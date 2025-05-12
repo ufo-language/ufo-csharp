@@ -1,5 +1,6 @@
 using System.Data.Common;
 using UFO.Types;
+using UFO.Types.Expression;
 using UFO.Types.Literal;
 
 namespace UFO.Evaluator;

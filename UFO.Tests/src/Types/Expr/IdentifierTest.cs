@@ -1,4 +1,5 @@
 using UFO.Types;
+using UFO.Types.Expression;
 using UFO.Types.Literal;
 
 namespace UFO.Tests;
@@ -6,7 +7,7 @@ namespace UFO.Tests;
 public class IdentifeirTests
 {
     [Fact]
-    public void Eval_Throw()
+    public void Eval_UnboundIdentifierThrowsException()
     {
         // Arrange
         Evaluator.Evaluator etor = new Evaluator.Evaluator();
@@ -20,7 +21,7 @@ public class IdentifeirTests
     }
 
     [Fact]
-    public void Eval_NoThrow()
+    public void Eval_BoundIdentifierEvaluatesToValue()
     {
         // Arrange
         Evaluator.Evaluator etor = new Evaluator.Evaluator();

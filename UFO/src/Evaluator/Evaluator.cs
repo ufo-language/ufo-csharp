@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using UFO.Types;
+using UFO.Types.Expression;
 using UFO.Types.Literal;
 
 namespace UFO.Evaluator;
@@ -46,5 +48,20 @@ public class Evaluator
     {
         return EStack.Pop();
     }
+
+    public void Run()
+    {
+        while(EStack.Count > 0)
+        {
+            Step();
+        }
+    }
     
+    public void Step()
+    {
+        UFOObject expr = PopExpr();
+        // Console.WriteLine($"Evaluator.Step got expr {expr}");
+        expr.Eval(this);
+    }
+
 }

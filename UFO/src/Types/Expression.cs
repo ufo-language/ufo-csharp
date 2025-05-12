@@ -6,5 +6,9 @@ public abstract class Expression : UFOObject
 {
     public abstract override void Eval([NotNull] Evaluator.Evaluator etor);
 
-    public abstract override int GetHashCode();
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException("Expression.GetHashCode");
+    }
+
 }

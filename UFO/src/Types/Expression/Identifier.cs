@@ -1,8 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace UFO.Types.Literal;
+namespace UFO.Types.Expression;
 
-public class Identifier : Literal
+public class Identifier : Expression
 {
 
     public class UnboundIdentifierException(Identifier ident) : Exception($"Unbound identifier: {ident}")
