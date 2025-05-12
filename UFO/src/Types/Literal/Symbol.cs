@@ -7,7 +7,7 @@ public class Symbol : Literal
     private static readonly Dictionary<string, Symbol> _internedSymbols = new Dictionary<string, Symbol>();
 
     public string Name { get; private set; }
-    private int HashCode;
+    private readonly int HashCode;
 
     private static readonly int HashSeed = typeof(Symbol).GetHashCode();
 

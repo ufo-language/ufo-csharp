@@ -1,5 +1,3 @@
-using Xunit;
-using UFO.Evaluator;
 using UFO.Types;
 using UFO.Types.Literal;
 

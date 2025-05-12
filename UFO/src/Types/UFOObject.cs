@@ -15,6 +15,11 @@ public abstract class UFOObject
         return EqualsAux(other);
     }
 
+    public virtual bool BoolValue()
+    {
+        return true;
+    }
+
     public virtual bool EqualsAux([NotNull] UFOObject other)
     {
         return false;

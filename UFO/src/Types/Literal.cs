@@ -8,6 +8,4 @@ public abstract class Literal : UFOObject
     {
         etor.PushObj(this);
     }
-
-    public abstract override int GetHashCode();
 }
