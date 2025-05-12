@@ -1,8 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
+using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
 
-public class Seq(params UFOObject[] exprs) : Expression
+public class Seq : Expression
 {
 
     public class DropContin : Expression
@@ -20,10 +21,25 @@ public class Seq(params UFOObject[] exprs) : Expression
 
     private static readonly DropContin DROP_CONTIN = new();
 
-    private readonly UFOObject[] Exprs = exprs;
+    private readonly UFOObject[] Exprs;
+
+    private Seq(params UFOObject[] exprs)
+    {
+        Exprs = exprs;
+    }
+
+    public static Seq Create(params UFOObject[] exprs)
+    {
+        return new Seq(exprs);
+    }
 
     public override void Eval([NotNull] Evaluator.Evaluator etor)
     {
+        int nExprs = Exprs.Length;
+        if (nExprs == 0) {
+            etor.PushObj(Nil.Create());
+            return;
+        }
         bool firstIter = true;
         for (int n = Exprs.Length - 1; n>=0; n--)
         {
