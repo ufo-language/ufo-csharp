@@ -14,7 +14,6 @@ public class IdentifeirTests
         Identifier id_x = Identifier.Create("x");
 
         // Act
-        // id_x.Eval(etor);
 
         // Assert
         Assert.Throws<Identifier.UnboundIdentifierException>(() => id_x.Eval(etor));

@@ -1,3 +1,4 @@
+using System.Text;
 using UFO.Types.Data;
 using UFO.Types.Expression;
 
@@ -38,6 +39,7 @@ public class Closure : Literal
             {
                 return fun.Body.Eval(etor);
             }
+            fun = fun.NextRule;
         }
         throw new ArgumentMismatchException(Fun, args);
     }
@@ -50,6 +52,11 @@ public class Closure : Literal
     public override int GetHashCode()
     {
         throw new NotImplementedException();
+    }
+
+    public override void ToString(StringBuilder sb)
+    {
+        Fun.ToString(sb);
     }
 
 }

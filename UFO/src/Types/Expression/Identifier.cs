@@ -18,7 +18,7 @@ public class Identifier : Expression
         }
     }
 
-    private static readonly Dictionary<string, Identifier> _internedIdentifiers = new Dictionary<string, Identifier>();
+    private static readonly Dictionary<string, Identifier> _internedIdentifiers = [];
 
     public string Name { get; private set; }
     private readonly int HashCode;

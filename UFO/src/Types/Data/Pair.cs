@@ -71,6 +71,16 @@ public class Pair : Data
         return ReferenceEquals(this, EMPTY);
     }
 
+    public override bool Match(UFOObject other, ref Evaluator.Evaluator etor)
+    {
+        if (GetType() != other.GetType())
+        {
+            return false;
+        }
+        Pair otherPair = (Pair)other;
+        return First.Match(otherPair.First, ref etor) && Rest.Match(otherPair.Rest, ref etor);
+    }
+
     public override void ToString(StringBuilder sb)
     {
         Utils.ToString.ToStringWith(sb, EachElem(), "[", ", ", "]");
