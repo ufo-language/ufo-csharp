@@ -11,16 +11,11 @@ public class Pair : Data
     {
         public override void Eval([NotNull] Evaluator.Evaluator etor)
         {
-            UFOObject condVal = etor.PopObj();
-            UFOObject altExpr = etor.PopObj();
-            UFOObject conseqExpr = etor.PopObj();
-            etor.PushExpr(condVal.BoolValue() ? conseqExpr : altExpr);
+            UFOObject first = etor.PopObj();
+            UFOObject rest = etor.PopObj();
+            etor.PushExpr(Pair.Create(first, rest));
         }
 
-        public override string ToString()
-        {
-            return GetType().Name + "{}";
-        }
     }
 
     private static readonly MakePairContin MAKE_PAIR_CONTIN = new();
@@ -30,7 +25,7 @@ public class Pair : Data
     public UFOObject First { get; set; }
     public UFOObject Rest { get; set; }
 
-    private Pair(UFOObject first, UFOObject rest)
+    protected Pair(UFOObject first, UFOObject rest)
     {
         First = first;
         Rest = rest;
@@ -51,15 +46,15 @@ public class Pair : Data
         return new(first, rest);
     }
 
-    // public static Pair Create(params UFOObject[] args)
-    // {
-    //     Queue q = Queue.Create();
-    //     foreach (UFOObject arg in args)
-    //     {
-    //         q.Enq(arg);
-    //     }
-    //     return q.AsList();
-    // }
+    public static Pair Create(params UFOObject[] args)
+    {
+        Queue q = Queue.Create();
+        foreach (UFOObject arg in args)
+        {
+            q.Enq(arg);
+        }
+        return q.AsList();
+    }
 
     public override void Eval([NotNull] Evaluator.Evaluator etor)
     {

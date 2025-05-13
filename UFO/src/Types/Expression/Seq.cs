@@ -14,10 +14,6 @@ public class Seq : Expression
             etor.PopObj();
         }
 
-        public override string ToString()
-        {
-            return "DropContin{}";
-        }
     }
 
     private static readonly DropContin DROP_CONTIN = new();

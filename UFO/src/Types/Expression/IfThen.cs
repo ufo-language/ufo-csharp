@@ -16,10 +16,6 @@ public class IfThen([NotNull] UFOObject cond, UFOObject conseq, UFOObject alt) :
             etor.PushExpr(condVal.BoolValue() ? conseqExpr : altExpr);
         }
 
-        public override string ToString()
-        {
-            return "SelectContin{}";
-        }
     }
 
     private static readonly SelectContin SELECT_CONTIN = new();

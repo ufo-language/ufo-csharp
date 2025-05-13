@@ -36,6 +36,11 @@ public class Queue : Data
         return new();
     }
 
+    public Pair AsList()
+    {
+        return First;
+    }
+
     public bool Deq(out UFOObject elem)
     {
         if (Count == 0)
@@ -74,8 +79,7 @@ public class Queue : Data
 
     public override void Eval([NotNull] Evaluator.Evaluator etor)
     {
-        int nElems = Count;
-        etor.PushContinInt(nElems);
+        etor.PushContinInt(Count);
         etor.PushExpr(MAKE_QUEUE_CONTIN);
         foreach (UFOObject elem in EachElem())
         {

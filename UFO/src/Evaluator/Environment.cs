@@ -9,8 +9,8 @@ namespace UFO.Evaluator;
 public class Environment
 {
 
-    private List<Identifier> Names = new();
-    private List<UFOObject> Values = new();
+    private readonly List<Identifier> Names = [];
+    private readonly List<UFOObject> Values = [];
 
     public Environment()
     {}
