@@ -9,7 +9,7 @@ public class Seq : Expression
 
     public class DropContin : Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             etor.PopObj();
         }
@@ -30,7 +30,7 @@ public class Seq : Expression
         return new Seq(exprs);
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         int nExprs = Exprs.Length;
         if (nExprs == 0) {

@@ -8,7 +8,7 @@ public class Array : Data
 {
     public class MakeArrayContin : Expression.Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             Array ary = new();
             int nElems = etor.PopContinInt();
@@ -26,12 +26,12 @@ public class Array : Data
 
     public int Count { get { return Elems.Count; } }
 
-    private Array([NotNull] params UFOObject[] elems)
+    private Array(params UFOObject[] elems)
     {
         Elems = [.. elems];
     }
 
-    public static Array Create([NotNull] params UFOObject[] elems)
+    public static Array Create(params UFOObject[] elems)
     {
         return new(elems);
     }
@@ -50,7 +50,7 @@ public class Array : Data
         yield break;
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushContinInt(Count);
         etor.PushExpr(MAKE_ARRAY_CONTIN);

@@ -9,7 +9,7 @@ public class Pair : Data
 
     public class MakePairContin : Expression.Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             UFOObject first = etor.PopObj();
             UFOObject rest = etor.PopObj();
@@ -36,12 +36,12 @@ public class Pair : Data
         return EMPTY;
     }
 
-    public static Pair Create([NotNull] UFOObject first)
+    public static Pair Create(UFOObject first)
     {
         return new(first, EMPTY);
     }
 
-    public static Pair Create([NotNull] UFOObject first, [NotNull] UFOObject rest)
+    public static Pair Create(UFOObject first, UFOObject rest)
     {
         return new(first, rest);
     }
@@ -56,7 +56,7 @@ public class Pair : Data
         return q.AsList();
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushExpr(MAKE_PAIR_CONTIN);
         etor.PushExpr(Rest);

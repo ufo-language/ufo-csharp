@@ -8,7 +8,7 @@ public class HashTable : Data
 {
     public class MakeHashTableContin : Expression.Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             HashTable hashTable = new();
             int nPairs = etor.PopContinInt();
@@ -45,7 +45,7 @@ public class HashTable : Data
     /// </summary>
     /// <param name="elems">The bindings of the HashTable as a linear array in key / value order.</param>
     /// <returns>The new HashTable.</returns>
-    private HashTable([NotNull] params UFOObject[] elems)
+    private HashTable(params UFOObject[] elems)
     {
         Dict = [];
         bool keyIter = true;
@@ -67,7 +67,7 @@ public class HashTable : Data
         }
     }
 
-    public static HashTable Create([NotNull] params UFOObject[] elems)
+    public static HashTable Create(params UFOObject[] elems)
     {
         return new(elems);
     }
@@ -96,7 +96,7 @@ public class HashTable : Data
         yield break;
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushContinInt(Count);
         etor.PushExpr(MAKE_HASHTABLE_CONTIN);

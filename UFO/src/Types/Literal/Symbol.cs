@@ -12,13 +12,13 @@ public class Symbol : Literal
 
     private static readonly int HashSeed = typeof(Symbol).GetHashCode();
 
-    private Symbol([NotNull] string name)
+    private Symbol(string name)
     {
         Name = name;
         HashCode = Utils.Hash.CombineHash(HashSeed, Name.GetHashCode());
     }
 
-    public static Symbol Create([NotNull] string name)
+    public static Symbol Create(string name)
     {
         if (!_internedSymbols.ContainsKey(name))
         {
@@ -27,7 +27,7 @@ public class Symbol : Literal
         return _internedSymbols[name];
     }
 
-    public override bool EqualsAux([NotNull] UFOObject other)
+    public override bool EqualsAux(UFOObject other)
     {
         Symbol otherSymbol = (Symbol)other;
         return Name == otherSymbol.Name;

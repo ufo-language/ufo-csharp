@@ -8,7 +8,7 @@ public class Queue : Data
 {
     public class MakeQueueContin : Expression.Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             Queue q = new();
             int nElems = etor.PopContinInt();
@@ -59,7 +59,7 @@ public class Queue : Data
         return First.EachElem();
     }
 
-    public void Enq([NotNull] params UFOObject[] elems)
+    public void Enq(params UFOObject[] elems)
     {
         foreach (UFOObject elem in elems)
         {
@@ -77,7 +77,7 @@ public class Queue : Data
         }
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushContinInt(Count);
         etor.PushExpr(MAKE_QUEUE_CONTIN);

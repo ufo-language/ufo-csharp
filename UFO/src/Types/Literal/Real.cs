@@ -25,7 +25,7 @@ public class Real : Literal
         return Value != 0.0;
     }
 
-    public override bool EqualsAux([NotNull] UFOObject otherObj)
+    public override bool EqualsAux(UFOObject otherObj)
     {
         Real other = (Real)otherObj;
         return Value == other.Value;

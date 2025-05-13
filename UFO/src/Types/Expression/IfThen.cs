@@ -3,12 +3,12 @@ using System.Text;
 
 namespace UFO.Types.Expression;
 
-public class IfThen([NotNull] UFOObject cond, UFOObject conseq, UFOObject alt) : Expression
+public class IfThen(UFOObject cond, UFOObject conseq, UFOObject alt) : Expression
 {
 
     public class SelectContin : Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             UFOObject condVal = etor.PopObj();
             UFOObject altExpr = etor.PopObj();
@@ -24,7 +24,7 @@ public class IfThen([NotNull] UFOObject cond, UFOObject conseq, UFOObject alt) :
     private readonly UFOObject Conseq = conseq;
     private readonly UFOObject Alt = alt;
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushObj(Conseq);
         etor.PushObj(Alt);

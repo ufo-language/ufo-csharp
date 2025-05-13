@@ -4,7 +4,7 @@ namespace UFO.Types.Expression;
 
 public abstract class Expression : UFOObject
 {
-    public abstract override void Eval([NotNull] Evaluator.Evaluator etor);
+    public abstract override void Eval(Evaluator.Evaluator etor);
 
     public override int GetHashCode()
     {

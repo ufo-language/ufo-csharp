@@ -8,7 +8,7 @@ public class Set : Data
 {
     public class MakeSetContin : Expression.Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             Set set = new();
             int nElems = etor.PopContinInt();
@@ -27,7 +27,7 @@ public class Set : Data
 
     public int Count { get { return Elems.Count; } }
 
-    private Set([NotNull] params UFOObject[] elems)
+    private Set(params UFOObject[] elems)
     {
         Elems = [];
         foreach (UFOObject elem in elems)
@@ -36,17 +36,17 @@ public class Set : Data
         }
     }
 
-    public static Set Create([NotNull] params UFOObject[] elems)
+    public static Set Create(params UFOObject[] elems)
     {
         return new(elems);
     }
 
-    public void Add([NotNull] UFOObject elem)
+    public void Add(UFOObject elem)
     {
         Elems.Add(elem);
     }
 
-    public bool Contains([NotNull] UFOObject elem)
+    public bool Contains(UFOObject elem)
     {
         return Elems.Contains(elem);
     }
@@ -60,7 +60,7 @@ public class Set : Data
         yield break;
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushContinInt(Count);
         etor.PushExpr(MAKE_SET_CONTIN);
@@ -70,7 +70,7 @@ public class Set : Data
         }
     }
 
-    public bool Remove([NotNull] UFOObject elem)
+    public bool Remove(UFOObject elem)
     {
         return Elems.Remove(elem);
     }

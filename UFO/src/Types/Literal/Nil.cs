@@ -22,7 +22,7 @@ public class Nil : Literal
         return false;
     }
 
-    public override bool EqualsAux([NotNull] UFOObject other)
+    public override bool EqualsAux(UFOObject other)
     {
         return true;
     }

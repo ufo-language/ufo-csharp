@@ -23,13 +23,13 @@ public class Identifier : Expression
 
     private static readonly int HashSeed = typeof(Identifier).GetHashCode();
 
-    private Identifier([NotNull] string name)
+    private Identifier(string name)
     {
         Name = name;
         HashCode = Utils.Hash.CombineHash(HashSeed, Name.GetHashCode());
     }
 
-    public static Identifier Create([NotNull] string name)
+    public static Identifier Create(string name)
     {
         if (!_internedIdentifiers.TryGetValue(name, out Identifier? value))
         {
@@ -39,13 +39,13 @@ public class Identifier : Expression
         return value;
     }
 
-    public override bool EqualsAux([NotNull] UFOObject other)
+    public override bool EqualsAux(UFOObject other)
     {
         Identifier otherIdentifier = (Identifier)other;
         return Name == otherIdentifier.Name;
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         UFOObject value = default!;
         if (etor.Lookup_Rel(this, ref value)) etor.PushObj(value);

@@ -9,7 +9,7 @@ public class Binding : Data
 
     public class MakeBindingContin : Expression.Expression
     {
-        public override void Eval([NotNull] Evaluator.Evaluator etor)
+        public override void Eval(Evaluator.Evaluator etor)
         {
             UFOObject key = etor.PopObj();
             UFOObject value = etor.PopObj();
@@ -22,18 +22,18 @@ public class Binding : Data
     public UFOObject Key { get; private set; }
     public UFOObject Value { get; set; }
 
-    private Binding([NotNull] UFOObject key, [NotNull] UFOObject value)
+    private Binding(UFOObject key, UFOObject value)
     {
         Key = key;
         Value = value;
     }
 
-    public static Binding Create([NotNull] UFOObject first, [NotNull] UFOObject rest)
+    public static Binding Create(UFOObject first, UFOObject rest)
     {
         return new(first, rest);
     }
 
-    public override void Eval([NotNull] Evaluator.Evaluator etor)
+    public override void Eval(Evaluator.Evaluator etor)
     {
         etor.PushExpr(MAKE_BINDING_CONTIN);
         etor.PushExpr(Key);

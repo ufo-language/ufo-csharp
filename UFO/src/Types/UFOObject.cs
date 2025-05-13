@@ -5,7 +5,7 @@ namespace UFO.Types;
 
 public abstract class UFOObject
 {
-    public bool Equals([NotNull] UFOObject other)
+    public bool Equals(UFOObject other)
     {
         if (ReferenceEquals(this, other))
             return true;
@@ -21,12 +21,12 @@ public abstract class UFOObject
         return true;
     }
 
-    public virtual bool EqualsAux([NotNull] UFOObject other)
+    public virtual bool EqualsAux(UFOObject other)
     {
         return false;
     }
 
-    public abstract void Eval([NotNull] Evaluator.Evaluator etor);
+    public abstract void Eval(Evaluator.Evaluator etor);
 
     public override abstract int GetHashCode();
 

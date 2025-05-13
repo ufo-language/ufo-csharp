@@ -25,7 +25,7 @@ public class Integer : Literal
         return Value != 0;
     }
 
-    public override bool EqualsAux([NotNull] UFOObject otherObj)
+    public override bool EqualsAux(UFOObject otherObj)
     {
         Integer other = (Integer)otherObj;
         return Value == other.Value;
