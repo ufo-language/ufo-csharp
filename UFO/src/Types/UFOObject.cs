@@ -17,7 +17,7 @@ public abstract class UFOObject
         return EqualsAux(other);
     }
 
-    public virtual void Apply(Evaluator.Evaluator etor, Pair args)
+    public virtual UFOObject Apply(Evaluator.Evaluator etor, Pair args)
     {
         throw new Exception("Object is not applyable");
     }
@@ -32,11 +32,11 @@ public abstract class UFOObject
         return false;
     }
 
-    public abstract void Eval(Evaluator.Evaluator etor);
+    public abstract UFOObject Eval(Evaluator.Evaluator etor);
 
     public override abstract int GetHashCode();
 
-    public virtual bool Match(UFOObject other, ref Binding env)
+    public virtual bool Match(UFOObject other, ref Evaluator.Evaluator etor)
     {
         return ReferenceEquals(this, other);
     }

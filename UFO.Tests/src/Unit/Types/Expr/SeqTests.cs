@@ -14,13 +14,10 @@ public class SeqTests
         Seq seq = Seq.Create();
 
         // Act
-        seq.Eval(etor);
+        UFOObject value = seq.Eval(etor);
 
         // Assert
-        UFOObject expr = etor.PopObj();
-        Assert.Same(Nil.Create(), expr);
-        Assert.Throws<InvalidOperationException>(() => etor.PopObj());
-        Assert.Throws<InvalidOperationException>(() => etor.PopExpr());
+        Assert.Same(Nil.Create(), value);
     }
 
     [Fact]
@@ -32,13 +29,10 @@ public class SeqTests
         Seq seq = Seq.Create(i100);
 
         // Act
-        seq.Eval(etor);
+        UFOObject value = seq.Eval(etor);
 
         // Assert
-        UFOObject expr = etor.PopExpr();
-        Assert.Same(i100, expr);
-        Assert.Throws<InvalidOperationException>(() => etor.PopObj());
-        Assert.Throws<InvalidOperationException>(() => etor.PopExpr());
+        Assert.Same(i100, value);
     }
 
     [Fact]
@@ -51,14 +45,10 @@ public class SeqTests
         Seq seq = Seq.Create(i100, i200);
 
         // Act
-        seq.Eval(etor);
+        UFOObject value = seq.Eval(etor);
 
         // Assert
-        Assert.Same(i100, etor.PopExpr());
-        Assert.IsType<Seq.DropContin>(etor.PopExpr());
-        Assert.Same(i200, etor.PopExpr());
-        Assert.Throws<InvalidOperationException>(() => etor.PopObj());
-        Assert.Throws<InvalidOperationException>(() => etor.PopExpr());
+        Assert.Same(i200, value);
     }
 
 }

@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using UFO.Types.Data;
 using UFO.Types.Expression;
 
@@ -27,16 +26,17 @@ public class Closure : Literal
         LexicalEnv = lexicalEnv;
     }
 
-    public override void Apply(Evaluator.Evaluator etor, Pair args)
+    public override UFOObject Apply(Evaluator.Evaluator etor, Pair args)
     {
+        Pair argValues = (Pair)args.Eval(etor);
         Binding env = etor.Env;
         Function? fun = Fun;
         while (fun != null)
         {
             Pair parameters = fun.Parameters;
-            if (parameters.Match(args, ref env))
+            if (parameters.Match(args, ref etor))
             {
-                etor.PushExpr(fun.Body, env);
+                return fun.Body.Eval(etor);
             }
         }
         throw new ArgumentMismatchException(Fun, args);

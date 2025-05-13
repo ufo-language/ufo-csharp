@@ -6,36 +6,6 @@ namespace UFO.Types.Data;
 
 public class HashTable : Data
 {
-    public class MakeHashTableContin : Expression.Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            HashTable hashTable = new();
-            int nPairs = etor.PopContinInt();
-            bool keyIter = true;
-            UFOObject key = Nil.Create();
-            UFOObject value;
-            for (int n=0; n<nPairs; n++)
-            {
-                UFOObject elem = etor.PopObj();
-                if (keyIter)
-                {
-                    key = elem;
-                    keyIter = false;
-                }
-                else
-                {
-                    value = elem;
-                    hashTable[key] = value;
-                    keyIter = true;
-                }
-            }
-            etor.PushObj(hashTable);
-        }
-    }
-
-    private static readonly MakeHashTableContin MAKE_HASHTABLE_CONTIN = new();
-
     private readonly Dictionary<UFOObject, UFOObject> Dict;
 
     public int Count { get { return Dict.Count; } }
@@ -96,15 +66,16 @@ public class HashTable : Data
         yield break;
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        etor.PushContinInt(Count);
-        etor.PushExpr(MAKE_HASHTABLE_CONTIN);
-        foreach (KeyValuePair<UFOObject, UFOObject> pair in Dict)
+        HashTable newHashTable = new();
+        foreach (KeyValuePair<UFOObject, UFOObject> pair in EachElem())
         {
-            etor.PushExpr(pair.Key);
-            etor.PushExpr(pair.Value);
+            UFOObject keyValue = pair.Key.Eval(etor);
+            UFOObject valueValue = pair.Value.Eval(etor);
+            newHashTable[keyValue] = valueValue;
         }
+        return newHashTable;
     }
 
     public bool Get(UFOObject key, out UFOObject elem)

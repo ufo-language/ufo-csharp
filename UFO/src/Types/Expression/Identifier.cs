@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using UFO.Types.Data;
+using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
 
@@ -46,11 +47,14 @@ public class Identifier : Expression
         return Name == otherIdentifier.Name;
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        UFOObject value = default!;
-        if (etor.Lookup_Rel(this, ref value)) etor.PushObj(value);
-        else throw new UnboundIdentifierException(this);
+        UFOObject value = Nil.Create();
+        if (etor.Lookup(this, ref value))
+        {
+            return value;
+        }
+        throw new UnboundIdentifierException(this);
     }
 
     public override int GetHashCode()
@@ -58,9 +62,9 @@ public class Identifier : Expression
         return HashCode;
     }
 
-    public override bool Match(UFOObject other, ref Binding env)
+    public override bool Match(UFOObject other, ref Evaluator.Evaluator etor)
     {
-        env = Binding.Create(this, other, env);
+        etor.Bind(this, other);
         return true;
     }
 

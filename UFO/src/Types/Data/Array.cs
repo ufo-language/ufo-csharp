@@ -6,21 +6,6 @@ namespace UFO.Types.Data;
 
 public class Array : Data
 {
-    public class MakeArrayContin : Expression.Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            Array ary = new();
-            int nElems = etor.PopContinInt();
-            for (int n=0; n<nElems; n++)
-            {
-                ary.Add(etor.PopObj());
-            }
-            etor.PushObj(ary);
-        }
-    }
-
-    private static readonly MakeArrayContin MAKE_ARRAY_CONTIN = new();
 
     private readonly List<UFOObject> Elems;
 
@@ -36,7 +21,7 @@ public class Array : Data
         return new(elems);
     }
 
-    public void Add(UFOObject elem)
+    public void Append(UFOObject elem)
     {
         Elems.Add(elem);
     }
@@ -50,14 +35,15 @@ public class Array : Data
         yield break;
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        etor.PushContinInt(Count);
-        etor.PushExpr(MAKE_ARRAY_CONTIN);
+        Array newArray = new();
         foreach (UFOObject elem in EachElem())
         {
-            etor.PushExpr(elem);
+            UFOObject value = elem.Eval(etor);
+            newArray.Append(value);
         }
+        return newArray;
     }
 
     public bool Get(int index, out UFOObject elem)

@@ -6,23 +6,6 @@ namespace UFO.Types.Data;
 
 public class Set : Data
 {
-    public class MakeSetContin : Expression.Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            Set set = new();
-            int nElems = etor.PopContinInt();
-            for (int n=0; n<nElems; n++)
-            {
-                UFOObject elem = etor.PopObj();
-                set.Add(elem);
-            }
-            etor.PushObj(set);
-        }
-    }
-
-    private static readonly MakeSetContin MAKE_SET_CONTIN = new();
-
     private readonly HashSet<UFOObject> Elems;
 
     public int Count { get { return Elems.Count; } }
@@ -60,14 +43,14 @@ public class Set : Data
         yield break;
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        etor.PushContinInt(Count);
-        etor.PushExpr(MAKE_SET_CONTIN);
+        Set newSet = new();
         foreach (UFOObject elem in Elems)
         {
-            etor.PushExpr(elem);
+            newSet.Add(elem.Eval(etor));
         }
+        return newSet;
     }
 
     public bool Remove(UFOObject elem)

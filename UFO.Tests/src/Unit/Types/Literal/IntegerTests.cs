@@ -5,6 +5,7 @@ namespace UFO.Tests;
 
 public class IntegerTests
 {
+#if false  // This was for the CPS evaluator
     [Fact]
     public void Eval()
     {
@@ -21,4 +22,5 @@ public class IntegerTests
         Assert.Throws<InvalidOperationException>(() => etor.PopObj());
         Assert.Throws<InvalidOperationException>(() => etor.PopExpr());
     }
+#endif
 }

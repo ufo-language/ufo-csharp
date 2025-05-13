@@ -6,20 +6,6 @@ namespace UFO.Types.Data;
 
 public class Pair : Data
 {
-
-    public class MakePairContin : Expression.Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            UFOObject first = etor.PopObj();
-            UFOObject rest = etor.PopObj();
-            etor.PushExpr(Pair.Create(first, rest));
-        }
-
-    }
-
-    private static readonly MakePairContin MAKE_PAIR_CONTIN = new();
-
     public static readonly Pair EMPTY = new(Nil.Create(), Nil.Create());
 
     public UFOObject First { get; set; }
@@ -56,11 +42,9 @@ public class Pair : Data
         return q.AsList();
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        etor.PushExpr(MAKE_PAIR_CONTIN);
-        etor.PushExpr(Rest);
-        etor.PushExpr(First);
+        return IsEmpty() ? this : new Pair(First.Eval(etor), Rest.Eval(etor));
     }
 
     public IEnumerable<UFOObject> EachElem()

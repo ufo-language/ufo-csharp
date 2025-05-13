@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using UFO.Types.Literal;
 
@@ -6,25 +5,11 @@ namespace UFO.Types.Data;
 
 public class Binding : Data
 {
-
-    public class MakeBindingContin : Expression.Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            UFOObject key = etor.PopObj();
-            UFOObject value = etor.PopObj();
-            Binding next = (Binding)etor.PopObj();
-            etor.PushExpr(Create(key, value, next));
-        }
-    }
-
-    private static readonly MakeBindingContin MAKE_BINDING_CONTIN = new();
     private static readonly Binding EMPTY = new(Nil.Create(), Nil.Create(), null);
 
     public UFOObject Key { get; private set; }
     public UFOObject Value { get; set; }
     public Binding? Next { get; set; }
-
 
     private Binding(UFOObject key, UFOObject value, Binding? next)
     {
@@ -59,17 +44,13 @@ public class Binding : Data
         yield break;
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
         if (ReferenceEquals(this, EMPTY))
         {
-            etor.PushObj(EMPTY);
-            return;
+            return this;
         }
-        etor.PushExpr(MAKE_BINDING_CONTIN);
-        etor.PushExpr(Key);
-        etor.PushExpr(Value);
-        etor.PushExpr(Next!);
+        return new Binding(Key.Eval(etor), Value.Eval(etor), (Binding)Next!.Eval(etor));
     }
 
     public bool IsEmpty()

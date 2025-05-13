@@ -5,6 +5,8 @@ namespace UFO.Tests;
 
 public class EvaluatorTests
 {
+
+#if false  // This was for the CPS evaluator
     [Fact]
     public void PushObj()
     {
@@ -20,4 +22,5 @@ public class EvaluatorTests
         Assert.Same(nil, obj);
         Assert.Throws<InvalidOperationException>(() => etor.PopObj());
     }
+#endif
 }

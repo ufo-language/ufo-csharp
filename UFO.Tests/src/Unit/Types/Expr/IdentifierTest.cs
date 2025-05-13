@@ -10,7 +10,7 @@ public class IdentifeirTests
     public void Eval_UnboundIdentifierThrowsException()
     {
         // Arrange
-        Evaluator.Evaluator etor = new Evaluator.Evaluator();
+        Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
 
         // Act
@@ -24,16 +24,15 @@ public class IdentifeirTests
     public void Eval_BoundIdentifierEvaluatesToValue()
     {
         // Arrange
-        Evaluator.Evaluator etor = new Evaluator.Evaluator();
+        Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
         Integer i100 = Integer.Create(100);
         etor.Bind(id_x, i100);
 
         // Act
-        id_x.Eval(etor);
+        UFOObject value = id_x.Eval(etor);
 
         // Assert
-        UFOObject value = etor.PopObj();
         Assert.Same(i100, value);
     }
 

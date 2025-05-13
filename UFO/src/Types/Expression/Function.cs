@@ -30,10 +30,9 @@ public class Function : Expression
         return new(name, parameters, body, nextRule);
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        Closure closure = Closure.Create(this, etor.Env);
-        etor.PushObj(closure);
+        return Closure.Create(this, etor.Env);
     }
 
     public void SetNextRule(Function nextRule)

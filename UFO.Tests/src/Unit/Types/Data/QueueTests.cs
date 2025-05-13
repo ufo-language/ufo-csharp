@@ -20,6 +20,7 @@ public class QueueTests
         Assert.False(success);
     }
 
+#if false  // This was for the CPS evaluator
     [Fact]
     public void Eval_EmptyQueue()
     {
@@ -95,5 +96,5 @@ public class QueueTests
 
         Assert.Equal(0, qValue.Count);
     }
-
+#endif
 }

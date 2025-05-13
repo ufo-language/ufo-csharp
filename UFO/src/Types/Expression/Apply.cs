@@ -6,19 +6,6 @@ namespace UFO.Types.Expression;
 
 public class Apply : Expression
 {
-
-    public class ApplyContin : Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            Pair args = (Pair)etor.PopObj();
-            UFOObject abstrObj = etor.PopObj();
-            abstrObj.Apply(etor, args);
-        }
-    }
-
-    private readonly ApplyContin APPLY_CONTIN = new();
-
     public UFOObject Abstr { get; private set; }
     public Pair Args { get; private set; }
 
@@ -33,11 +20,10 @@ public class Apply : Expression
         return new Apply(abstr, args);
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        etor.PushExpr(APPLY_CONTIN);
-        etor.PushExpr(Args);
-        etor.PushExpr(Abstr);
+        UFOObject abstrVal = Abstr.Eval(etor);
+        return abstrVal.Apply(etor, Args);
     }
 
     public override void ToString(StringBuilder sb)

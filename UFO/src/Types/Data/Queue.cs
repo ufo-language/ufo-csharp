@@ -6,22 +6,6 @@ namespace UFO.Types.Data;
 
 public class Queue : Data
 {
-    public class MakeQueueContin : Expression.Expression
-    {
-        public override void Eval(Evaluator.Evaluator etor)
-        {
-            Queue q = new();
-            int nElems = etor.PopContinInt();
-            for (int n=0; n<nElems; n++)
-            {
-                q.Enq(etor.PopObj());
-            }
-            etor.PushObj(q);
-        }
-    }
-
-    private static readonly MakeQueueContin MAKE_QUEUE_CONTIN = new();
-
     private Pair First;
     private Pair Last;
     public int Count { get; private set; }
@@ -77,14 +61,14 @@ public class Queue : Data
         }
     }
 
-    public override void Eval(Evaluator.Evaluator etor)
+    public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        etor.PushContinInt(Count);
-        etor.PushExpr(MAKE_QUEUE_CONTIN);
+        Queue newQueue = new();
         foreach (UFOObject elem in EachElem())
         {
-            etor.PushExpr(elem);
+            newQueue.Enq(elem.Eval(etor));
         }
+        return newQueue;
     }
 
     public override void ToString(StringBuilder sb)

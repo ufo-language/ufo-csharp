@@ -1,24 +1,15 @@
-using System.Linq.Expressions;
-using System.Runtime.Intrinsics.X86;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Expression;
-using UFO.Types.Literal;
 
 namespace UFO.Evaluator;
 
 public class Evaluator
 {
-    private readonly Stack<UFOObject> OStack;
-    private readonly Stack<Tuple<UFOObject, Binding>> EStack;
-    private readonly Stack<int> ContinIntStack;
     public Binding Env { get; private set; }
 
     public Evaluator()
     {
-        OStack = new();
-        EStack = new();
-        ContinIntStack = new();
         Env = Binding.Create();
     }
 
@@ -27,7 +18,7 @@ public class Evaluator
         Env = Binding.Create(name, value, Env);
     }
 
-    public bool Lookup_Rel(Identifier name, ref UFOObject value)
+    public bool Lookup(Identifier name, ref UFOObject value)
     {
         value = default!;
         Binding binding = Env.Locate(name);
@@ -36,58 +27,6 @@ public class Evaluator
         }
         value = binding.Value;
         return true;
-    }
-
-    public void PushObj(UFOObject obj)
-    {
-        OStack.Push(obj);
-    }
-
-    public UFOObject PopObj()
-    {
-        return OStack.Pop();
-    }
-
-    public void PushExpr(UFOObject obj)
-    {
-        EStack.Push(new(obj, Env));
-    }
-
-    public void PushExpr(UFOObject obj, Binding env)
-    {
-        EStack.Push(new(obj, env));
-    }
-
-    public UFOObject PopExpr()
-    {
-        Tuple<UFOObject, Binding> tup = EStack.Pop();
-        Env = tup.Item2;
-        return tup.Item1;
-    }
-
-    public void PushContinInt(int n)
-    {
-        ContinIntStack.Push(n);
-    }
-
-    public int PopContinInt()
-    {
-        return ContinIntStack.Pop();
-    }
-
-    public void Run()
-    {
-        while(EStack.Count > 0)
-        {
-            Step();
-        }
-    }
-    
-    public void Step()
-    {
-        UFOObject expr = PopExpr();
-        // Console.WriteLine($"Evaluator.Step got expr {expr}");
-        expr.Eval(this);
     }
 
 }
