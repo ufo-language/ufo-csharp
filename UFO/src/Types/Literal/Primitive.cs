@@ -10,7 +10,7 @@ public abstract class Primitive : Literal
 
     private static readonly int HashSeed = typeof(Primitive).GetHashCode();
 
-    private readonly string Name;
+    public readonly string Name;
 
     protected Primitive(string name)
     {

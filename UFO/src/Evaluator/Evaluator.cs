@@ -1,3 +1,4 @@
+using Prims;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Expression;
@@ -11,6 +12,7 @@ public class Evaluator
     public Evaluator()
     {
         Env = Binding.Create();
+        DefinePrims.DefineAllPrims(this);
     }
 
     public void Bind(Identifier name, UFOObject value)
