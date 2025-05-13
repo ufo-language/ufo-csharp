@@ -54,9 +54,9 @@ public class Closure : Literal
         throw new NotImplementedException();
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Fun.ToString(sb);
+        Fun.ShowOn(writer);
     }
 
 }

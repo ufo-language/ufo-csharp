@@ -30,9 +30,11 @@ public abstract class Primitive : Literal
         return Utils.Hash.CombineHash(HashSeed, Name.GetHashCode());
     }
     
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        sb.Append("Primitive{").Append(Name).Append('}');
+        writer.Write("Primitive{");
+        writer.Write(Name);
+        writer.Write('}');
     }
 
 }

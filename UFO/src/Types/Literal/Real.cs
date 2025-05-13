@@ -36,9 +36,9 @@ public class Real : Literal
         return Utils.Hash.CombineHash(HashSeed, Value.GetHashCode());
     }
     
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        sb.Append(Value);
+        writer.Write(Value);
     }
 
 }

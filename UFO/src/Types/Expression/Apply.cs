@@ -26,19 +26,19 @@ public class Apply : Expression
         return abstrVal.Apply(etor, Args);
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
         if (Abstr is Literal.Literal)
         {
-            Abstr.ToString(sb);
+            Abstr.ShowOn(writer);
         }
         else
         {
-            sb.Append('(');
-            Abstr.ToString(sb);
-            sb.Append(')');
+            writer.Write('(');
+            Abstr.ShowOn(writer);
+            writer.Write(')');
         }
-        Utils.ToString.ToStringWith(sb, Args.EachElem(), "(", ", ", ")");
+        Utils.ShowOn.ShowOnWith(writer, Args.EachElem(), "(", ", ", ")");
     }
 
 }

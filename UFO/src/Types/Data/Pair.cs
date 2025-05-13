@@ -81,9 +81,9 @@ public class Pair : Data
         return First.Match(otherPair.First, ref etor) && Rest.Match(otherPair.Rest, ref etor);
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Utils.ToString.ToStringWith(sb, EachElem(), "[", ", ", "]");
+        Utils.ShowOn.ShowOnWith(writer, EachElem(), "[", ", ", "]");
     }
 
 }

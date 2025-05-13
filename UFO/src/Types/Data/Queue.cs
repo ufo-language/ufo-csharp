@@ -71,9 +71,9 @@ public class Queue : Data
         return newQueue;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Utils.ToString.ToStringWith(sb, EachElem(), "~[", ", ", "]");
+        Utils.ShowOn.ShowOnWith(writer, EachElem(), "~[", ", ", "]");
     }
 
 }

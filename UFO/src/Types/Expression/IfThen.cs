@@ -14,14 +14,14 @@ public class IfThen(UFOObject cond, UFOObject conseq, UFOObject alt) : Expressio
         return (Cond.Eval(etor).BoolValue() ? Conseq : Alt).Eval(etor);
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        sb.Append("if ");
-        Cond.ToString(sb);
-        sb.Append(" then ");
-        Conseq.ToString(sb);
-        sb.Append(" else ");
-        Alt.ToString(sb);
+        writer.Write("if ");
+        Cond.ShowOn(writer);
+        writer.Write(" then ");
+        Conseq.ShowOn(writer);
+        writer.Write(" else ");
+        Alt.ShowOn(writer);
     }
 
 }

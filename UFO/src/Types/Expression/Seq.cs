@@ -27,9 +27,9 @@ public class Seq : Expression
         return returnValue;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Utils.ToString.ToStringWith(sb, Exprs, "(", "; ", ")");
+        Utils.ShowOn.ShowOnWith(writer, Exprs, "(", "; ", ")");
     }
 
 }

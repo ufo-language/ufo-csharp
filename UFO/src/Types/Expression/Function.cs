@@ -50,22 +50,22 @@ public class Function : Expression
         NextRule = nextRule;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
         Function? fun = this;
         bool firstIter = true;
-        sb.Append("fun ");
+        writer.Write("fun ");
         if (!ReferenceEquals(fun.Name, Nil.Create()))
         {
-            fun.Name.ToString(sb);
+            fun.Name.ShowOn(writer);
         }
         while (fun != null)
         {
             if (firstIter) firstIter = false;
-            else sb.Append(", ");
-            Utils.ToString.ToStringWith(sb, fun.Parameters.EachElem(), "(", ", ", ")");
-            sb.Append(" = ");
-            fun.Body.ToString(sb);
+            else writer.Write(", ");
+            Utils.ShowOn.ShowOnWith(writer, fun.Parameters.EachElem(), "(", ", ", ")");
+            writer.Write(" = ");
+            fun.Body.ShowOn(writer);
             fun = fun.NextRule;
         }
     }

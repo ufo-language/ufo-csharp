@@ -68,9 +68,9 @@ public class Identifier : Expression
         return true;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        sb.Append(Name);
+        writer.Write(Name);
     }
 
 }

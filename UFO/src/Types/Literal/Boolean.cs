@@ -24,9 +24,9 @@ public class Boolean : Literal
         return Utils.Hash.CombineHash(HashSeed, ((object)this).GetHashCode());
     }
     
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        sb.Append(BoolValue() ? "true" : "false");
+        writer.Write(BoolValue() ? "true" : "false");
     }
 
 }

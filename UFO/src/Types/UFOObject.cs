@@ -27,6 +27,11 @@ public abstract class UFOObject
         return true;
     }
 
+    public virtual void DisplayOn(TextWriter writer)
+    {
+        ShowOn(writer);
+    }
+
     public virtual bool EqualsAux(UFOObject other)
     {
         return false;
@@ -41,16 +46,17 @@ public abstract class UFOObject
         return ReferenceEquals(this, other);
     }
 
-    public override string ToString()
-    {  
-        StringBuilder sb = new();
-        ToString(sb);
-        return sb.ToString();
+    public virtual void ShowOn(TextWriter writer)
+    {
+        writer.Write(GetType().Name);
+        writer.Write("{}");
     }
 
-    public virtual void ToString(StringBuilder sb)
+    public override String ToString()
     {
-        sb.Append(GetType().Name).Append("{}");
+        StringWriter sw = new();
+        ShowOn(sw);
+        return sw.ToString();
     }
 
 }

@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Formats.Asn1;
 using System.Text;
 using UFO.Types.Literal;
 
@@ -85,9 +86,9 @@ public class HashTable : Data
         return found;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Utils.ToString.ToStringWith(sb, EachElemAsBinding(), "#{", ", ", "}");
+        Utils.ShowOn.ShowOnWith(writer, EachElemAsBinding(), "#{", ", ", "}");
     }
 
 }

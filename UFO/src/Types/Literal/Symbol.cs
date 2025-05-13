@@ -38,9 +38,9 @@ public class Symbol : Literal
         return HashCode;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        sb.Append(Name);
+        writer.Write(Name);
     }
 
 }

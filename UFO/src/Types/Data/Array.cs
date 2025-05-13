@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
@@ -77,9 +75,9 @@ public class Array : Data
         Elems[index] = elem;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Utils.ToString.ToStringWith(sb, EachElem(), "{", ", ", "}");
+        Utils.ShowOn.ShowOnWith(writer, EachElem(), "{", ", ", "}");
     }
 
 }

@@ -70,11 +70,11 @@ public class Binding : Data
         return EMPTY;
     }
 
-    public override void ToString(StringBuilder sb)
+    public override void ShowOn(TextWriter writer)
     {
-        Key.ToString(sb);
-        sb.Append('=');
-        Value.ToString(sb);
+        Key.ShowOn(writer);
+        writer.Write('=');
+        Value.ShowOn(writer);
     }
 
 }
