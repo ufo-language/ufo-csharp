@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace UFO.Types;
 
@@ -28,5 +29,17 @@ public abstract class UFOObject
     public abstract void Eval([NotNull] Evaluator.Evaluator etor);
 
     public override abstract int GetHashCode();
+
+    public override string ToString()
+    {  
+        StringBuilder sb = new();
+        ToString(sb);
+        return sb.ToString();
+    }
+
+    public virtual void ToString(StringBuilder sb)
+    {
+        sb.Append(GetType().Name).Append("{}");
+    }
 
 }

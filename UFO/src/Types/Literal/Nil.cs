@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace UFO.Types.Literal;
 
@@ -31,9 +32,9 @@ public class Nil : Literal
         return Nil.HashCode;
     }
     
-    public override string ToString()
+    public override void ToString(StringBuilder sb)
     {
-        return "nil";
+        sb.Append("nil");
     }
 
 }

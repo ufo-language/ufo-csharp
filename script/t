@@ -1,2 +1,2 @@
 cd UFO.Tests
-dotnet test
+dotnet test --logger "console;verbosity=detailed"

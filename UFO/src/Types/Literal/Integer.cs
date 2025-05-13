@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace UFO.Types.Literal;
 
@@ -35,9 +36,9 @@ public class Integer : Literal
         return Utils.Hash.CombineHash(HashSeed, Value.GetHashCode());
     }
     
-    public override string ToString()
+    public override void ToString(StringBuilder sb)
     {
-        return Value.ToString();
+        sb.Append(Value);
     }
 
 }

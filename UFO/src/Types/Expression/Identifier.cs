@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace UFO.Types.Expression;
 
@@ -30,11 +31,12 @@ public class Identifier : Expression
 
     public static Identifier Create([NotNull] string name)
     {
-        if (!_internedIdentifiers.ContainsKey(name))
+        if (!_internedIdentifiers.TryGetValue(name, out Identifier? value))
         {
-            _internedIdentifiers[name] = new Identifier(name);
+            value = new Identifier(name);
+            _internedIdentifiers[name] = value;
         }
-        return _internedIdentifiers[name];
+        return value;
     }
 
     public override bool EqualsAux([NotNull] UFOObject other)
@@ -46,14 +48,8 @@ public class Identifier : Expression
     public override void Eval([NotNull] Evaluator.Evaluator etor)
     {
         UFOObject value = default!;
-        if (etor.Lookup_Rel(this, ref value))
-        {
-            etor.PushObj(value);
-        }
-        else
-        {
-            throw new UnboundIdentifierException(this);
-        }
+        if (etor.Lookup_Rel(this, ref value)) etor.PushObj(value);
+        else throw new UnboundIdentifierException(this);
     }
 
     public override int GetHashCode()
@@ -61,9 +57,9 @@ public class Identifier : Expression
         return HashCode;
     }
 
-    public override string ToString()
+    public override void ToString(StringBuilder sb)
     {
-        return Name;
+        sb.Append(Name);
     }
 
 }

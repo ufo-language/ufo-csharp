@@ -9,13 +9,15 @@ public class Evaluator
 {
     private readonly Stack<UFOObject> OStack;
     private readonly Stack<UFOObject> EStack;
+    private readonly Stack<int> ContinIntStack;
     private readonly Environment Env;
 
     public Evaluator()
     {
-        OStack = new Stack<UFOObject>();
-        EStack = new Stack<UFOObject>();
-        Env = new Environment();
+        OStack = new();
+        EStack = new();
+        ContinIntStack = new();
+        Env = new();
     }
 
     public void Bind(Identifier name, UFOObject value)
@@ -47,6 +49,16 @@ public class Evaluator
     public UFOObject PopExpr()
     {
         return EStack.Pop();
+    }
+
+    public void PushContinInt(int n)
+    {
+        ContinIntStack.Push(n);
+    }
+
+    public int PopContinInt()
+    {
+        return ContinIntStack.Pop();
     }
 
     public void Run()

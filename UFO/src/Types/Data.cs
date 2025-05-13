@@ -2,10 +2,13 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace UFO.Types.Data;
 
-public abstract class Expression : UFOObject
+public abstract class Data : UFOObject
 {
     public abstract override void Eval([NotNull] Evaluator.Evaluator etor);
 
-    public abstract override int GetHashCode();
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException("GetHashCode");
+    }
 
 }

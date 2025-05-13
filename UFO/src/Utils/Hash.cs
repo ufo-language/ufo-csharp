@@ -1,4 +1,4 @@
-namespace Utils;
+namespace UFO.Utils;
 
 public class Hash
 {

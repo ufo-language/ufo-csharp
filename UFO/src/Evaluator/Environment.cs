@@ -1,4 +1,5 @@
 using System.Data.Common;
+using System.Text;
 using UFO.Types;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
@@ -49,22 +50,19 @@ public class Environment
         Values[index1] = value;
     }
 
-    public override string ToString()
+    public void ToString(StringBuilder sb)
     {
-        string s = "[";
-        bool firstIter = true;
+        sb.Append("Environment{");
         for (int n=0; n<Names.Count; n++)
         {
-            if (firstIter)
-                firstIter = false;
-            else
-                s += ", ";
+            if (n > 0) sb.Append(", ");
             Identifier name = Names[n];
             UFOObject value = Values[n];
-            s += $"({n}){name}={value}";
+            name.ToString(sb);
+            sb.Append('=');
+            value.ToString(sb);
         }
-        s += "]";
-        return s;
+        sb.Append('}');
     }
 
 }

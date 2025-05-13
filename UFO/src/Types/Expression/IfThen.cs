@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace UFO.Types.Expression;
 
@@ -35,9 +36,14 @@ public class IfThen([NotNull] UFOObject cond, UFOObject conseq, UFOObject alt) :
         etor.PushExpr(Cond);
     }
 
-    public override string ToString()
+    public override void ToString(StringBuilder sb)
     {
-        return "if " + Cond + " then " + Conseq + " else " + Alt;
+        sb.Append("if ");
+        Cond.ToString(sb);
+        sb.Append(" then ");
+        Conseq.ToString(sb);
+        sb.Append(" else ");
+        Alt.ToString(sb);
     }
 
 }

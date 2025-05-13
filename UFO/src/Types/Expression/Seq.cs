@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
@@ -52,20 +53,9 @@ public class Seq : Expression
         }
     }
 
-    public override string ToString()
+    public override void ToString(StringBuilder sb)
     {
-        string s = "(";
-        bool firstIter = true;
-        foreach (UFOObject expr in Exprs)
-        {
-            if (firstIter)
-                firstIter = false;
-            else
-                s += "; ";
-            s += expr;
-        }
-        s += ")";
-        return s;
+        Utils.ToString.ToStringWith(sb, Exprs, "(", "; ", ")");
     }
 
 }

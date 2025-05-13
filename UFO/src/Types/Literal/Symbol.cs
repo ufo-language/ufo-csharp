@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace UFO.Types.Literal;
 
@@ -37,9 +38,9 @@ public class Symbol : Literal
         return HashCode;
     }
 
-    public override string ToString()
+    public override void ToString(StringBuilder sb)
     {
-        return Name;
+        sb.Append(Name);
     }
 
 }
