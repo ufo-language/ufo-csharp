@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Runtime.Intrinsics.X86;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Expression;
@@ -9,9 +10,9 @@ namespace UFO.Evaluator;
 public class Evaluator
 {
     private readonly Stack<UFOObject> OStack;
-    private readonly Stack<UFOObject> EStack;
+    private readonly Stack<Tuple<UFOObject, Binding>> EStack;
     private readonly Stack<int> ContinIntStack;
-    private Binding Env;
+    public Binding Env { get; private set; }
 
     public Evaluator()
     {
@@ -49,12 +50,19 @@ public class Evaluator
 
     public void PushExpr(UFOObject obj)
     {
-        EStack.Push(obj);
+        EStack.Push(new(obj, Env));
+    }
+
+    public void PushExpr(UFOObject obj, Binding env)
+    {
+        EStack.Push(new(obj, env));
     }
 
     public UFOObject PopExpr()
     {
-        return EStack.Pop();
+        Tuple<UFOObject, Binding> tup = EStack.Pop();
+        Env = tup.Item2;
+        return tup.Item1;
     }
 
     public void PushContinInt(int n)

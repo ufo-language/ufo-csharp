@@ -13,7 +13,6 @@ public class Seq : Expression
         {
             etor.PopObj();
         }
-
     }
 
     private static readonly DropContin DROP_CONTIN = new();

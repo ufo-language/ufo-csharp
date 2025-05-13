@@ -17,6 +17,11 @@ public abstract class UFOObject
         return EqualsAux(other);
     }
 
+    public virtual void Apply(Evaluator.Evaluator etor, Pair args)
+    {
+        throw new Exception("Object is not applyable");
+    }
+
     public virtual bool BoolValue()
     {
         return true;
