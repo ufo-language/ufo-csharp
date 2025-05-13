@@ -57,6 +57,12 @@ public class Identifier : Expression
         return HashCode;
     }
 
+    public override bool Match(UFOObject other, ref Evaluator.Environment env)
+    {
+        env.Bind(this, other);
+        return true;
+    }
+
     public override void ToString(StringBuilder sb)
     {
         sb.Append(Name);

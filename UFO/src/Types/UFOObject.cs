@@ -1,5 +1,5 @@
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using UFO.Evaluator;
 
 namespace UFO.Types;
 
@@ -29,6 +29,11 @@ public abstract class UFOObject
     public abstract void Eval(Evaluator.Evaluator etor);
 
     public override abstract int GetHashCode();
+
+    public virtual bool Match(UFOObject other, ref Evaluator.Environment env)
+    {
+        return ReferenceEquals(this, other);
+    }
 
     public override string ToString()
     {  
