@@ -1,5 +1,6 @@
 using System.Text;
 using UFO.Evaluator;
+using UFO.Types.Data;
 
 namespace UFO.Types;
 
@@ -30,7 +31,7 @@ public abstract class UFOObject
 
     public override abstract int GetHashCode();
 
-    public virtual bool Match(UFOObject other, ref Evaluator.Environment env)
+    public virtual bool Match(UFOObject other, ref Binding env)
     {
         return ReferenceEquals(this, other);
     }

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using UFO.Types.Data;
 
 namespace UFO.Types.Expression;
 
@@ -57,9 +58,9 @@ public class Identifier : Expression
         return HashCode;
     }
 
-    public override bool Match(UFOObject other, ref Evaluator.Environment env)
+    public override bool Match(UFOObject other, ref Binding env)
     {
-        env.Bind(this, other);
+        env = Binding.Create(this, other, env);
         return true;
     }
 
