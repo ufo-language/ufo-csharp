@@ -8,11 +8,11 @@ public class Real : Literal
 
     private static readonly int HashSeed = typeof(Real).GetHashCode();
 
-    private readonly double _value;
+    public readonly double Value;
 
     private Real(double value)
     {
-        _value = value;
+        Value = value;
     }
 
     public static Real Create(double value)
@@ -20,25 +20,22 @@ public class Real : Literal
         return new Real(value);
     }
 
-    public override bool BoolValue()
-    {
-        return _value != 0.0;
-    }
+    public override bool BoolValue => Value != 0.0;
 
     public override bool EqualsAux(UFOObject otherObj)
     {
         Real other = (Real)otherObj;
-        return _value == other._value;
+        return Value == other.Value;
     }
 
     public override int GetHashCode()
     {
-        return Utils.Hash.CombineHash(HashSeed, _value.GetHashCode());
+        return Utils.Hash.CombineHash(HashSeed, Value.GetHashCode());
     }
     
     public override void ShowOn(TextWriter writer)
     {
-        writer.Write(_value);
+        writer.Write(Value);
     }
 
 }

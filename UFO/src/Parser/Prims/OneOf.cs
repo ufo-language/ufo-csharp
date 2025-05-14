@@ -26,6 +26,7 @@ public class OneOf(params object[] parsers) : IParser
         }
         if (longestParse == -1)
         {
+
             return false;
         }
         parserState.RestoreState(longestResult);

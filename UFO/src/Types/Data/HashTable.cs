@@ -49,6 +49,8 @@ public class HashTable : Data
         set => _dict[index] = value;
     }
 
+    public override bool BoolValue => _dict.Count > 0;
+
     public IEnumerable<KeyValuePair<UFOObject, UFOObject>> EachElem()
     {
         foreach (KeyValuePair<UFOObject, UFOObject> pair in _dict)

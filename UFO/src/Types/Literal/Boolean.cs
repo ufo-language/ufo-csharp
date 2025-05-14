@@ -14,10 +14,12 @@ public class Boolean : Literal
     private Boolean()
     {}
 
-    public override bool BoolValue()
+    public static Boolean Create(bool b)
     {
-        return ReferenceEquals(this, TRUE);
+        return b ? TRUE : FALSE;
     }
+
+    public override bool BoolValue => ReferenceEquals(this, TRUE);
 
     public override int GetHashCode()
     {
@@ -26,7 +28,7 @@ public class Boolean : Literal
     
     public override void ShowOn(TextWriter writer)
     {
-        writer.Write(BoolValue() ? "true" : "false");
+        writer.Write(BoolValue ? "true" : "false");
     }
 
 }

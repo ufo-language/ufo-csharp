@@ -39,8 +39,11 @@ public class Parser
             parserState.Advance();
             success = true;
         }
+        else
+        {
+            success = false;
+        }
         // Memoize the result.
-        success = Parse(parser!, parserState);
         parserState.Memoize(parserName, savedIndex, success, parserState.Value);
         return success;
     }

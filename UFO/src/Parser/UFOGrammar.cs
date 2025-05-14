@@ -1,0 +1,80 @@
+using UFO.Lexer;
+using UFO.Parser.Prims;
+
+using UFOBool = UFO.Types.Literal.Boolean;
+using UFOInt = UFO.Types.Literal.Integer;
+using UFONil = UFO.Types.Literal.Nil;
+using UFOReal = UFO.Types.Literal.Real;
+using UFOString = UFO.Types.Literal.String;
+using UFOSymbol = UFO.Types.Literal.Symbol;
+
+namespace UFO.Parser;
+
+public class UFOGrammar
+{
+
+    // Parser shortcut functions
+    private static Apply Apply(Func<object, object> function, object parser) => new(function, parser);
+    private static IfThen IfThen(object returnValue, object parser) => new(returnValue, parser);
+    private static OneOf OneOf(params object[] parsers) => new(parsers);
+    // private static Returning Returning(object returnValue, object parser) => new(returnValue, parser);
+    private static Spot Spot(TokenType tokenType) => new(tokenType);
+
+    // Type conversion functions
+    private static readonly Func<object, object> MakeBool = tokenObj => UFOBool.Create(((Token)tokenObj).Lexeme == "true");
+    private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
+    private static readonly Func<object, object> MakeReal = tokenObj => UFOReal.Create(double.Parse(((Token)tokenObj).Lexeme));
+    private static readonly Func<object, object> MakeString = tokenObj => UFOString.Create(((Token)tokenObj).Lexeme);
+    private static readonly Func<object, object> MakeSymbol = tokenObj => UFOSymbol.Create(((Token)tokenObj).Lexeme);
+
+
+    public static readonly Dictionary<string, IParser> Parsers = new()
+    {
+        // ["Number"] = Spot(TokenType.Number),
+        // ["Identifier"] = Spot(TokenType.Identifier)
+
+        // 'Program'     : seq('Any', '!EOI'),
+        // '!EOI'        : require(Lexer.EOI, 'End-of-Input'),
+        // '!Any'        : require('Any'),
+
+        // 'Any'         : one_of('Apply', 'Assign', 'BinOp', 'Function', 'If', 'PrefixOp', 'Quote', 'ScopeRes', 'Subscript', 'Data'),
+        // 'Apply'       : apply(Apply.from_parser, seq(recursion_barrier, 'Any', 'ArgList')),
+        // 'ArgList'     : list_of('(', 'Any', ',', ')'),
+        // 'Assign'      : apply(Assign.from_parser, seq('Data', ':=', '!Any')),
+        // 'BinOp'       : apply(BinOp.from_parser, seq(recursion_barrier, 'Any', 'Operator', '!Any')),
+        // 'Operator'    : apply(Identifier, spot('Operator')),
+        // 'Function'    : apply(Function.from_parser, seq(one_of('fun', 'macro'), one_of('Identifier', succeed(None)), sep_by('FunctionRule', '|'))),
+        // 'fun'         : returning(False, spot('Reserved', 'fun')),
+        // 'macro'       : returning(True, spot('Reserved', 'macro')),
+        // 'FunctionRule': seq('ParamList', '=', 'Any'),
+        // 'ParamList'   : list_of('(', 'Any', ',', ')'),
+        // 'If'          : apply(IfThen.from_parser, seq('if', '!Any', '!then', '!Any', maybe(seq('else', '!Any')))),
+        // '!then'       : require('then'),
+        // 'PrefixOp'    : apply(PrefixOp.from_parser, seq('Operator', 'Any')),
+        // 'Quote'       : apply(Quote, seq('\'', 'Any', '\'')),
+        // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
+        // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
+
+        // 'Data'        : one_of('Array', 'HashTable', 'List', 'Queue', 'Set', 'Term', 'Literal'),
+        // 'Array'       : apply(Array.from_parser, list_of('{', 'Any', ',', '}')),
+        // # 'Binding'     : apply(Binding.from_parser, seq(recursion_barrier, 'Any', '=', 'Any')),
+        // 'HashTable'   : apply(HashTable.ProtoHash.from_parser, seq('#', list_of('{', 'Any', ',', '}'))),
+        // 'List'        : apply(List.from_parser, list_of('[', 'Any', ',', ']', '|')),
+        // 'Queue'       : apply(Queue.from_parser, seq('~', list_of('[', 'Any', ',', ']'))),
+        // 'Set'         : apply(Set.from_parser, seq('$', list_of('{', 'Any', ',', '}'))),
+        // 'Term'        : apply(Term.from_parser, seq(recursion_barrier, 'Any', 'Array')),
+
+        ["Literal"]      = OneOf("Boolean", "Integer", "Real", /*'Identifier',*/ "Nil", /*'Seq',*/ "String", "Symbol"),
+        ["Boolean"]      = OneOf(IfThen("true", UFOBool.TRUE), IfThen("false", UFOBool.FALSE)),
+        ["Integer"]      = Apply(MakeInt, Spot(TokenType.Integer)),
+        ["Real"]         = Apply(MakeReal, Spot(TokenType.Real)),
+        ["Nil"]          = IfThen("nil", UFONil.NIL),
+        ["String"]       = Apply(MakeString, Spot(TokenType.String)),
+        ["Symbol"]       = Apply(MakeSymbol, Spot(TokenType.Symbol)),
+
+        // # these are not literals, but they are parsed as literals:
+        // 'Identifier'  : apply(Identifier, spot('Identifier')),
+        // 'Seq'         : apply(Seq.from_parser, list_of('(', 'Any', ';', ')')),
+    };
+
+}

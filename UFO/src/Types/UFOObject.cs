@@ -22,10 +22,7 @@ public abstract class UFOObject
         throw new Exception("Object is not applyable");
     }
 
-    public virtual bool BoolValue()
-    {
-        return true;
-    }
+    public virtual bool BoolValue => true;
 
     public virtual void DisplayOn(TextWriter writer)
     {

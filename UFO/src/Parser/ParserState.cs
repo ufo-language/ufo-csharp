@@ -12,7 +12,7 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
     public object Value = new();
     public (string, int) MemoKey = ("", -1);
     private readonly Dictionary<(string, int), (bool, object)> MemoTable = [];
-    private readonly List<Token> _tokens = tokens;
+    public readonly List<Token> Tokens = tokens;
 
     public void Advance()
     {
@@ -33,7 +33,7 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
 
     public Token NextToken()
     {
-        return _tokens[TokenIndex];
+        return Tokens[TokenIndex];
     }
 
     public (int, object) GetState()

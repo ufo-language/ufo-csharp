@@ -38,7 +38,7 @@ public class PrimitiveTests
         Assert.Same(Nil.Create(), value);
         Assert.Equal(1, prim1.NCalls);
         Assert.IsType<List>(prim1.SavedArgs);
-        Assert.False(prim1.SavedArgs.IsEmpty());
+        Assert.False(prim1.SavedArgs.IsEmpty);
         Assert.Equal(i100, prim1.SavedArgs.First);
     }
 

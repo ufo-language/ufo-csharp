@@ -42,15 +42,17 @@ public class List : Data
         return q.AsList();
     }
 
+    public override bool BoolValue => !IsEmpty;
+
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        return IsEmpty() ? this : new List(First.Eval(etor), Rest.Eval(etor));
+        return IsEmpty ? this : new List(First.Eval(etor), Rest.Eval(etor));
     }
 
     public IEnumerable<UFOObject> EachElem()
     {
         List List = this;
-        while (!List.IsEmpty())
+        while (!List.IsEmpty)
         {
             yield return List.First;
             UFOObject restObject = List.Rest;
@@ -66,10 +68,7 @@ public class List : Data
         yield break;
     }
 
-    public bool IsEmpty()
-    {
-        return ReferenceEquals(this, EMPTY);
-    }
+    public bool IsEmpty => ReferenceEquals(this, EMPTY);
 
     public override bool Match(UFOObject other, ref Evaluator.Evaluator etor)
     {

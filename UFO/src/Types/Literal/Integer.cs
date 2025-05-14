@@ -8,11 +8,11 @@ public class Integer : Literal
 
     private static readonly int HashSeed = typeof(Integer).GetHashCode();
 
-    private readonly int _value;
+    public readonly int Value;
 
     private Integer(int value)
     {
-        _value = value;
+        Value = value;
     }
 
     public static Integer Create(int value)
@@ -20,25 +20,22 @@ public class Integer : Literal
         return new Integer(value);
     }
 
-    public override bool BoolValue()
-    {
-        return _value != 0;
-    }
+    public override bool BoolValue => Value != 0;
 
     public override bool EqualsAux(UFOObject otherObj)
     {
         Integer other = (Integer)otherObj;
-        return _value == other._value;
+        return Value == other.Value;
     }
 
     public override int GetHashCode()
     {
-        return Utils.Hash.CombineHash(HashSeed, _value.GetHashCode());
+        return Utils.Hash.CombineHash(HashSeed, Value.GetHashCode());
     }
     
     public override void ShowOn(TextWriter writer)
     {
-        writer.Write(_value);
+        writer.Write(Value);
     }
 
 }

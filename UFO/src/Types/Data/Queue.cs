@@ -25,6 +25,8 @@ public class Queue : Data
         return _first;
     }
 
+    public override bool BoolValue => !IsEmpty;
+
     public bool Deq(out UFOObject elem)
     {
         if (Count == 0)
@@ -70,6 +72,8 @@ public class Queue : Data
         }
         return newQueue;
     }
+
+    public bool IsEmpty => _first.IsEmpty;
 
     public override void ShowOn(TextWriter writer)
     {

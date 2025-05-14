@@ -11,7 +11,7 @@ public class IfThen(UFOObject cond, UFOObject conseq, UFOObject alt) : Expressio
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        return (_cond.Eval(etor).BoolValue() ? _conseq : _alt).Eval(etor);
+        return (_cond.Eval(etor).BoolValue ? _conseq : _alt).Eval(etor);
     }
 
     public override void ShowOn(TextWriter writer)

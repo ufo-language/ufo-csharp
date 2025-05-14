@@ -6,7 +6,7 @@ namespace UFO.Types.Literal;
 
 public class Nil : Literal
 {
-    private static readonly Nil INSTANCE = new();
+    public static readonly Nil NIL = new();
 
     private static readonly int HashCode = typeof(Nil).GetHashCode();
 
@@ -15,13 +15,10 @@ public class Nil : Literal
 
     public static Nil Create()
     {
-        return INSTANCE;
+        return NIL;
     }
 
-    public override bool BoolValue()
-    {
-        return false;
-    }
+    public override bool BoolValue => false;
 
     public override bool EqualsAux(UFOObject other)
     {

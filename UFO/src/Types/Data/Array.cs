@@ -24,6 +24,8 @@ public class Array : Data
         _elems.Add(elem);
     }
 
+    public override bool BoolValue => _elems.Count > 0;
+
     public IEnumerable<UFOObject> EachElem()
     {
         foreach (UFOObject elem in _elems)

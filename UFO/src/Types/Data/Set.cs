@@ -29,6 +29,8 @@ public class Set : Data
         _elems.Add(elem);
     }
 
+    public override bool BoolValue => !IsEmpty;
+
     public bool Contains(UFOObject elem)
     {
         return _elems.Contains(elem);
@@ -52,6 +54,8 @@ public class Set : Data
         }
         return newSet;
     }
+
+    public bool IsEmpty => _elems.Count > 0;
 
     public bool Remove(UFOObject elem)
     {
