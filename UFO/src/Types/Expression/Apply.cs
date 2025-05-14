@@ -7,15 +7,15 @@ namespace UFO.Types.Expression;
 public class Apply : Expression
 {
     public UFOObject Abstr { get; private set; }
-    public Pair Args { get; private set; }
+    public List Args { get; private set; }
 
-    private Apply(UFOObject abstr, Pair args)
+    private Apply(UFOObject abstr, List args)
     {
         Abstr = abstr;
         Args = args;
     }
 
-    public static Apply Create(UFOObject abstr, Pair args)
+    public static Apply Create(UFOObject abstr, List args)
     {
         return new Apply(abstr, args);
     }

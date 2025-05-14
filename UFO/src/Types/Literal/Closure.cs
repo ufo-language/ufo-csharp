@@ -10,8 +10,8 @@ public class Closure : Literal
     public class ArgumentMismatchException : Exception
     {
         public Function Fun { get; private set; }
-        public Pair Args { get; private set; }
-        public ArgumentMismatchException(Function fun, Pair args)
+        public List Args { get; private set; }
+        public ArgumentMismatchException(Function fun, List args)
         {
             Fun = fun;
             Args = args;
@@ -27,14 +27,14 @@ public class Closure : Literal
         LexicalEnv = lexicalEnv;
     }
 
-    public override UFOObject Apply(Evaluator.Evaluator etor, Pair args)
+    public override UFOObject Apply(Evaluator.Evaluator etor, List args)
     {
-        Pair argValues = (Pair)args.Eval(etor);
+        List argValues = (List)args.Eval(etor);
         Binding env = etor.Env;
         Function? fun = Fun;
         while (fun != null)
         {
-            Pair parameters = fun.Parameters;
+            List parameters = fun.Parameters;
             if (parameters.Match(args, ref etor))
             {
                 return fun.Body.Eval(etor);

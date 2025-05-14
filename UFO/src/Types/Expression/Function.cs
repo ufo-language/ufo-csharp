@@ -8,11 +8,11 @@ public class Function : Expression
 {
 
     private UFOObject Name;
-    public Pair Parameters { get; private set; }
+    public List Parameters { get; private set; }
     public UFOObject Body { get; private set; }
     public Function? NextRule { get; private set; }
 
-    private Function(UFOObject name, Pair parameters, UFOObject body, Function? nextRule)
+    private Function(UFOObject name, List parameters, UFOObject body, Function? nextRule)
     {
         Name = name;
         Parameters = parameters;
@@ -20,22 +20,22 @@ public class Function : Expression
         NextRule = nextRule;
     }
 
-    public static Function Create(Pair parameters, UFOObject body)
+    public static Function Create(List parameters, UFOObject body)
     {
         return new(Nil.Create(), parameters, body, null);
     }
 
-    public static Function Create(Pair parameters, UFOObject body, Function nextRule)
+    public static Function Create(List parameters, UFOObject body, Function nextRule)
     {
         return new(Nil.Create(), parameters, body, nextRule);
     }
 
-    public static Function Create(UFOObject name, Pair parameters, UFOObject body)
+    public static Function Create(UFOObject name, List parameters, UFOObject body)
     {
         return new(name, parameters, body, null);
     }
     
-    public static Function Create(UFOObject name, Pair parameters, UFOObject body, Function nextRule)
+    public static Function Create(UFOObject name, List parameters, UFOObject body, Function nextRule)
     {
         return new(name, parameters, body, nextRule);
     }

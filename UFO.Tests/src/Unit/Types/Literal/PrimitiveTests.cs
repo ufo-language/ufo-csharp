@@ -11,10 +11,10 @@ public class PrimitiveTests
     class Prim1 : Primitive
     {
         public int NCalls = 0;
-        public Pair SavedArgs = Pair.Create();
+        public List SavedArgs = List.Create();
         public Prim1() : base("Prim1")
         {}
-        public override UFOObject Call(Evaluator.Evaluator etor, Pair args)
+        public override UFOObject Call(Evaluator.Evaluator etor, List args)
         {
             NCalls++;
             SavedArgs = args;
@@ -28,7 +28,7 @@ public class PrimitiveTests
         Evaluator.Evaluator etor = new();
         Prim1 prim1 = new();
         Integer i100 = Integer.Create(100);
-        Pair args = Pair.Create(i100);
+        List args = List.Create(i100);
         Apply app = Apply.Create(prim1, args);
 
         // Act
@@ -37,7 +37,7 @@ public class PrimitiveTests
         // Assert
         Assert.Same(Nil.Create(), value);
         Assert.Equal(1, prim1.NCalls);
-        Assert.IsType<Pair>(prim1.SavedArgs);
+        Assert.IsType<List>(prim1.SavedArgs);
         Assert.False(prim1.SavedArgs.IsEmpty());
         Assert.Equal(i100, prim1.SavedArgs.First);
     }

@@ -17,7 +17,7 @@ public abstract class UFOObject
         return EqualsAux(other);
     }
 
-    public virtual UFOObject Apply(Evaluator.Evaluator etor, Pair args)
+    public virtual UFOObject Apply(Evaluator.Evaluator etor, List args)
     {
         throw new Exception("Object is not applyable");
     }

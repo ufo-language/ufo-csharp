@@ -10,7 +10,7 @@ public class Show : Primitive
     public Show() : base("io_show")
     {}
 
-    public override UFOObject Call(Evaluator.Evaluator etor, Pair args)
+    public override UFOObject Call(Evaluator.Evaluator etor, List args)
     {
         foreach (UFOObject arg in args.EachElem())
         {

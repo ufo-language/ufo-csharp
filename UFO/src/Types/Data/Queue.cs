@@ -6,13 +6,13 @@ namespace UFO.Types.Data;
 
 public class Queue : Data
 {
-    private Pair First;
-    private Pair Last;
+    private List First;
+    private List Last;
     public int Count { get; private set; }
 
     public Queue()
     {
-        First = Last = Pair.EMPTY;
+        First = Last = List.EMPTY;
     }
 
     public static Queue Create()
@@ -20,7 +20,7 @@ public class Queue : Data
         return new();
     }
 
-    public Pair AsList()
+    public List AsList()
     {
         return First;
     }
@@ -33,7 +33,7 @@ public class Queue : Data
             return false;
         }
         elem = First.First;
-        First = (Pair)First.Rest;
+        First = (List)First.Rest;
         Count--;
         return true;
     }
@@ -47,15 +47,15 @@ public class Queue : Data
     {
         foreach (UFOObject elem in elems)
         {
-            Pair pair = Pair.Create(elem);
+            List List = List.Create(elem);
             if (Count == 0)
             {
-                First = Last = pair;
+                First = Last = List;
             }
             else
             {
-                Last.Rest = pair;
-                Last = pair;
+                Last.Rest = List;
+                Last = List;
             }
             Count++;
         }

@@ -4,35 +4,35 @@ using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
 
-public class Pair : Data
+public class List : Data
 {
-    public static readonly Pair EMPTY = new(Nil.Create(), Nil.Create());
+    public static readonly List EMPTY = new(Nil.Create(), Nil.Create());
 
     public UFOObject First { get; set; }
     public UFOObject Rest { get; set; }
 
-    protected Pair(UFOObject first, UFOObject rest)
+    protected List(UFOObject first, UFOObject rest)
     {
         First = first;
         Rest = rest;
     }
 
-    public static Pair Create()
+    public static List Create()
     {
         return EMPTY;
     }
 
-    public static Pair Create(UFOObject first)
+    public static List Create(UFOObject first)
     {
         return new(first, EMPTY);
     }
 
-    public static Pair Create(UFOObject first, UFOObject rest)
+    public static List Create(UFOObject first, UFOObject rest)
     {
         return new(first, rest);
     }
 
-    public static Pair Create(params UFOObject[] args)
+    public static List Create(params UFOObject[] args)
     {
         Queue q = Queue.Create();
         foreach (UFOObject arg in args)
@@ -44,23 +44,23 @@ public class Pair : Data
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        return IsEmpty() ? this : new Pair(First.Eval(etor), Rest.Eval(etor));
+        return IsEmpty() ? this : new List(First.Eval(etor), Rest.Eval(etor));
     }
 
     public IEnumerable<UFOObject> EachElem()
     {
-        Pair pair = this;
-        while (!pair.IsEmpty())
+        List List = this;
+        while (!List.IsEmpty())
         {
-            yield return pair.First;
-            UFOObject restObject = pair.Rest;
-            if (restObject.GetType() != typeof(Pair))
+            yield return List.First;
+            UFOObject restObject = List.Rest;
+            if (restObject.GetType() != typeof(List))
             {
-                pair = Create(restObject);
+                List = Create(restObject);
             }
             else
             {
-                pair = (Pair)restObject;
+                List = (List)restObject;
             }
         }
         yield break;
@@ -77,8 +77,8 @@ public class Pair : Data
         {
             return false;
         }
-        Pair otherPair = (Pair)other;
-        return First.Match(otherPair.First, ref etor) && Rest.Match(otherPair.Rest, ref etor);
+        List otherList = (List)other;
+        return First.Match(otherList.First, ref etor) && Rest.Match(otherList.Rest, ref etor);
     }
 
     public override void ShowOn(TextWriter writer)

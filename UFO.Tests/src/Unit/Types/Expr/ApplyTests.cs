@@ -14,11 +14,11 @@ public class ApplyTests
         // Arrange
         Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
-        Pair parameters = Pair.Create(id_x);
+        List parameters = List.Create(id_x);
         Function fun = Function.Create(parameters, id_x);
         UFOObject closure = fun.Eval(etor);
         Integer i100 = Integer.Create(100);
-        Pair args = Pair.Create(i100);
+        List args = List.Create(i100);
         Apply app = Apply.Create(closure, args);
 
         // Act
