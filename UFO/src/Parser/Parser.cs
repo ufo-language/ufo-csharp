@@ -9,6 +9,7 @@ public class Parser
 
     public static bool Parse(string parserName, ParserState parserState)
     {
+        parserState.CurrentParserName = parserName;
         (string, int) memoKey = (parserName, parserState.TokenIndex);
         if (parserState.FindMemo(memoKey, out (bool, object) memoValue))
         {
