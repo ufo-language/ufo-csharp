@@ -21,7 +21,7 @@ public class ParserTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
+        object value = parserState.Value;
         Assert.NotNull(value);
         Assert.IsType<Token>(value);
         Token token = (Token)value;
@@ -46,7 +46,7 @@ public class ParserTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
+        object value = parserState.Value;
         Assert.NotNull(value);
         Assert.IsType<Token>(value);
         Token token = (Token)value;

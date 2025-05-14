@@ -19,8 +19,7 @@ public class SpotTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
-        Assert.NotNull(value);
+        object value = parserState.Value;
         Assert.IsType<Token>(value);
         Token token = (Token)value;
         Assert.Equal(TokenType.Symbol, token.Type);
@@ -41,8 +40,7 @@ public class SpotTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
-        Assert.NotNull(value);
+        object value = parserState.Value;
         Assert.IsType<Token>(value);
         Token token = (Token)value;
         Assert.Equal(TokenType.Integer, token.Type);
@@ -63,8 +61,7 @@ public class SpotTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
-        Assert.NotNull(value);
+        object value = parserState.Value;
         Assert.IsType<Token>(value);
         Token token = (Token)value;
         Assert.Equal(TokenType.Word, token.Type);
@@ -85,8 +82,7 @@ public class SpotTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
-        Assert.NotNull(value);
+        object value = parserState.Value;
         Assert.IsType<Token>(value);
         Token token = (Token)value;
         Assert.Equal(TokenType.ReservedWord, token.Type);
@@ -107,8 +103,7 @@ public class SpotTests
 
         // Assert
         Assert.True(success);
-        object? value = parserState.Value;
-        Assert.NotNull(value);
+        object value = parserState.Value;
         Assert.IsType<Token>(value);
         Token token = (Token)value;
         Assert.Equal(TokenType.Special, token.Type);

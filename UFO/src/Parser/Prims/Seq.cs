@@ -16,7 +16,7 @@ public class Seq(params object[] parsers) : IParser
                 parserState.RestoreState(savedState);
                 return false;
             }
-            object? value = parserState.Value;
+            object value = parserState.Value;
             if (!ReferenceEquals(value, Parser.IGNORE))
             {
                 values.Add(value);
