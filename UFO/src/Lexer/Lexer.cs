@@ -2,13 +2,22 @@ using System.Text;
 
 namespace UFO.Lexer;
 
+public static class Constants
+{
+    public static readonly string Operators = "+-*/&|=<>!";
+    public static readonly List<string> ReservedWords = [
+        "fun", "for", "in"
+    ];
+}
+
 public enum TokenType {
     Integer, Real,
-    LowerWord, UpperWord,
+    Word, ReservedWord, Symbol,
     String,
     Operator,
     Special,
     Comment,
+    EOI
 }
 
 public record Token(TokenType Type, string Lexeme, (int Col, int Line, int Index) Position) {
@@ -128,15 +137,24 @@ public class Lexer {
                     sb.Append(Peek());
                     Advance();
                 }
-                var type = char.IsUpper(sb[0]) ? TokenType.UpperWord : TokenType.LowerWord;
+                TokenType type;
+                string word = sb.ToString();
+                if (char.IsUpper(sb[0]))
+                {
+                    type = TokenType.Symbol;
+                }
+                else
+                {
+                    type = Constants.ReservedWords.Contains(word) ? TokenType.ReservedWord : TokenType.Word;
+                }
                 tokens.Add(new Token(type, sb.ToString(), (startCol, startLine, startIdx)));
                 continue;
             }
 
-            // Operators: + - * / & |
-            if ("+-*/&|".Contains(c)) {
+            // Operators |
+            if (Constants.Operators.Contains(c)) {
                 var sb = new StringBuilder();
-                while (index < input.Length && "+-*/&|".Contains(Peek())) {
+                while (index < input.Length && Constants.Operators.Contains(Peek())) {
                     sb.Append(Peek());
                     Advance();
                 }
@@ -144,17 +162,11 @@ public class Lexer {
                 continue;
             }
 
-            // Special character
-            if (!char.IsLetterOrDigit(c)) {
-                tokens.Add(new Token(TokenType.Special, c.ToString(), (startCol, startLine, startIdx)));
-                Advance();
-                continue;
-            }
-
-            // Shouldn't reach here
-            throw new Exception($"Unrecognized character '{c}' at {line}:{col}");
+            // If it's none of the above, then it's a special character.
+            tokens.Add(new Token(TokenType.Special, c.ToString(), (startCol, startLine, startIdx)));
+            Advance();
         }
-
+        tokens.Add(new Token(TokenType.EOI, "EOI", (col, line, index)));
         return tokens;
     }
 

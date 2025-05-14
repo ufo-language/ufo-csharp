@@ -19,6 +19,7 @@ public class Identifier : Expression
     }
 
     private static readonly Dictionary<string, Identifier> _internedIdentifiers = [];
+    private static readonly object _dictionaryLock = new();
 
     public string Name { get; private set; }
     private readonly int HashCode;
@@ -33,12 +34,15 @@ public class Identifier : Expression
 
     public static Identifier Create(string name)
     {
-        if (!_internedIdentifiers.TryGetValue(name, out Identifier? value))
+        lock (_dictionaryLock)
         {
-            value = new Identifier(name);
-            _internedIdentifiers[name] = value;
+            if (!_internedIdentifiers.TryGetValue(name, out Identifier? value))
+            {
+                value = new Identifier(name);
+                _internedIdentifiers[name] = value;
+            }
+            return value;
         }
-        return value;
     }
 
     public override bool EqualsAux(UFOObject other)

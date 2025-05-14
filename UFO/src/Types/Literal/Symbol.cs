@@ -5,7 +5,8 @@ namespace UFO.Types.Literal;
 
 public class Symbol : Literal
 {
-    private static readonly Dictionary<string, Symbol> _internedSymbols = new Dictionary<string, Symbol>();
+    private static readonly Dictionary<string, Symbol> _internedSymbols = [];
+    private static readonly object _dictionaryLock = new();
 
     public string Name { get; private set; }
     private readonly int HashCode;
@@ -20,11 +21,15 @@ public class Symbol : Literal
 
     public static Symbol Create(string name)
     {
-        if (!_internedSymbols.ContainsKey(name))
+        lock (_dictionaryLock)
         {
-            _internedSymbols[name] = new Symbol(name);
+            if (!_internedSymbols.TryGetValue(name, out Symbol? value))
+            {
+                value = new Symbol(name);
+                _internedSymbols[name] = value;
+            }
+            return value;
         }
-        return _internedSymbols[name];
     }
 
     public override bool EqualsAux(UFOObject other)
