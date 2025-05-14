@@ -1,7 +1,7 @@
 using UFO.Types;
 using UFO.Types.Data;
 
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Types.Data;
 
 public class QueueTests
 {

@@ -3,7 +3,7 @@ using UFO.Types.Data;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Types.Expr;
 
 public class FunctionTests
 {
@@ -11,7 +11,7 @@ public class FunctionTests
     public void Eval_ReturnsClosure()
     {
         // Arrange
-        Evaluator.Evaluator etor = new();
+        UFO.Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
         List parameters = List.Create(id_x);
         Function fun = Function.Create(parameters, id_x);

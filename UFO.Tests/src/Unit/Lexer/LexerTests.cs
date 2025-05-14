@@ -1,6 +1,6 @@
 using UFO.Lexer;
 
-namespace UFO.Tests.Lexer;
+namespace UFO.Tests.Unit.Lexer;
 
 public class LexerTests
 {

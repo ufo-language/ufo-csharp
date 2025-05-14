@@ -2,7 +2,7 @@ using UFO.Types;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Types.Expr;
 
 public class IdentifeirTests
 {
@@ -10,7 +10,7 @@ public class IdentifeirTests
     public void Eval_UnboundIdentifierThrowsException()
     {
         // Arrange
-        Evaluator.Evaluator etor = new();
+       UFO.Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
 
         // Act
@@ -23,7 +23,7 @@ public class IdentifeirTests
     public void Eval_BoundIdentifierEvaluatesToValue()
     {
         // Arrange
-        Evaluator.Evaluator etor = new();
+        UFO.Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
         Integer i100 = Integer.Create(100);
         etor.Bind(id_x, i100);

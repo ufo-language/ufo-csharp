@@ -1,7 +1,4 @@
-using UFO.Types;
-using UFO.Types.Literal;
-
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Evaluator;
 
 public class EvaluatorTests
 {

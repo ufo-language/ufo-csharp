@@ -3,7 +3,7 @@ using UFO.Types.Data;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Types.Literal;
 
 public class PrimitiveTests
 {
@@ -14,7 +14,7 @@ public class PrimitiveTests
         public List SavedArgs = List.Create();
         public Prim1() : base("Prim1")
         {}
-        public override UFOObject Call(Evaluator.Evaluator etor, List args)
+        public override UFOObject Call(UFO.Evaluator.Evaluator etor, List args)
         {
             NCalls++;
             SavedArgs = args;
@@ -25,7 +25,7 @@ public class PrimitiveTests
     public static void Apply_CallsPrimitive()
     {
         // Arrange
-        Evaluator.Evaluator etor = new();
+        UFO.Evaluator.Evaluator etor = new();
         Prim1 prim1 = new();
         Integer i100 = Integer.Create(100);
         List args = List.Create(i100);

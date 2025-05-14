@@ -1,8 +1,7 @@
 using UFO.Types;
-using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Types.Expr;
 
 public class SeqTests
 {
@@ -10,8 +9,8 @@ public class SeqTests
     public void Seq_0()
     {
         // Arrange
-        Evaluator.Evaluator etor = new Evaluator.Evaluator();
-        Seq seq = Seq.Create();
+        UFO.Evaluator.Evaluator etor = new();
+        UFO.Types.Expression.Seq seq = UFO.Types.Expression.Seq.Create();
 
         // Act
         UFOObject value = seq.Eval(etor);
@@ -24,9 +23,9 @@ public class SeqTests
     public void Seq_1()
     {
         // Arrange
-        Evaluator.Evaluator etor = new Evaluator.Evaluator();
+        UFO.Evaluator.Evaluator etor = new();
         Integer i100 = Integer.Create(100);
-        Seq seq = Seq.Create(i100);
+        UFO.Types.Expression.Seq seq = UFO.Types.Expression.Seq.Create(i100);
 
         // Act
         UFOObject value = seq.Eval(etor);
@@ -39,10 +38,10 @@ public class SeqTests
     public void Seq_2()
     {
         // Arrange
-        Evaluator.Evaluator etor = new Evaluator.Evaluator();
+        UFO.Evaluator.Evaluator etor = new();
         Integer i100 = Integer.Create(100);
         Integer i200 = Integer.Create(100);
-        Seq seq = Seq.Create(i100, i200);
+        UFO.Types.Expression.Seq seq = UFO.Types.Expression.Seq.Create(i100, i200);
 
         // Act
         UFOObject value = seq.Eval(etor);

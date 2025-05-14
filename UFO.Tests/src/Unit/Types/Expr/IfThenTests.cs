@@ -2,7 +2,7 @@ using UFO.Types;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace UFO.Tests;
+namespace UFO.Tests.Unit.Types.Expr;
 
 public class IfThenTests
 {
@@ -10,8 +10,8 @@ public class IfThenTests
     public void IfThen_Eval_TruePath()
     {
         // Arrange
-        Evaluator.Evaluator etor = new();
-        Types.Literal.Boolean cond = Types.Literal.Boolean.TRUE;
+        UFO.Evaluator.Evaluator etor = new();
+        UFO.Types.Literal.Boolean cond = UFO.Types.Literal.Boolean.TRUE;
         Integer conseq = Integer.Create(100);
         Integer alt = Integer.Create(200);
         IfThen ifThen = new(cond, conseq, alt);
@@ -27,8 +27,8 @@ public class IfThenTests
     public void IfThen_Eval_FalsePath()
     {
         // Arrange
-        Evaluator.Evaluator etor = new();
-        Types.Literal.Boolean cond = Types.Literal.Boolean.FALSE;
+        UFO.Evaluator.Evaluator etor = new();
+        UFO.Types.Literal.Boolean cond = UFO.Types.Literal.Boolean.FALSE;
         Integer conseq = Integer.Create(100);
         Integer alt = Integer.Create(200);
         IfThen ifThen = new(cond, conseq, alt);
