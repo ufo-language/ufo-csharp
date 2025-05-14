@@ -1,9 +1,8 @@
 using UFO.Lexer;
-using UFO.Parser;
 
 namespace UFO.Parser.Prims;
 
-public class Spot : Parser
+public class Spot : IParser
 {
     private TokenType TokenType { get; }
     private string? LexemeString { get; }
@@ -20,12 +19,12 @@ public class Spot : Parser
         LexemeString = lexemeString;
     }
 
-    public override bool Parse(ParserState parserState)
+    public bool Parse(ParserState parserState)
     {
         Token token = parserState.NextToken();
         if (token.Type != TokenType || (LexemeString != null && token.Lexeme != LexemeString))
             return false;
-        parserState.Token = token;
+        parserState.Value = token;
         parserState.Advance();
         return true;
     }

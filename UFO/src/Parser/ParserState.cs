@@ -3,22 +3,47 @@ using UFO.Types;
 
 namespace UFO.Parser;
 
-public class ParserState(List<Token> tokens)
+public class ParserState(Dictionary<string, IParser> parserTable, List<Token> tokens)
 {
 
+    public Dictionary<string, IParser> ParserTable { get; private set; } = parserTable;
     private readonly List<Token> Tokens = tokens;
-    private int TokenIndex = 0;
-    public Token? Token = null;
-    public UFOObject? Value = null;
+    public int TokenIndex { get; private set; } = 0;
+    public object Value = new();
+    public (string, int) MemoKey = ("", -1);
+    public readonly Dictionary<(string, int), (bool, object)> MemoTable = [];
+
+    public void Advance()
+    {
+        TokenIndex++;
+    }
+
+    public bool FindMemo((string, int) memoKey, out (bool, object) value)
+    {
+        string parserName = memoKey.Item1;
+        int tokenIndex = memoKey.Item2;
+        return MemoTable.TryGetValue((parserName, tokenIndex), out value);
+    }
+
+    public void Memoize(string name, int index, bool success, object value)
+    {
+        MemoTable[(name, index)] = (success, value);
+    }
 
     public Token NextToken()
     {
         return Tokens[TokenIndex];
     }
 
-    public void Advance()
+    public (int, object) GetState()
     {
-        TokenIndex++;
+        return (TokenIndex, Value);
+    }
+
+    public void RestoreState((int, object) state)
+    {
+        TokenIndex = state.Item1;
+        Value = state.Item2;
     }
 
 }
