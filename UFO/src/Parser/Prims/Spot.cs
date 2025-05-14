@@ -4,25 +4,25 @@ namespace UFO.Parser.Prims;
 
 public class Spot : IParser
 {
-    private TokenType TokenType { get; }
+    private TokenType _tokenType { get; }
     private string? LexemeString { get; }
 
     public Spot(TokenType tokenType)
     {
-        TokenType = tokenType;
+        _tokenType = tokenType;
         LexemeString = null;
     }
 
     public Spot(TokenType tokenType, string lexemeString)
     {
-        TokenType = tokenType;
+        _tokenType = tokenType;
         LexemeString = lexemeString;
     }
 
     public bool Parse(ParserState parserState)
     {
         Token token = parserState.NextToken();
-        if (token.Type != TokenType || (LexemeString != null && token.Lexeme != LexemeString))
+        if (token.Type != _tokenType || (LexemeString != null && token.Lexeme != LexemeString))
             return false;
         parserState.Value = token;
         parserState.Advance();

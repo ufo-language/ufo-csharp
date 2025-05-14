@@ -7,11 +7,11 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
 {
 
     public Dictionary<string, IParser> ParserTable { get; private set; } = parserTable;
-    private readonly List<Token> Tokens = tokens;
     public int TokenIndex { get; private set; } = 0;
     public object Value = new();
     public (string, int) MemoKey = ("", -1);
     public readonly Dictionary<(string, int), (bool, object)> MemoTable = [];
+    private readonly List<Token> _tokens = tokens;
 
     public void Advance()
     {
@@ -32,7 +32,7 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
 
     public Token NextToken()
     {
-        return Tokens[TokenIndex];
+        return _tokens[TokenIndex];
     }
 
     public (int, object) GetState()

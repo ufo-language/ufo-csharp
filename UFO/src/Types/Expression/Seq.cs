@@ -5,11 +5,11 @@ namespace UFO.Types.Expression;
 
 public class Seq : Expression
 {
-    private readonly UFOObject[] Exprs;
+    private readonly UFOObject[] _exprs;
 
     private Seq(params UFOObject[] exprs)
     {
-        Exprs = exprs;
+        _exprs = exprs;
     }
 
     public static Seq Create(params UFOObject[] exprs)
@@ -20,7 +20,7 @@ public class Seq : Expression
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
         UFOObject returnValue = Nil.Create();
-        foreach (UFOObject expr in Exprs)
+        foreach (UFOObject expr in _exprs)
         {
             returnValue = expr.Eval(etor);
         }
@@ -29,7 +29,7 @@ public class Seq : Expression
 
     public override void ShowOn(TextWriter writer)
     {
-        Utils.ShowOn.ShowOnWith(writer, Exprs, "(", "; ", ")");
+        Utils.ShowOn.ShowOnWith(writer, _exprs, "(", "; ", ")");
     }
 
 }

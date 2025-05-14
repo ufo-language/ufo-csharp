@@ -11,7 +11,7 @@ public class List : Data
     public UFOObject First { get; set; }
     public UFOObject Rest { get; set; }
 
-    protected List(UFOObject first, UFOObject rest)
+    private List(UFOObject first, UFOObject rest)
     {
         First = first;
         Rest = rest;

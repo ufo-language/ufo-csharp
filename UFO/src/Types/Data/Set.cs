@@ -6,16 +6,16 @@ namespace UFO.Types.Data;
 
 public class Set : Data
 {
-    private readonly HashSet<UFOObject> Elems;
+    private readonly HashSet<UFOObject> _elems;
 
-    public int Count { get { return Elems.Count; } }
+    public int Count { get { return _elems.Count; } }
 
     private Set(params UFOObject[] elems)
     {
-        Elems = [];
+        _elems = [];
         foreach (UFOObject elem in elems)
         {
-            Elems.Add(elem);
+            _elems.Add(elem);
         }
     }
 
@@ -26,17 +26,17 @@ public class Set : Data
 
     public void Add(UFOObject elem)
     {
-        Elems.Add(elem);
+        _elems.Add(elem);
     }
 
     public bool Contains(UFOObject elem)
     {
-        return Elems.Contains(elem);
+        return _elems.Contains(elem);
     }
 
     public IEnumerable<UFOObject> EachElem()
     {
-        foreach (UFOObject elem in Elems)
+        foreach (UFOObject elem in _elems)
         {
             yield return elem;
         }
@@ -46,7 +46,7 @@ public class Set : Data
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
         Set newSet = new();
-        foreach (UFOObject elem in Elems)
+        foreach (UFOObject elem in _elems)
         {
             newSet.Add(elem.Eval(etor));
         }
@@ -55,7 +55,7 @@ public class Set : Data
 
     public bool Remove(UFOObject elem)
     {
-        return Elems.Remove(elem);
+        return _elems.Remove(elem);
     }
 
     public override void ShowOn(TextWriter writer)

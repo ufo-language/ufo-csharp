@@ -18,28 +18,28 @@ public class Identifier : Expression
         }
     }
 
-    private static readonly Dictionary<string, Identifier> _internedIdentifiers = [];
-    private static readonly object _dictionaryLock = new();
+    private static readonly Dictionary<string, Identifier> _INTERNED_IDENTIFIERS = [];
+    private static readonly Lock _DICTIONARY_LOCK = new();
 
     public string Name { get; private set; }
-    private readonly int HashCode;
+    private readonly int _hashCode;
 
-    private static readonly int HashSeed = typeof(Identifier).GetHashCode();
+    private static readonly int _HASH_SEED = typeof(Identifier).GetHashCode();
 
     private Identifier(string name)
     {
         Name = name;
-        HashCode = Utils.Hash.CombineHash(HashSeed, Name.GetHashCode());
+        _hashCode = Utils.Hash.CombineHash(_HASH_SEED, Name.GetHashCode());
     }
 
     public static Identifier Create(string name)
     {
-        lock (_dictionaryLock)
+        lock (_DICTIONARY_LOCK)
         {
-            if (!_internedIdentifiers.TryGetValue(name, out Identifier? value))
+            if (!_INTERNED_IDENTIFIERS.TryGetValue(name, out Identifier? value))
             {
                 value = new Identifier(name);
-                _internedIdentifiers[name] = value;
+                _INTERNED_IDENTIFIERS[name] = value;
             }
             return value;
         }
@@ -63,7 +63,7 @@ public class Identifier : Expression
 
     public override int GetHashCode()
     {
-        return HashCode;
+        return _hashCode;
     }
 
     public override bool Match(UFOObject other, ref Evaluator.Evaluator etor)

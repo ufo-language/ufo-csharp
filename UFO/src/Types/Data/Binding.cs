@@ -5,7 +5,7 @@ namespace UFO.Types.Data;
 
 public class Binding : Data
 {
-    private static readonly Binding EMPTY = new(Nil.Create(), Nil.Create(), null);
+    private static readonly Binding _EMPTY = new(Nil.Create(), Nil.Create(), null);
 
     public UFOObject Key { get; private set; }
     public UFOObject Value { get; set; }
@@ -20,12 +20,12 @@ public class Binding : Data
 
     public static Binding Create()
     {
-        return EMPTY;
+        return _EMPTY;
     }
 
     public static Binding Create(UFOObject key, UFOObject value)
     {
-        return new(key, value, EMPTY);
+        return new(key, value, _EMPTY);
     }
 
     public static Binding Create(UFOObject key, UFOObject value, Binding next)
@@ -46,7 +46,7 @@ public class Binding : Data
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        if (ReferenceEquals(this, EMPTY))
+        if (ReferenceEquals(this, _EMPTY))
         {
             return this;
         }
@@ -55,7 +55,7 @@ public class Binding : Data
 
     public bool IsEmpty()
     {
-        return ReferenceEquals(this, EMPTY);
+        return ReferenceEquals(this, _EMPTY);
     }
 
     public Binding Locate(UFOObject key)
@@ -67,7 +67,7 @@ public class Binding : Data
                 return binding;
             }
         }
-        return EMPTY;
+        return _EMPTY;
     }
 
     public override void ShowOn(TextWriter writer)

@@ -8,7 +8,7 @@ namespace UFO.Types.Literal;
 public abstract class Primitive(string name) : Literal
 {
 
-    private static readonly int HashSeed = typeof(Primitive).GetHashCode();
+    private static readonly int _HASH_SEED = typeof(Primitive).GetHashCode();
 
     public readonly string Name = name;
 
@@ -57,7 +57,7 @@ public abstract class Primitive(string name) : Literal
 
     public override int GetHashCode()
     {
-        return Utils.Hash.CombineHash(HashSeed, Name.GetHashCode());
+        return Utils.Hash.CombineHash(_HASH_SEED, Name.GetHashCode());
     }
 
     public void ParamTypes_ProdOfSums(params IEnumerable<TypeId>[] paramTypes)

@@ -9,7 +9,7 @@ public class Boolean : Literal
     public static readonly Boolean TRUE = new();
     public static readonly Boolean FALSE = new();
 
-    private static readonly int HashSeed = typeof(Integer).GetHashCode();
+    private static readonly int _HASH_SEED = typeof(Integer).GetHashCode();
 
     private Boolean()
     {}
@@ -21,7 +21,7 @@ public class Boolean : Literal
 
     public override int GetHashCode()
     {
-        return Utils.Hash.CombineHash(HashSeed, ((object)this).GetHashCode());
+        return Utils.Hash.CombineHash(_HASH_SEED, ((object)this).GetHashCode());
     }
     
     public override void ShowOn(TextWriter writer)

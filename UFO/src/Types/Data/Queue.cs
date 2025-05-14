@@ -6,13 +6,13 @@ namespace UFO.Types.Data;
 
 public class Queue : Data
 {
-    private List First;
-    private List Last;
+    private List _first;
+    private List _last;
     public int Count { get; private set; }
 
     public Queue()
     {
-        First = Last = List.EMPTY;
+        _first = _last = List.EMPTY;
     }
 
     public static Queue Create()
@@ -22,7 +22,7 @@ public class Queue : Data
 
     public List AsList()
     {
-        return First;
+        return _first;
     }
 
     public bool Deq(out UFOObject elem)
@@ -32,15 +32,15 @@ public class Queue : Data
             elem = Nil.Create();
             return false;
         }
-        elem = First.First;
-        First = (List)First.Rest;
+        elem = _first.First;
+        _first = (List)_first.Rest;
         Count--;
         return true;
     }
 
     public IEnumerable<UFOObject> EachElem()
     {
-        return First.EachElem();
+        return _first.EachElem();
     }
 
     public void Enq(params UFOObject[] elems)
@@ -50,12 +50,12 @@ public class Queue : Data
             List List = List.Create(elem);
             if (Count == 0)
             {
-                First = Last = List;
+                _first = _last = List;
             }
             else
             {
-                Last.Rest = List;
-                Last = List;
+                _last.Rest = List;
+                _last = List;
             }
             Count++;
         }

@@ -7,9 +7,9 @@ namespace UFO.Types.Data;
 
 public class HashTable : Data
 {
-    private readonly Dictionary<UFOObject, UFOObject> Dict;
+    private readonly Dictionary<UFOObject, UFOObject> _dict;
 
-    public int Count { get { return Dict.Count; } }
+    public int Count { get { return _dict.Count; } }
 
     /// <summary>
     /// Creates a new HashTable.
@@ -18,7 +18,7 @@ public class HashTable : Data
     /// <returns>The new HashTable.</returns>
     private HashTable(params UFOObject[] elems)
     {
-        Dict = [];
+        _dict = [];
         bool keyIter = true;
         UFOObject key = Nil.Create();
         UFOObject value;
@@ -32,7 +32,7 @@ public class HashTable : Data
             else
             {
                 value = elem;
-                Dict[key] = value;
+                _dict[key] = value;
                 keyIter = true;
             }
         }
@@ -45,13 +45,13 @@ public class HashTable : Data
 
     public UFOObject this[UFOObject index]
     {
-        get => Dict[index];
-        set => Dict[index] = value;
+        get => _dict[index];
+        set => _dict[index] = value;
     }
 
     public IEnumerable<KeyValuePair<UFOObject, UFOObject>> EachElem()
     {
-        foreach (KeyValuePair<UFOObject, UFOObject> pair in Dict)
+        foreach (KeyValuePair<UFOObject, UFOObject> pair in _dict)
         {
             yield return pair;
         }
@@ -60,7 +60,7 @@ public class HashTable : Data
 
     public IEnumerable<Binding> EachElemAsBinding()
     {
-        foreach (KeyValuePair<UFOObject, UFOObject> pair in Dict)
+        foreach (KeyValuePair<UFOObject, UFOObject> pair in _dict)
         {
             yield return Binding.Create(pair.Key, pair.Value);
         }
@@ -81,7 +81,7 @@ public class HashTable : Data
 
     public bool Get(UFOObject key, out UFOObject elem)
     {
-        bool found = Dict.TryGetValue(key, out UFOObject? elem1);
+        bool found = _dict.TryGetValue(key, out UFOObject? elem1);
         elem = found ? elem1! : Nil.Create();
         return found;
     }

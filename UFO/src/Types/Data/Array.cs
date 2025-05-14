@@ -5,13 +5,13 @@ namespace UFO.Types.Data;
 public class Array : Data
 {
 
-    private readonly List<UFOObject> Elems;
+    private readonly List<UFOObject> _elems;
 
-    public int Count { get { return Elems.Count; } }
+    public int Count { get { return _elems.Count; } }
 
     private Array(params UFOObject[] elems)
     {
-        Elems = [.. elems];
+        _elems = [.. elems];
     }
 
     public static Array Create(params UFOObject[] elems)
@@ -21,12 +21,12 @@ public class Array : Data
 
     public void Append(UFOObject elem)
     {
-        Elems.Add(elem);
+        _elems.Add(elem);
     }
 
     public IEnumerable<UFOObject> EachElem()
     {
-        foreach (UFOObject elem in Elems)
+        foreach (UFOObject elem in _elems)
         {
             yield return elem;
         }
@@ -51,13 +51,13 @@ public class Array : Data
         {
             return false;
         }
-        elem = Elems[index];
+        elem = _elems[index];
         return true;
     }
 
     public UFOObject Get_Unsafe(int index)
     {
-        return Elems[index];
+        return _elems[index];
     }
 
     public bool Set(int index, UFOObject elem)
@@ -66,13 +66,13 @@ public class Array : Data
         {
             return false;
         }
-        Elems[index] = elem;
+        _elems[index] = elem;
         return true;
     }
 
     public void Set_Unsafe(int index, UFOObject elem)
     {
-        Elems[index] = elem;
+        _elems[index] = elem;
     }
 
     public override void ShowOn(TextWriter writer)

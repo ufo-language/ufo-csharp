@@ -5,28 +5,28 @@ namespace UFO.Types.Literal;
 
 public class Symbol : Literal
 {
-    private static readonly Dictionary<string, Symbol> _internedSymbols = [];
-    private static readonly object _dictionaryLock = new();
+    private static readonly Dictionary<string, Symbol> _INTERNED_SYMBOLS = [];
+    private static readonly Lock _DICTIONARY_LOCK = new();
 
     public string Name { get; private set; }
-    private readonly int HashCode;
+    private readonly int _hashCode;
 
-    private static readonly int HashSeed = typeof(Symbol).GetHashCode();
+    private static readonly int _HASH_SEED = typeof(Symbol).GetHashCode();
 
     private Symbol(string name)
     {
         Name = name;
-        HashCode = Utils.Hash.CombineHash(HashSeed, Name.GetHashCode());
+        _hashCode = Utils.Hash.CombineHash(_HASH_SEED, Name.GetHashCode());
     }
 
     public static Symbol Create(string name)
     {
-        lock (_dictionaryLock)
+        lock (_DICTIONARY_LOCK)
         {
-            if (!_internedSymbols.TryGetValue(name, out Symbol? value))
+            if (!_INTERNED_SYMBOLS.TryGetValue(name, out Symbol? value))
             {
                 value = new Symbol(name);
-                _internedSymbols[name] = value;
+                _INTERNED_SYMBOLS[name] = value;
             }
             return value;
         }
@@ -40,7 +40,7 @@ public class Symbol : Literal
 
     public override int GetHashCode()
     {
-        return HashCode;
+        return _hashCode;
     }
 
     public override void ShowOn(TextWriter writer)

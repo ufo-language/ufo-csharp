@@ -7,14 +7,14 @@ namespace UFO.Types.Expression;
 public class Function : Expression
 {
 
-    private UFOObject Name;
+    private UFOObject _name;
     public List Parameters { get; private set; }
     public UFOObject Body { get; private set; }
     public Function? NextRule { get; private set; }
 
     private Function(UFOObject name, List parameters, UFOObject body, Function? nextRule)
     {
-        Name = name;
+        _name = name;
         Parameters = parameters;
         Body = body;
         NextRule = nextRule;
@@ -55,9 +55,9 @@ public class Function : Expression
         Function? fun = this;
         bool firstIter = true;
         writer.Write("fun ");
-        if (!ReferenceEquals(fun.Name, Nil.Create()))
+        if (!ReferenceEquals(fun._name, Nil.Create()))
         {
-            fun.Name.ShowOn(writer);
+            fun._name.ShowOn(writer);
         }
         while (fun != null)
         {
