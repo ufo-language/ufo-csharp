@@ -267,7 +267,8 @@ public class UFOGrammarTests
     public void Grammar_List_0()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("[]");
+        string inputString = "[]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -279,14 +280,15 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.List>(value);
         UFO.Types.Data.List list = (UFO.Types.Data.List)value;
-        Assert.True(list.IsEmpty);
+        Assert.Equal(inputString, list.ToString());
     }
 
     [Fact]
     public void Grammar_List_1()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("[123]");
+        string inputString = "[123]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -298,14 +300,15 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.List>(value);
         UFO.Types.Data.List list = (UFO.Types.Data.List)value;
-        Assert.Equal("[123]", list.ToString());
+        Assert.Equal(inputString, list.ToString());
     }
 
     [Fact]
     public void Grammar_List_2()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("[123, Abc]");
+        string inputString = "[123, Abc]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -317,14 +320,15 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.List>(value);
         UFO.Types.Data.List list = (UFO.Types.Data.List)value;
-        Assert.Equal("[123, Abc]", list.ToString());
+        Assert.Equal(inputString, list.ToString());
     }
 
     [Fact]
     public void Grammar_ListOfArray()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("[{123}]");
+        string inputString = "[{123}]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -336,14 +340,15 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.List>(value);
         UFO.Types.Data.List list = (UFO.Types.Data.List)value;
-        Assert.Equal("[{123}]", list.ToString());
+        Assert.Equal(inputString, list.ToString());
     }
 
     [Fact]
     public void Grammar_Queue_0()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("~[]");
+        string inputString = "~[]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -355,14 +360,15 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.Queue>(value);
         UFO.Types.Data.Queue q = (UFO.Types.Data.Queue)value;
-        Assert.Equal("~[]", q.ToString());
+        Assert.Equal(inputString, q.ToString());
     }
 
     [Fact]
     public void Grammar_Queue_1()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("~[123]");
+        string inputString = "~[123]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -374,14 +380,15 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.Queue>(value);
         UFO.Types.Data.Queue q = (UFO.Types.Data.Queue)value;
-        Assert.Equal("~[123]", q.ToString());
+        Assert.Equal(inputString, q.ToString());
     }
     [Fact]
 
     public void Grammar_Queue_2()
     {
         // Arrange
-        UFO.Lexer.Lexer lexer = new("~[123, Abc]");
+        string inputString = "~[123, Abc]";
+        UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
@@ -393,7 +400,67 @@ public class UFOGrammarTests
         object value = parserState.Value;
         Assert.IsType<UFO.Types.Data.Queue>(value);
         UFO.Types.Data.Queue q = (UFO.Types.Data.Queue)value;
-        Assert.Equal("~[123, Abc]", q.ToString());
+        Assert.Equal(inputString, q.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Set_0()
+    {
+        // Arrange
+        string inputString = "${}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Set", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Set>(value);
+        UFO.Types.Data.Set set = (UFO.Types.Data.Set)value;
+        Assert.Equal(inputString, set.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Set_1()
+    {
+        // Arrange
+        string inputString = "${123}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Set", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Set>(value);
+        UFO.Types.Data.Set set = (UFO.Types.Data.Set)value;
+        Assert.Equal(inputString, set.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Set_2()
+    {
+        // Arrange
+        string inputString = "${123, Abc}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Set", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Set>(value);
+        UFO.Types.Data.Set set = (UFO.Types.Data.Set)value;
+        Assert.Equal(inputString, set.ToString());
     }
 
 }

@@ -10,6 +10,7 @@ using UFONil = UFO.Types.Literal.Nil;
 using UFOQueue = UFO.Types.Data.Queue;
 using UFOReal = UFO.Types.Literal.Real;
 using UFOSeq = UFO.Types.Expression.Seq;
+using UFOSet = UFO.Types.Data.Set;
 using UFOString = UFO.Types.Literal.String;
 using UFOSymbol = UFO.Types.Literal.Symbol;
 
@@ -36,6 +37,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeQueue = tokenObj => UFOQueue.Create((List)tokenObj);
     private static readonly Func<object, object> MakeReal = tokenObj => UFOReal.Create(double.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeSeq = tokenObj => UFOSeq.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
+    private static readonly Func<object, object> MakeSet = tokenObj => UFOSet.Create((List)tokenObj);
     private static readonly Func<object, object> MakeString = tokenObj => UFOString.Create(((Token)tokenObj).Lexeme);
     private static readonly Func<object, object> MakeSymbol = tokenObj => UFOSymbol.Create(((Token)tokenObj).Lexeme);
 
@@ -73,7 +75,7 @@ public class UFOGrammar
         // 'HashTable'   : apply(HashTable.ProtoHash.from_parser, seq('#', list_of('{', 'Any', ',', '}'))),
         ["List"]         = Apply(MakeList, ListOf("[", "Any", ",", "]", "|")),
         ["Queue"]        = Apply(MakeQueue, Seq("~", ListOf("[", "Any", ",", "]"))),
-        // 'Set'         : apply(Set.from_parser, seq("$", list_of('{', 'Any', ',', '}'))),
+        ["Set"]          = Apply(MakeSet, Seq("$", ListOf("{", "Any", ",", "}"))),
         // 'Term'        : apply(Term.from_parser, seq(recursion_barrier, 'Any', 'Array')),
 
         ["Literal"]      = OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol"),

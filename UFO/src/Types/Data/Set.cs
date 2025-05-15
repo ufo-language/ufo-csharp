@@ -24,6 +24,16 @@ public class Set : Data
         return new(elems);
     }
 
+    public static Set Create(Parser.List elems)
+    {
+        Set set = new();
+        foreach (object elem in elems)
+        {
+            set.Add((UFOObject)elem);
+        }
+        return set;
+    }
+
     public void Add(UFOObject elem)
     {
         _elems.Add(elem);
