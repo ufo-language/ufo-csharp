@@ -42,6 +42,16 @@ public class List : Data
         return q.AsList();
     }
 
+    public static List Create(Parser.List elems)
+    {
+        Queue q = Queue.Create();
+        foreach (object elem in elems)
+        {
+            q.Enq((UFOObject)elem);
+        }
+        return q.AsList();
+    }
+
     public override bool BoolValue => !IsEmpty;
 
     public override UFOObject Eval(Evaluator.Evaluator etor)

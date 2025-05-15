@@ -36,7 +36,7 @@ public class ListOf : IParser
         }
         List elems = (List)parserState.Value;
         if (!Parser.Parse(_closeParser, parserState)) {
-            throw new Exception($"Closing {_closeParser} expected after element {_openParser}");
+            throw new Exception($"Closing {_closeParser} expected after opening {_openParser} or element {_elemParser}");
         }
         parserState.Value = elems;
         return true;
@@ -44,8 +44,8 @@ public class ListOf : IParser
 
     private bool ParseImproperList(ParserState parserState)
     {
-        // TODO implement this
-        return false;
+        // TODO implement this correctly instead of calling ParseProperList
+        return ParseProperList(parserState);
     }
 
     public bool Parse(ParserState parserState)

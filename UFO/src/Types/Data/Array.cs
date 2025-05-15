@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
@@ -17,6 +18,16 @@ public class Array : Data
     public static Array Create(params UFOObject[] elems)
     {
         return new(elems);
+    }
+
+    public static Array Create(Parser.List elems)
+    {
+        Array array = new();
+        foreach (object elem in elems)
+        {
+            array.Append((UFOObject)elem);
+        }
+        return array;
     }
 
     public void Append(UFOObject elem)

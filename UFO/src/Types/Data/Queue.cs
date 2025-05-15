@@ -20,6 +20,16 @@ public class Queue : Data
         return new();
     }
 
+    public static Queue Create(Parser.List elems)
+    {
+        Queue q = new();
+        foreach (object elem in elems)
+        {
+            q.Enq((UFOObject)elem);
+        }
+        return q;
+    }
+
     public List AsList()
     {
         return _first;

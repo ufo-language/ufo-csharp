@@ -5,7 +5,9 @@ using UFOArray = UFO.Types.Data.Array;
 using UFOBool = UFO.Types.Literal.Boolean;
 using UFOIdentifier = UFO.Types.Expression.Identifier;
 using UFOInt = UFO.Types.Literal.Integer;
+using UFOList = UFO.Types.Data.List;
 using UFONil = UFO.Types.Literal.Nil;
+using UFOQueue = UFO.Types.Data.Queue;
 using UFOReal = UFO.Types.Literal.Real;
 using UFOSeq = UFO.Types.Expression.Seq;
 using UFOString = UFO.Types.Literal.String;
@@ -20,14 +22,18 @@ public class UFOGrammar
     private static Apply Apply(Func<object, object> function, object parser) => new(function, parser);
     private static IfThen IfThen(object returnValue, object parser) => new(returnValue, parser);
     private static ListOf ListOf(object open, object elem, object sep, object close) => new(open, elem, sep, close);
+    private static ListOf ListOf(object open, object elem, object sep, object close, object bar) => new(open, elem, sep, close, bar);
     private static OneOf OneOf(params object[] parsers) => new(parsers);
     // private static Returning Returning(object returnValue, object parser) => new(returnValue, parser);
+    private static Seq Seq(params object[] parsers) => new(parsers);
     private static Spot Spot(TokenType tokenType) => new(tokenType);
 
     // Type conversion functions
-    private static readonly Func<object, object> MakeArray = tokenObj => UFOArray.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
+    private static readonly Func<object, object> MakeArray = tokenObj => UFOArray.Create((List)tokenObj);
     private static readonly Func<object, object> MakeIdentifier = tokenObj => UFOIdentifier.Create(((Token)tokenObj).Lexeme);
     private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
+    private static readonly Func<object, object> MakeList = tokenObj => UFOList.Create((List)tokenObj);
+    private static readonly Func<object, object> MakeQueue = tokenObj => UFOQueue.Create((List)tokenObj);
     private static readonly Func<object, object> MakeReal = tokenObj => UFOReal.Create(double.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeSeq = tokenObj => UFOSeq.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
     private static readonly Func<object, object> MakeString = tokenObj => UFOString.Create(((Token)tokenObj).Lexeme);
@@ -61,13 +67,13 @@ public class UFOGrammar
         // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
         // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
 
-        ["Data"]         = OneOf("Array", /*'HashTable', 'List', 'Queue', 'Set', 'Term',*/ "Literal"),
+        ["Data"]         = OneOf("Array", /*'HashTable',*/ "List", "Queue", /*'Set', 'Term',*/ "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
         // # 'Binding'     : apply(Binding.from_parser, seq(recursion_barrier, 'Any', '=', 'Any')),
         // 'HashTable'   : apply(HashTable.ProtoHash.from_parser, seq('#', list_of('{', 'Any', ',', '}'))),
-        // 'List'        : apply(List.from_parser, list_of('[', 'Any', ',', ']', '|')),
-        // 'Queue'       : apply(Queue.from_parser, seq('~', list_of('[', 'Any', ',', ']'))),
-        // 'Set'         : apply(Set.from_parser, seq('$', list_of('{', 'Any', ',', '}'))),
+        ["List"]         = Apply(MakeList, ListOf("[", "Any", ",", "]", "|")),
+        ["Queue"]        = Apply(MakeQueue, Seq("~", ListOf("[", "Any", ",", "]"))),
+        // 'Set'         : apply(Set.from_parser, seq("$", list_of('{', 'Any', ',', '}'))),
         // 'Term'        : apply(Term.from_parser, seq(recursion_barrier, 'Any', 'Array')),
 
         ["Literal"]      = OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol"),
@@ -80,7 +86,7 @@ public class UFOGrammar
 
         // # these are not literals, but they are parsed as literals:
         ["Identifier"]   = Apply(MakeIdentifier, Spot(TokenType.Word)),
-        ["Seq"]          = Apply(MakeSeq, ListOf("(", "Any", ";", ")")),
+        ["Seq"]          = Apply(MakeSeq, ListOf("(", "Any", ";", ")"))
     };
 
 }

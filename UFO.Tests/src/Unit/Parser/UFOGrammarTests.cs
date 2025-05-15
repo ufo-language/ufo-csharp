@@ -263,4 +263,137 @@ public class UFOGrammarTests
         Assert.Equal(2, array.Count);
     }
 
+    [Fact]
+    public void Grammar_List_0()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("[]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("List", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.List>(value);
+        UFO.Types.Data.List list = (UFO.Types.Data.List)value;
+        Assert.True(list.IsEmpty);
+    }
+
+    [Fact]
+    public void Grammar_List_1()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("[123]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("List", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.List>(value);
+        UFO.Types.Data.List list = (UFO.Types.Data.List)value;
+        Assert.Equal("[123]", list.ToString());
+    }
+
+    [Fact]
+    public void Grammar_List_2()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("[123, Abc]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("List", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.List>(value);
+        UFO.Types.Data.List list = (UFO.Types.Data.List)value;
+        Assert.Equal("[123, Abc]", list.ToString());
+    }
+
+    [Fact]
+    public void Grammar_ListOfArray()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("[{123}]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("List", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.List>(value);
+        UFO.Types.Data.List list = (UFO.Types.Data.List)value;
+        Assert.Equal("[{123}]", list.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Queue_0()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("~[]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Queue", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Queue>(value);
+        UFO.Types.Data.Queue q = (UFO.Types.Data.Queue)value;
+        Assert.Equal("~[]", q.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Queue_1()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("~[123]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Queue", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Queue>(value);
+        UFO.Types.Data.Queue q = (UFO.Types.Data.Queue)value;
+        Assert.Equal("~[123]", q.ToString());
+    }
+    [Fact]
+
+    public void Grammar_Queue_2()
+    {
+        // Arrange
+        UFO.Lexer.Lexer lexer = new("~[123, Abc]");
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Queue", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Queue>(value);
+        UFO.Types.Data.Queue q = (UFO.Types.Data.Queue)value;
+        Assert.Equal("~[123, Abc]", q.ToString());
+    }
+
 }
