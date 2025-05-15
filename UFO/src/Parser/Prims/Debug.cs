@@ -25,13 +25,13 @@ public class Debug : IParser
     public bool Parse(ParserState parserState)
     {
         _Indent();
-        Token token = parserState.NextToken();
+        Token token = parserState.NextToken;
         Console.WriteLine($"DEBUG: {_parser} token = {token}");
         _depth++;
         bool success = Parser.Parse(_parser, parserState);
         _depth--;
         _Indent();
-        Console.WriteLine($"DEBUG: {_parser} returning {success}");
+        Console.WriteLine($"DEBUG: {_parser} returning {success}, next token = '{parserState.NextToken.Lexeme}'");
         return success;
     }
 

@@ -21,7 +21,7 @@ public class Spot : IParser
 
     public bool Parse(ParserState parserState)
     {
-        Token token = parserState.NextToken();
+        Token token = parserState.NextToken;
         if (token.Type != _tokenType || (LexemeString != null && token.Lexeme != LexemeString))
             return false;
         parserState.Value = token;

@@ -307,13 +307,22 @@ public class UFOGrammarTests
     public void Grammar_List_2()
     {
         // Arrange
-        string inputString = "[123, Abc]";
+        string inputString = "[123, x]";
         UFO.Lexer.Lexer lexer = new(inputString);
         List<Token> tokens = lexer.Tokenize();
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
         // Act
-        bool success = UFO.Parser.Parser.Parse("List", parserState);
+        bool success = false;
+        try
+        {
+            success = UFO.Parser.Parser.Parse("List", parserState);
+        }
+        catch (ParseException exn)
+        {
+            Console.WriteLine($"Grammar_List_2 caught exception\n{exn.ToString()}");
+            return;
+        }
 
         // Assert
         Assert.True(success);

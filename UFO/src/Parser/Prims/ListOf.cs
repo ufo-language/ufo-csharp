@@ -36,7 +36,7 @@ public class ListOf : IParser
         }
         List elems = (List)parserState.Value;
         if (!Parser.Parse(_closeParser, parserState)) {
-            throw new Exception($"Closing {_closeParser} expected after opening {_openParser} or element {_elemParser}");
+            throw new ParseException($"Closing '{_closeParser}' expected after opening '{_openParser}' or element '{_elemParser}'", parserState);
         }
         parserState.Value = elems;
         return true;

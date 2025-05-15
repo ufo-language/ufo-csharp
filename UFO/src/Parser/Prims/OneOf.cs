@@ -7,11 +7,14 @@ public class OneOf(params object[] parsers) : IParser
 
     private object[] _parsers = parsers;
 
+    static int depth = 0;
+
     public bool Parse(ParserState parserState)
     {
         (int, object) longestResult = default;
         int longestParse = -1;
         (int, object) savedState = parserState.GetState();
+        depth++;
         for (int n=0; n<_parsers.Length; n++)
         {
             object parserObj = _parsers[n];
@@ -26,9 +29,9 @@ public class OneOf(params object[] parsers) : IParser
             }
             parserState.RestoreState(savedState);
         }
+        depth--;
         if (longestParse == -1)
         {
-
             return false;
         }
         parserState.RestoreState(longestResult);

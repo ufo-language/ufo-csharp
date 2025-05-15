@@ -28,7 +28,7 @@ public class Parser
         {
             // Memoize the result.
             success = Parse(parser!, parserState);
-            parserState.Memoize(parserName, savedIndex, success, parserState.Value);
+            parserState.Memoize(parserName, parserState.TokenIndex, success, parserState.Value);
             return success;
         }
         if (char.IsUpper(parserName[0]))
@@ -36,7 +36,7 @@ public class Parser
             throw new Exception($"Unknown parser '{parserName}'");
         }
         // Look for a lexeme with that name.
-        Token token = parserState.NextToken();
+        Token token = parserState.NextToken;
         if (token.Lexeme == parserName)
         {
             parserState.Value = IGNORE;

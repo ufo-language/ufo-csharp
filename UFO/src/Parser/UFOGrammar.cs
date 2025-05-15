@@ -22,6 +22,7 @@ public class UFOGrammar
 
     // Parser shortcut functions
     private static Apply Apply(Func<object, object> function, object parser) => new(function, parser);
+    private static Debug Debug(object parser) => new(parser);
     private static IfThen IfThen(object returnValue, object parser) => new(returnValue, parser);
     private static ListOf ListOf(object open, object elem, object sep, object close) => new(open, elem, sep, close);
     private static ListOf ListOf(object open, object elem, object sep, object close, object bar) => new(open, elem, sep, close, bar);
@@ -71,7 +72,7 @@ public class UFOGrammar
         // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
         // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
 
-        ["Data"]         = OneOf("Array", /*'HashTable',*/ "List", "Queue", "Set", /*"Term",*/ "Literal"),
+        ["Data"]         = OneOf("Array", /*'HashTable',*/ "List", "Queue", "Set", "Term", "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
         // # 'Binding'     : apply(Binding.from_parser, seq(recursion_barrier, 'Any', '=', 'Any')),
         // 'HashTable'   : apply(HashTable.ProtoHash.from_parser, seq('#', list_of('{', 'Any', ',', '}'))),

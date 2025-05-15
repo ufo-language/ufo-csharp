@@ -31,10 +31,7 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
         MemoTable[(name, index)] = (success, value);
     }
 
-    public Token NextToken()
-    {
-        return Tokens[TokenIndex];
-    }
+    public Token NextToken => Tokens[TokenIndex];
 
     public (int, object) GetState()
     {
