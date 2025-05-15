@@ -1,9 +1,22 @@
 namespace UFO.Parser.Prims;
 
-public class Require(object parser) : IParser
+public class Require : IParser
 {
 
-    private readonly object _parser = parser;
+    private readonly object _parser;
+    private readonly string? _message;
+
+    public Require(object parser)
+    {
+        _parser = parser;
+        _message = null;
+    }
+
+    public Require(object parser, string message)
+    {
+        _parser = parser;
+        _message = message;
+    }
 
     public bool Parse(ParserState parserState)
     {
@@ -11,6 +24,6 @@ public class Require(object parser) : IParser
         {
             return true;
         }
-        throw new Exception($"Parse failure: expected {_parser}");
+        throw new Exception(_message ?? $"Parse failure: expected {_parser}");
     }
 }
