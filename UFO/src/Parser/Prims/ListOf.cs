@@ -1,6 +1,6 @@
 namespace UFO.Parser.Prims;
 
-public class ListOf
+public class ListOf : IParser
 {
 
     private readonly object _openParser;
@@ -8,6 +8,7 @@ public class ListOf
     private readonly object _sepParser;
     private readonly object _closeParser;
     private readonly object? _barParser;
+    private readonly object _sepByParser;
 
     public ListOf(object open, object elem, object sep, object close)
     {
@@ -16,32 +17,44 @@ public class ListOf
         _sepParser = sep;
         _closeParser = close;
         _barParser = null;
+        _sepByParser = new SepBy(_elemParser, _sepParser);
     }
 
     public ListOf(object open, object elem, object sep, object close, object bar)
+        : this(open, elem, sep, close)
     {
-        _openParser = open;
-        _elemParser = elem;
-        _sepParser = sep;
-        _closeParser = close;
         _barParser = bar;
     }
 
-    /*
-    def list_of(open, elem, sep, close, bar=None):
-        def _proper_list(parser_state):
-            parser = seq(open, sep_by(elem, sep), require(close))
-            success = parse(parser, parser_state)
-            return success
-        def _improper_list(parser_state):
-            parser = seq(open, maybe(seq(sep_by(elem, sep), one_of(seq(bar, elem), succeed(None)))), close)
-            success = parse(parser, parser_state)
-            return success
-        return _proper_list if bar is None else _improper_list
-    */
+    private bool ParseProperList(ParserState parserState)
+    {
+        if (!Parser.Parse(_openParser, parserState)) {
+            return false;
+        }
+        if (!Parser.Parse(_sepByParser, parserState)) {
+            throw new Exception($"Element {_elemParser} expected after opening {_openParser}");
+        }
+        List elems = (List)parserState.Value;
+        if (!Parser.Parse(_closeParser, parserState)) {
+            throw new Exception($"Closing {_closeParser} expected after element {_openParser}");
+        }
+        parserState.Value = elems;
+        return true;
+    }
+
+    private bool ParseImproperList(ParserState parserState)
+    {
+        // TODO implement this
+        return false;
+    }
+
+    public bool Parse(ParserState parserState)
+    {
+        return _barParser == null ? ParseProperList(parserState) : ParseImproperList(parserState);
+    }
 
     public override string ToString()
     {
-        return $"ListOf({_openParser}, {_elemParser}, {_sepParser}, {_closeParser}, {_barParser})";
+        return $"ListOf('{_openParser}', '{_elemParser}', '{_sepParser}', '{_closeParser}', '{_barParser}')";
     }
 }

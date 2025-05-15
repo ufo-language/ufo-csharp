@@ -6,7 +6,7 @@ public static class Constants
 {
     public static readonly string Operators = "+-*/&|=<>!";
     public static readonly List<string> ReservedWords = [
-        "fun", "for", "in"
+        "false", "fun", "for", "in", "nil", "true"
     ];
 }
 
