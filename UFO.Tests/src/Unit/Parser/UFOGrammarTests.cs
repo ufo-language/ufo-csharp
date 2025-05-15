@@ -472,23 +472,64 @@ public class UFOGrammarTests
         Assert.Equal(inputString, set.ToString());
     }
 
-    // [Fact]
-    // public void Grammar_Term_0()
-    // {
-    //     // Arrange
-    //     string inputString = "Abc{}";
-    //     UFO.Lexer.Lexer lexer = new(inputString);
-    //     List<Token> tokens = lexer.Tokenize();
-    //     ParserState parserState = new(UFOGrammar.Parsers, tokens);
+    [Fact]
+    public void Grammar_Term_0()
+    {
+        // Arrange
+        string inputString = "Abc{}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
-    //     // Act
-    //     bool success = UFO.Parser.Parser.Parse("Term", parserState);
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Term", parserState);
 
-    //     // Assert
-    //     Assert.True(success);
-    //     object value = parserState.Value;
-    //     Assert.IsType<UFO.Types.Data.Term>(value);
-    //     UFO.Types.Data.Term term = (UFO.Types.Data.Term)value;
-    //     Assert.Equal(inputString, term.ToString());
-    // }
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Term>(value);
+        UFO.Types.Data.Term term = (UFO.Types.Data.Term)value;
+        Assert.Equal(inputString, term.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Term_1()
+    {
+        // Arrange
+        string inputString = "Abc{123}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Term", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Term>(value);
+        UFO.Types.Data.Term term = (UFO.Types.Data.Term)value;
+        Assert.Equal(inputString, term.ToString());
+    }
+
+    [Fact]
+    public void Grammar_Term_2()
+    {
+        // Arrange
+        string inputString = "Abc{Def{123}, Ghi{456}}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Term", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Term>(value);
+        UFO.Types.Data.Term term = (UFO.Types.Data.Term)value;
+        Assert.Equal(inputString, term.ToString());
+    }
+
 }

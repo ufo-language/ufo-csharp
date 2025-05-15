@@ -18,14 +18,10 @@ public class Term : Data
 
     public static Term Create(Parser.List elems)
     {
-        Console.WriteLine($"Term.Create elems = {elems}");
         Symbol name = (Symbol)elems[0];
         Array args = (Array)elems[1];
-        Console.WriteLine($"  name = '{name}', args = '{args}'");
         UFOObject attrib = elems.Count == 3 ? (UFOObject)elems[2] : Nil.NIL;
-        Term term = new(name, args, attrib);
-        Console.WriteLine($"  Term = {term}");
-        return term;
+        return new(name, args, attrib);
     }
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
