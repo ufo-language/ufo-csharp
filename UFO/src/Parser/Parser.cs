@@ -4,8 +4,12 @@ namespace UFO.Parser;
 
 public class Parser
 {
+    public class Ignore
+    {
+        public override string ToString() => "IGNORE";
+    }
 
-    public static readonly object IGNORE = new();
+    public static readonly Ignore IGNORE = new();
 
     public static bool Parse(string parserName, ParserState parserState)
     {

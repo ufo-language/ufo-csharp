@@ -15,4 +15,10 @@ public class Returning(object value, object parser) : IParser
         }
         return false;
     }
+
+    public override string ToString()
+    {
+        return $"Returning({_value}, {_parser})";
+    }
+
 }

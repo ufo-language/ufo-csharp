@@ -17,4 +17,10 @@ public class Apply(Func<object, object> function, object parser) : IParser
         }
         return false;
     }
+
+    public override string ToString()
+    {
+        return $"Apply({_function}, {_parser})";
+    }
+
 }

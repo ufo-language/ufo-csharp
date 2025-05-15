@@ -1,3 +1,5 @@
+using System.Text;
+
 namespace UFO.Parser.Prims;
 
 public class OneOf(params object[] parsers) : IParser
@@ -32,4 +34,20 @@ public class OneOf(params object[] parsers) : IParser
         parserState.RestoreState(longestResult);
         return true;
     }
+
+    public override string ToString()
+    {
+        StringBuilder sb = new();
+        sb.Append("OneOf(");
+        bool firstIter = true;
+        foreach (object parser in _parsers)
+        {
+            if (firstIter) firstIter = false;
+            else sb.Append(", ");
+            sb.Append(parser);
+        }
+        sb.Append(')');
+        return sb.ToString();
+    }
+
 }

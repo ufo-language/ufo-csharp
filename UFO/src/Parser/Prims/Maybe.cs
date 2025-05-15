@@ -16,4 +16,10 @@ public class Maybe(object parser) : IParser
         parserState.Value = Parser.IGNORE;
         return true;
     }
+
+    public override string ToString()
+    {
+        return $"Maybe({_parser})";
+    }
+
 }

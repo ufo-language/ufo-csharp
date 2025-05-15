@@ -15,4 +15,10 @@ public class IfThen(object parser, object value) : IParser
         }
         return false;
     }
+
+    public override string ToString()
+    {
+        return $"IfThen({_parser}, {_value})";
+    }
+
 }

@@ -23,7 +23,7 @@ public enum TokenType {
 public record Token(TokenType Type, string Lexeme, (int Col, int Line, int Index) Position) {
     public override string ToString() {
         var (col, line, idx) = Position;
-        return $"[{Type}] \"{Lexeme}\" at line {line}, col {col}, index {idx}";
+        return $"Token{{{Type}, \"{Lexeme}\", line={line}, col={col}, index={idx}}}";
     }
 }
 

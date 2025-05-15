@@ -29,4 +29,13 @@ public class Spot : IParser
         return true;
     }
 
+    public override string ToString()
+    {
+        if (LexemeString != null)
+        {
+            return $"Spot({_tokenType}, '{LexemeString}')";
+        }
+        return $"Spot({_tokenType})";
+    }
+
 }

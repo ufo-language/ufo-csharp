@@ -5,7 +5,12 @@ namespace UFO.Parser.Prims;
 public class RecursionBarrier() : IParser
 {
 
-    private readonly object _DUMMY_OBJECT = new();
+    public class DummyObject
+    {
+        public override string ToString() => "DUMMY_OBJECT";
+    }
+
+    private readonly DummyObject _DUMMY_OBJECT = new();
 
     public bool Parse(ParserState parserState)
     {
@@ -14,4 +19,10 @@ public class RecursionBarrier() : IParser
         parserState.Value = Parser.IGNORE;
         return true;
     }
+
+    public override string ToString()
+    {
+        return "RecursionBarrier()";
+    }
+
 }

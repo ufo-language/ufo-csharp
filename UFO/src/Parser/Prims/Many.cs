@@ -21,7 +21,7 @@ public class Many : IParser
 
     public bool Parse(ParserState parserState)
     {
-        List<object> elems = [];
+        List elems = [];
         int n = 0;
         (int, object) savedState = parserState.GetState();
         while (Parser.Parse(_parser, parserState))
@@ -37,4 +37,10 @@ public class Many : IParser
         parserState.Value = elems;
         return true;
     }
+
+    public override string ToString()
+    {
+        return $"Many({_parser}, {_min})";
+    }
+
 }

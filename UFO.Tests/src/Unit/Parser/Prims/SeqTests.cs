@@ -1,5 +1,5 @@
-
 using UFO.Lexer;
+using UFO.Parser;
 
 namespace UFO.Tests.Unit.Parser.Prims;
 
@@ -23,8 +23,8 @@ public class SeqTests
         // Assert
         Assert.True(success);
         object value = parserState.Value;
-        Assert.IsType<List<object>>(value);
-        List<object> list = (List<object>)value;
+        Assert.IsType<List>(value);
+        List list = (List)value;
         Assert.Equal(2, list.Count);
         Token token0 = (Token)list[0];
         Assert.Equal(TokenType.Symbol, token0.Type);

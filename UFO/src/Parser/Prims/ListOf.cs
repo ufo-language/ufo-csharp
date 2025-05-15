@@ -27,17 +27,21 @@ public class ListOf
         _barParser = bar;
     }
 
-/*
-def list_of(open, elem, sep, close, bar=None):
-    def _proper_list(parser_state):
-        parser = seq(open, sep_by(elem, sep), require(close))
-        success = parse(parser, parser_state)
-        return success
-    def _improper_list(parser_state):
-        parser = seq(open, maybe(seq(sep_by(elem, sep), one_of(seq(bar, elem), succeed(None)))), close)
-        success = parse(parser, parser_state)
-        return success
-    return _proper_list if bar is None else _improper_list
-*/
+    /*
+    def list_of(open, elem, sep, close, bar=None):
+        def _proper_list(parser_state):
+            parser = seq(open, sep_by(elem, sep), require(close))
+            success = parse(parser, parser_state)
+            return success
+        def _improper_list(parser_state):
+            parser = seq(open, maybe(seq(sep_by(elem, sep), one_of(seq(bar, elem), succeed(None)))), close)
+            success = parse(parser, parser_state)
+            return success
+        return _proper_list if bar is None else _improper_list
+    */
 
+    public override string ToString()
+    {
+        return $"ListOf({_openParser}, {_elemParser}, {_sepParser}, {_closeParser}, {_barParser})";
+    }
 }

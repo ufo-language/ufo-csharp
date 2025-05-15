@@ -26,4 +26,10 @@ public class Require : IParser
         }
         throw new Exception(_message ?? $"Parse failure: expected {_parser}");
     }
+
+    public override string ToString()
+    {
+        return $"Require({_parser})";
+    }
+
 }

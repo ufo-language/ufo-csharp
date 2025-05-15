@@ -10,4 +10,9 @@ public class Succeed(object value) : IParser
         parserState.Value = _value;
         return true;
     }
+
+    public override string ToString()
+    {
+        return $"Succeed({_value})";
+    }
 }
