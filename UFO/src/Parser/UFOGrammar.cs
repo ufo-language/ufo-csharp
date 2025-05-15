@@ -13,6 +13,7 @@ using UFOSeq = UFO.Types.Expression.Seq;
 using UFOSet = UFO.Types.Data.Set;
 using UFOString = UFO.Types.Literal.String;
 using UFOSymbol = UFO.Types.Literal.Symbol;
+using UFOTerm = UFO.Types.Data.Term;
 
 namespace UFO.Parser;
 
@@ -40,6 +41,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeSet = tokenObj => UFOSet.Create((List)tokenObj);
     private static readonly Func<object, object> MakeString = tokenObj => UFOString.Create(((Token)tokenObj).Lexeme);
     private static readonly Func<object, object> MakeSymbol = tokenObj => UFOSymbol.Create(((Token)tokenObj).Lexeme);
+    private static readonly Func<object, object> MakeTerm = tokenObj => UFOTerm.Create((List)tokenObj);
 
 
     public static readonly Dictionary<string, IParser> Parsers = new()
@@ -69,14 +71,14 @@ public class UFOGrammar
         // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
         // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
 
-        ["Data"]         = OneOf("Array", /*'HashTable',*/ "List", "Queue", /*'Set', 'Term',*/ "Literal"),
+        ["Data"]         = OneOf("Array", /*'HashTable',*/ "List", "Queue", "Set", /*"Term",*/ "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
         // # 'Binding'     : apply(Binding.from_parser, seq(recursion_barrier, 'Any', '=', 'Any')),
         // 'HashTable'   : apply(HashTable.ProtoHash.from_parser, seq('#', list_of('{', 'Any', ',', '}'))),
         ["List"]         = Apply(MakeList, ListOf("[", "Any", ",", "]", "|")),
         ["Queue"]        = Apply(MakeQueue, Seq("~", ListOf("[", "Any", ",", "]"))),
         ["Set"]          = Apply(MakeSet, Seq("$", ListOf("{", "Any", ",", "}"))),
-        // 'Term'        : apply(Term.from_parser, seq(recursion_barrier, 'Any', 'Array')),
+        ["Term"]         = Apply(MakeTerm, Seq("Symbol", "Array")),
 
         ["Literal"]      = OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol"),
         ["Boolean"]      = OneOf(IfThen("true", UFOBool.TRUE), IfThen("false", UFOBool.FALSE)),
