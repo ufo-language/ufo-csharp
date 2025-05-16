@@ -8,7 +8,7 @@ namespace UFO.Tests.Unit.Parser;
 public class UFOGrammarTests
 {
     [Fact]
-    public void Grammar_TestIfItWorksAtAll()
+    public void Grammar_Integer()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("123");
@@ -27,7 +27,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Integer()
+    public void Grammar_LiteralInteger()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("123");
@@ -46,7 +46,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Symbol()
+    public void Grammar_LiteralSymbol()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("Abc");
@@ -65,7 +65,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Real()
+    public void Grammar_LiteralReal()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("123.5");
@@ -84,7 +84,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Boolean_true()
+    public void Grammar_LiteralBoolean_true()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("true");
@@ -103,7 +103,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Boolean_false()
+    public void Grammar_LiteralBoolean_false()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("false");
@@ -122,7 +122,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Nil()
+    public void Grammar_LiteralNil()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("nil");
@@ -139,7 +139,7 @@ public class UFOGrammarTests
     }
 
     [Fact]
-    public void Grammar_Identifierl()
+    public void Grammar_LiteralIdentifierl()
     {
         // Arrange
         UFO.Lexer.Lexer lexer = new("abc");

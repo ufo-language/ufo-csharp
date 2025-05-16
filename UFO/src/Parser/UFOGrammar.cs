@@ -12,6 +12,7 @@ using UFOInt = UFO.Types.Literal.Integer;
 using UFOList = UFO.Types.Data.List;
 using UFONil = UFO.Types.Literal.Nil;
 using UFOQueue = UFO.Types.Data.Queue;
+using UFOQuote = UFO.Types.Expression.Quote;
 using UFOReal = UFO.Types.Literal.Real;
 using UFOSeq = UFO.Types.Expression.Seq;
 using UFOSet = UFO.Types.Data.Set;
@@ -49,6 +50,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeList = tokenObj => UFOList.Create((List)tokenObj);
     private static readonly Func<object, object> MakeQueue = tokenObj => UFOQueue.Create((List)tokenObj);
+    private static readonly Func<object, object> MakeQuote = tokenObj => UFOQuote.Create(tokenObj);
     private static readonly Func<object, object> MakeReal = tokenObj => UFOReal.Create(double.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeSeq = tokenObj => UFOSeq.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
     private static readonly Func<object, object> MakeSet = tokenObj => UFOSet.Create((List)tokenObj);
@@ -63,7 +65,7 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf(/*"Apply", "Assign", "BinOp", "Function",*/ "IfThen", /*"PrefixOp", "Quote", "ScopeRes", "Subscript",*/ "Data"),
+        ["Any"]          = OneOf(/*"Apply", "Assign", "BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes", "Subscript",*/ "Data"),
         // "Apply"       : apply(Apply.from_parser, seq(recursion_barrier, "Any", "ArgList")),
         // "ArgList"     : list_of("(", "Any", ",", ")"),
         // "Assign"      : apply(Assign.from_parser, seq("Data", ":=", "!Any")),
@@ -77,7 +79,7 @@ public class UFOGrammar
         ["IfThen"]       = Apply(MakeIfThen, Seq("if", "!Any", "!then", "!Any", Maybe(Seq("else", "!Any")))),
         ["!then"]        = Require("then"),
         // "PrefixOp"    : apply(PrefixOp.from_parser, seq("Operator", "Any")),
-        // "Quote"       : apply(Quote, seq("\"", "Any", "\"")),
+        ["Quote"]        = Apply(MakeQuote, Seq("'", "Any", "'")),
         // "ScopeRes"    : apply(ScopeResolution.from_parser, sep_by("Identifier", ":", 2)),
         // "Subscript"   : apply(Subscript.from_parser, seq(recursion_barrier, "Any", "[", "Any", "]")),
 

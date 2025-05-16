@@ -30,7 +30,6 @@ public class REP
         {
             if (!Read(out _expr))
             {
-                Console.WriteLine("Read returned false, ReadEvalPrint returning false");
                 return false;
             }
             _value = Eval(_expr);
@@ -59,7 +58,7 @@ public class REP
         }
         Lexer.Lexer lexer = new();
         _lexerTokens = lexer.Tokenize(inputString);
-        Lexer.Lexer.PrintTokens(_lexerTokens);
+        // Lexer.Lexer.PrintTokens(_lexerTokens);
         Parser.ParserState parserState = new(Parser.UFOGrammar.Parsers, _lexerTokens);
         try
         {
@@ -68,7 +67,6 @@ public class REP
                 expr = (UFOObject)parserState.Value;
                 return true;
             }
-            Console.WriteLine("Parse failure; Read returning false");
             return false;
         }
         catch (Parser.ParseException exn)
@@ -83,7 +81,7 @@ public class REP
         return expr.Eval(_etor);
     }
 
-    public void Print(UFOObject value)
+    public static void Print(UFOObject value)
     {
         value.ShowOn(Console.Out);
         Console.Out.Write(" :: ");
