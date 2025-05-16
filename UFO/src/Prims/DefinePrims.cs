@@ -16,6 +16,7 @@ public class DefinePrims
 
     public static void DefineAllPrims(Evaluator etor)
     {
+        DefinePrim(new Display(), etor);
         DefinePrim(new Show(), etor);
     }
 }

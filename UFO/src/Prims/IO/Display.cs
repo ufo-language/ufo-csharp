@@ -1,13 +1,12 @@
-using UFO.Evaluator;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.Prims.IO;
 
-public class Show : Primitive
+public class Display : Primitive
 {
-    public Show() : base("io_show")
+    public Display() : base("io_disp")
     {}
 
     public override UFOObject Call(Evaluator.Evaluator etor, List args)

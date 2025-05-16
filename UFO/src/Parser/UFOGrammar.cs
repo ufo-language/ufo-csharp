@@ -2,6 +2,7 @@ using UFO.Lexer;
 using UFO.Parser.Prims;
 using UFO.Utils;
 
+using UFOApply = UFO.Types.Expression.Apply;
 using UFOArray = UFO.Types.Data.Array;
 using UFOAssign = UFO.Types.Expression.Assign;
 using UFOBinding = UFO.Types.Data.Binding;
@@ -43,6 +44,7 @@ public class UFOGrammar
     private static Spot Spot(TokenType tokenType) => new(tokenType);
 
     // Type conversion functions
+    private static readonly Func<object, object> MakeApply = tokenObj => UFOApply.Create((List)tokenObj);
     private static readonly Func<object, object> MakeArray = tokenObj => UFOArray.Create((List)tokenObj);
     private static readonly Func<object, object> MakeAssign = tokenObj => UFOAssign.Create((List)tokenObj);
     private static readonly Func<object, object> MakeBinding = tokenObj => UFOBinding.Create((List)tokenObj);
@@ -67,23 +69,23 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf(/*"Apply",*/ "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes", "Subscript",*/ "Data"),
-        // "Apply"       : Apply(Apply.from_parser, Seq(RecursionBarrier(), "Any", "ArgList")),
-        // "ArgList"     : ListOf("(", "Any", ",", ")"),
+        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes", "Subscript",*/ "Data"),
+        ["Apply"]        = Apply(MakeApply, Seq(RecursionBarrier(), "Any", "ArgList")),
+        ["ArgList"]      = ListOf("(", "Any", ",", ")"),
         ["Assign"]       = Apply(MakeAssign, Seq("Data", ":=", "!Any")),
-        // "BinOp"       : Apply(BinOp.from_parser, Seq(RecursionBarrier(), "Any", "Operator", "!Any")),
-        // "Operator"    : Apply(Identifier, Spot("Operator")),
-        // "Function"    : Apply(Function.from_parser, Seq(OneOf("fun", "macro"), OneOf("Identifier", Succeed(None)), SepBy("FunctionRule", "|"))),
-        // "fun"         : IfThen(Spot("Reserved", "fun"), false),
-        // "macro"       : IfThen(Spot("Reserved", "macro"), true),
+        // "BinOp"         = Apply(BinOp.from_parser, Seq(RecursionBarrier(), "Any", "Operator", "!Any")),
+        // "Operator"      = Apply(Identifier, Spot("Operator")),
+        // "Function"      = Apply(Function.from_parser, Seq(OneOf("fun", "macro"), OneOf("Identifier", Succeed(None)), SepBy("FunctionRule", "|"))),
+        // "fun"           = IfThen(Spot("Reserved", "fun"), false),
+        // "macro"         = IfThen(Spot("Reserved", "macro"), true),
         // "FunctionRule": Seq("ParamList", "=", "Any"),
-        // "ParamList"   : ListOf("(", "Any", ",", ")"),
+        // "ParamList"     = ListOf("(", "Any", ",", ")"),
         ["IfThen"]       = Apply(MakeIfThen, Seq("if", "!Any", "!then", "!Any", Maybe(Seq("else", "!Any")))),
         ["!then"]        = Require("then"),
-        // "PrefixOp"    : Apply(PrefixOp.from_parser, Seq("Operator", "Any")),
+        // "PrefixOp"      = Apply(PrefixOp.from_parser, Seq("Operator", "Any")),
         ["Quote"]        = Apply(MakeQuote, Seq("'", "Any", "'")),
-        // "ScopeRes"    : Apply(ScopeResolution.from_parser, SepBy("Identifier", ":", 2)),
-        // "Subscript"   : Apply(Subscript.from_parser, Seq(RecursionBarrier(), "Any", "[", "Any", "]")),
+        // "ScopeRes"      = Apply(ScopeResolution.from_parser, SepBy("Identifier", ":", 2)),
+        // "Subscript"     = Apply(Subscript.from_parser, Seq(RecursionBarrier(), "Any", "[", "Any", "]")),
 
         ["Data"]         = OneOf("Array", "Binding", "HashTable", "List", "Queue", "Set", "Term", "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
@@ -106,5 +108,4 @@ public class UFOGrammar
         ["Identifier"]   = Apply(MakeIdentifier, Spot(TokenType.Word)),
         ["Seq"]          = Apply(MakeSeq, ListOf("(", "Any", ";", ")"))
     };
-
 }

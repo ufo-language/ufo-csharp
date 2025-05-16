@@ -20,6 +20,18 @@ public class Apply : Expression
         return new Apply(abstr, args);
     }
 
+    public static Apply Create(Parser.List parts)
+    {
+        UFOObject abstr = (UFOObject)parts[0];
+        Parser.List argsList = (Parser.List)parts[1];
+        Queue argsQ = new();
+        foreach (object argObj in argsList)
+        {
+            argsQ.Enq((UFOObject)argObj);
+        }
+        return new Apply(abstr, argsQ.AsList());
+    }
+
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
         UFOObject abstrVal = Abstr.Eval(etor);
@@ -40,5 +52,4 @@ public class Apply : Expression
         }
         Utils.ShowOn.ShowOnWith(writer, Args.EachElem(), "(", ", ", ")");
     }
-
 }

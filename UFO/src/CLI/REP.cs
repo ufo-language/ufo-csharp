@@ -88,10 +88,12 @@ public class REP
 
     public static void Print(UFOObject value)
     {
-        value.ShowOn(Console.Out);
-        Console.Out.Write(" :: ");
-        Console.Out.Write(value.GetType().Name);
-        Console.Out.WriteLine();
+        if (value != Nil.NIL)
+        {
+            value.ShowOn(Console.Out);
+            Console.Out.Write(" :: ");
+            Console.Out.Write(value.GetType().Name);
+            Console.Out.WriteLine();
+        }
     }
-
 }
