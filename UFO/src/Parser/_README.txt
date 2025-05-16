@@ -1,1 +1,1 @@
-These parsers use only native C# types.
+This parser uses only native C# types.

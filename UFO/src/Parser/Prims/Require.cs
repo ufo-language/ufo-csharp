@@ -1,22 +1,10 @@
 namespace UFO.Parser.Prims;
 
-public class Require : IParser
+public class Require(object parser, string? message = null) : IParser
 {
 
-    private readonly object _parser;
-    private readonly string? _message;
-
-    public Require(object parser)
-    {
-        _parser = parser;
-        _message = null;
-    }
-
-    public Require(object parser, string message)
-    {
-        _parser = parser;
-        _message = message;
-    }
+    private readonly object _parser = parser;
+    private readonly string? _message = message;
 
     public bool Parse(ParserState parserState)
     {

@@ -26,11 +26,14 @@ public class UFOGrammar
     private static Apply Apply(Func<object, object> function, object parser) => new(function, parser);
     private static Debug Debug(object parser) => new(parser);
     private static Debug Debug(string message, object parser) => new(message, parser);
+    private static Ignore Ignore(object parser) => new(parser);
     private static IfThen IfThen(object returnValue, object parser) => new(returnValue, parser);
     private static ListOf ListOf(object open, object elem, object sep, object close) => new(open, elem, sep, close);
     private static ListOf ListOf(object open, object elem, object sep, object close, object bar) => new(open, elem, sep, close, bar);
     private static OneOf OneOf(params object[] parsers) => new(parsers);
     private static RecursionBarrier RecursionBarrier() => new();
+    private static Require Require(object parser) => new(parser);
+    private static Require Require(object parser, string message) => new(parser, message);
     private static Seq Seq(params object[] parsers) => new(parsers);
     private static Spot Spot(TokenType tokenType) => new(tokenType);
 
@@ -52,30 +55,27 @@ public class UFOGrammar
 
     public static readonly Dictionary<string, IParser> Parsers = new()
     {
-        // ["Number"] = Spot(TokenType.Number),
-        // ["Identifier"] = Spot(TokenType.Identifier)
+        ["Program"]      = Seq("Any", "!EOI"),
+        ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
+        ["!Any"]         = Require("Any"),
 
-        // 'Program'     : seq('Any', '!EOI'),
-        // '!EOI'        : require(Lexer.EOI, 'End-of-Input'),
-        // '!Any'        : require('Any'),
-
-        ["Any"]          = OneOf(/*'Apply', 'Assign', 'BinOp', 'Function', 'If', 'PrefixOp', 'Quote', 'ScopeRes', 'Subscript',*/ "Data"),
-        // 'Apply'       : apply(Apply.from_parser, seq(recursion_barrier, 'Any', 'ArgList')),
-        // 'ArgList'     : list_of('(', 'Any', ',', ')'),
-        // 'Assign'      : apply(Assign.from_parser, seq('Data', ':=', '!Any')),
-        // 'BinOp'       : apply(BinOp.from_parser, seq(recursion_barrier, 'Any', 'Operator', '!Any')),
-        // 'Operator'    : apply(Identifier, spot('Operator')),
-        // 'Function'    : apply(Function.from_parser, seq(one_of('fun', 'macro'), one_of('Identifier', succeed(None)), sep_by('FunctionRule', '|'))),
-        // 'fun'         : returning(False, spot('Reserved', 'fun')),
-        // 'macro'       : returning(True, spot('Reserved', 'macro')),
-        // 'FunctionRule': seq('ParamList', '=', 'Any'),
-        // 'ParamList'   : list_of('(', 'Any', ',', ')'),
-        // 'If'          : apply(IfThen.from_parser, seq('if', '!Any', '!then', '!Any', maybe(seq('else', '!Any')))),
-        // '!then'       : require('then'),
-        // 'PrefixOp'    : apply(PrefixOp.from_parser, seq('Operator', 'Any')),
-        // 'Quote'       : apply(Quote, seq('\'', 'Any', '\'')),
-        // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
-        // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
+        ["Any"]          = OneOf(/*"Apply", "Assign", "BinOp", "Function", "If", "PrefixOp", "Quote", "ScopeRes", "Subscript",*/ "Data"),
+        // "Apply"       : apply(Apply.from_parser, seq(recursion_barrier, "Any", "ArgList")),
+        // "ArgList"     : list_of("(", "Any", ",", ")"),
+        // "Assign"      : apply(Assign.from_parser, seq("Data", ":=", "!Any")),
+        // "BinOp"       : apply(BinOp.from_parser, seq(recursion_barrier, "Any", "Operator", "!Any")),
+        // "Operator"    : apply(Identifier, spot("Operator")),
+        // "Function"    : apply(Function.from_parser, seq(one_of("fun", "macro"), one_of("Identifier", succeed(None)), sep_by("FunctionRule", "|"))),
+        // "fun"         : returning(False, spot("Reserved", "fun")),
+        // "macro"       : returning(True, spot("Reserved", "macro")),
+        // "FunctionRule": seq("ParamList", "=", "Any"),
+        // "ParamList"   : list_of("(", "Any", ",", ")"),
+        // "If"          : apply(IfThen.from_parser, seq("if", "!Any", "!then", "!Any", maybe(seq("else", "!Any")))),
+        // "!then"       : require("then"),
+        // "PrefixOp"    : apply(PrefixOp.from_parser, seq("Operator", "Any")),
+        // "Quote"       : apply(Quote, seq("\"", "Any", "\"")),
+        // "ScopeRes"    : apply(ScopeResolution.from_parser, sep_by("Identifier", ":", 2)),
+        // "Subscript"   : apply(Subscript.from_parser, seq(recursion_barrier, "Any", "[", "Any", "]")),
 
         ["Data"]         = OneOf("Array", "Binding", "HashTable", "List", "Queue", "Set", "Term", "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),

@@ -6,6 +6,7 @@ class UFO
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello from Main class!");
+        CLI.REPL repl = new();
+        repl.Run();
     }
 }
