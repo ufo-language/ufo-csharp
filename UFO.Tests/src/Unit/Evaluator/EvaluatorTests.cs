@@ -1,23 +1,23 @@
+using UFO.Types;
+using UFO.Types.Expression;
+using UFO.Types.Literal;
+
 namespace UFO.Tests.Unit.Evaluator;
 
 public class EvaluatorTests
 {
-
-#if false  // This was for the CPS evaluator
     [Fact]
-    public void PushObj()
+    public void Bind_noBindings()
     {
         // Arrange
-        var etor = new Evaluator.Evaluator();
-        var nil = Nil.Create();
+        UFO.Evaluator.Evaluator etor = new();
+        Identifier id_x = Identifier.Create("x");
 
         // Act
-        etor.PushObj(nil);
-        UFOObject obj = etor.PopObj();
+        UFOObject value = Nil.NIL;
+        bool success = etor.Lookup(id_x, ref value);
 
         // Assert
-        Assert.Same(nil, obj);
-        Assert.Throws<InvalidOperationException>(() => etor.PopObj());
+        Assert.False(success);
     }
-#endif
 }
