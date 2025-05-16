@@ -592,7 +592,6 @@ public class UFOGrammarTests
         Assert.Equal(inputString, protoHash.ToString());
     }
 
-#if false
     [Fact]
     public void Grammar_HashTable_2()
     {
@@ -603,7 +602,16 @@ public class UFOGrammarTests
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
         // Act
-        bool success = UFO.Parser.Parser.Parse("HashTable", parserState);
+        bool success = false;
+        try
+        {
+            success = UFO.Parser.Parser.Parse("HashTable", parserState);
+        }
+        catch (ParseException exn)
+        {
+            Console.WriteLine($"Grammar_HashTable_1 caught exception\n{exn.ToString()}");
+            Assert.Fail();
+        }
 
         // Assert
         Assert.True(success);
@@ -612,5 +620,5 @@ public class UFOGrammarTests
         UFO.Types.Data.HashTable.ProtoHash protoHash = (UFO.Types.Data.HashTable.ProtoHash)value;
         Assert.Equal(inputString, protoHash.ToString());
     }
-#endif
+
 }

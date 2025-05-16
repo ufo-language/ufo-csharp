@@ -16,7 +16,7 @@ public class RecursionBarrier() : IParser
     public bool Parse(ParserState parserState)
     {
         string parserName = parserState.CurrentParserName;
-        parserState.Memoize((parserName, parserState.TokenIndex), false, _DUMMY_OBJECT, parserState.TokenIndex);
+        parserState.Memoize((parserName, parserState.TokenIndex), false, _DUMMY_OBJECT, -1);
         parserState.Value = Parser.IGNORE;
         return true;
     }

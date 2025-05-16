@@ -77,22 +77,22 @@ public class UFOGrammar
         // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
         // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
 
-        ["Data"]         = Debug("ANY", OneOf("Array", "Binding", /*"HashTable",*/ "List", "Queue", "Set", "Term", "Literal")),
+        ["Data"]         = OneOf("Array", "Binding", "HashTable", "List", "Queue", "Set", "Term", "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
-        ["Binding"]      = Debug(Apply(MakeBinding, Debug(Seq(/*RecursionBarrier(),*/ "Any", "=", "Any")))),
+        ["Binding"]      = Apply(MakeBinding, Seq(RecursionBarrier(), "Any", "=", "Any")),
         ["HashTable"]    = Apply(MakeHashTable, Seq("#", ListOf("{", "Any", ",", "}"))),
         ["List"]         = Apply(MakeList, ListOf("[", "Any", ",", "]", "|")),
         ["Queue"]        = Apply(MakeQueue, Seq("~", ListOf("[", "Any", ",", "]"))),
         ["Set"]          = Apply(MakeSet, Seq("$", ListOf("{", "Any", ",", "}"))),
         ["Term"]         = Apply(MakeTerm, Seq("Symbol", "Array")),
 
-        ["Literal"]      = Debug("LITERAL", OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol")),
+        ["Literal"]      = OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol"),
         ["Boolean"]      = OneOf(IfThen("true", UFOBool.TRUE), IfThen("false", UFOBool.FALSE)),
         ["Integer"]      = Apply(MakeInt, Spot(TokenType.Integer)),
         ["Real"]         = Apply(MakeReal, Spot(TokenType.Real)),
         ["Nil"]          = IfThen("nil", UFONil.NIL),
         ["String"]       = Apply(MakeString, Spot(TokenType.String)),
-        ["Symbol"]       = Debug("SYMBOL", Apply(MakeSymbol, Spot(TokenType.Symbol))),
+        ["Symbol"]       = Apply(MakeSymbol, Spot(TokenType.Symbol)),
 
         // # these are not literals, but they are parsed as literals:
         ["Identifier"]   = Apply(MakeIdentifier, Spot(TokenType.Word)),

@@ -14,19 +14,19 @@ public class SepBy(object elem, object sep) : IParser
         if (Parser.Parse(_elemParser, parserState))
         {
             elems.Add(parserState.Value);
-            Console.WriteLine($"==== SepBy looking for {_sepParser}, nextToken = {parserState.NextToken}");
+            // Console.WriteLine($"==== SepBy looking for {_sepParser}, nextToken = {parserState.NextToken}");
             while (Parser.Parse(_sepParser, parserState))
             {
-                Console.WriteLine($"==== SepBy found {_sepParser}, looking for {_elemParser}, nextToken = {parserState.NextToken}");
+                // Console.WriteLine($"==== SepBy found {_sepParser}, looking for {_elemParser}, nextToken = {parserState.NextToken}");
                 if (!Parser.Parse(_elemParser, parserState))
                 {
-                    Console.WriteLine($"==== SepBy found separator {_sepParser} but no element {_elemParser}");
+                    // Console.WriteLine($"==== SepBy found separator {_sepParser} but no element {_elemParser}");
                     string lexeme = parserState.NextToken.Lexeme;
                     throw new Exception($"'{_elemParser}' expected after '{_sepParser}', found '{lexeme}'");
                 }
                 elems.Add(parserState.Value);
             }
-            Console.WriteLine($"==== SepBy did not find separator, returning {elems}");
+            // Console.WriteLine($"==== SepBy did not find separator, returning {elems}");
         }
         parserState.Value = elems;
         return true;

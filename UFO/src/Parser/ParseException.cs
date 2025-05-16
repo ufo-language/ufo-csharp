@@ -9,14 +9,17 @@ public class ParseException(string message, ParserState parserState) : Exception
     private string _message = message;
     private ParserState _parserState = parserState;
 
+    private readonly string _PREFIX = "==> ";
+
     public override string ToString()
     {
         StringBuilder sb = new();
-        sb.Append(">> Parse exception: ");
+        sb.Append(_PREFIX);
+        sb.Append("Parse exception: ");
         sb.Append(_message);
         sb.Append('\n');
+        sb.Append(_PREFIX);
         int indentSpaces = 0;
-        sb.Append(">> ");
         for (int n=0; n<_parserState.Tokens.Count - 1; n++)
         {
             Token token = _parserState.Tokens[n];
@@ -26,7 +29,8 @@ public class ParseException(string message, ParserState parserState) : Exception
                 indentSpaces += token.Lexeme.Length + 1;
             }
         }
-        sb.Append("\n>> ");
+        sb.Append('\n');
+        sb.Append(_PREFIX);
         sb.Append(new string(' ', indentSpaces));
         sb.Append("^\n");
         return sb.ToString();
