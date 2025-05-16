@@ -23,6 +23,7 @@ public enum TypeId
     NIL,
     PRIMITIVE,
     REAL,
+    STRING,
     SYMBOL,
     // Other
     Z_ANY,
