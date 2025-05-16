@@ -1,4 +1,3 @@
-using System.Text;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
@@ -7,12 +6,12 @@ namespace UFO.Types.Expression;
 public class Function : Expression
 {
 
-    private UFOObject _name;
-    public List Parameters { get; private set; }
+    private readonly UFOObject _name;
+    public List<UFOObject> Parameters { get; private set; }
     public UFOObject Body { get; private set; }
     public Function? NextRule { get; private set; }
 
-    private Function(UFOObject name, List parameters, UFOObject body, Function? nextRule)
+    private Function(UFOObject name, List<UFOObject> parameters, UFOObject body, Function? nextRule)
     {
         _name = name;
         Parameters = parameters;
@@ -20,22 +19,22 @@ public class Function : Expression
         NextRule = nextRule;
     }
 
-    public static Function Create(List parameters, UFOObject body)
+    public static Function Create(List<UFOObject> parameters, UFOObject body)
     {
         return new(Nil.Create(), parameters, body, null);
     }
 
-    public static Function Create(List parameters, UFOObject body, Function nextRule)
+    public static Function Create(List<UFOObject> parameters, UFOObject body, Function nextRule)
     {
         return new(Nil.Create(), parameters, body, nextRule);
     }
 
-    public static Function Create(UFOObject name, List parameters, UFOObject body)
+    public static Function Create(UFOObject name, List<UFOObject> parameters, UFOObject body)
     {
         return new(name, parameters, body, null);
     }
     
-    public static Function Create(UFOObject name, List parameters, UFOObject body, Function nextRule)
+    public static Function Create(UFOObject name, List<UFOObject> parameters, UFOObject body, Function nextRule)
     {
         return new(name, parameters, body, nextRule);
     }
@@ -63,7 +62,7 @@ public class Function : Expression
         {
             if (firstIter) firstIter = false;
             else writer.Write(", ");
-            Utils.ShowOn.ShowOnWith(writer, fun.Parameters.EachElem(), "(", ", ", ")");
+            Utils.ShowOn.ShowOnWith(writer, fun.Parameters, "(", ", ", ")");
             writer.Write(" = ");
             fun.Body.ShowOn(writer);
             fun = fun.NextRule;

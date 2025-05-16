@@ -14,7 +14,7 @@ public class Load : Primitive
         ParamTypes_SumOfProds([TypeId.SYMBOL]);
     }
 
-    public override UFOObject Call(Evaluator.Evaluator etor, List args)
+    public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         throw new NotImplementedException();
     }

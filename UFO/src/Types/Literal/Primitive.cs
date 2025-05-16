@@ -22,16 +22,16 @@ public abstract class Primitive(string name) : Literal
 
     private ParamTypeTypes ParamTypeType;
 
-    public override UFOObject Apply(Evaluator.Evaluator etor, List args)
+    public override UFOObject Apply(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        List argValues = (List)args.Eval(etor);
+        List<UFOObject> argValues = etor.EvalEach(args);
         CheckArgTypes(argValues);
         return Call(etor, argValues);
     }
 
-    public abstract UFOObject Call(Evaluator.Evaluator etor, List args);
+    public abstract UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args);
 
-    private void CheckArgTypes(List args)
+    private void CheckArgTypes(List<UFOObject> args)
     {
         switch (ParamTypeType) {
             case ParamTypeTypes.PROD_OF_SUMS:
@@ -45,12 +45,12 @@ public abstract class Primitive(string name) : Literal
         }
     }
 
-    private void CheckArgTypes_ProdOfSums(List args)
+    private void CheckArgTypes_ProdOfSums(List<UFOObject> args)
     {
         // TODO
     }
 
-    private void CheckArgTypes_SumOfProds(List args)
+    private void CheckArgTypes_SumOfProds(List<UFOObject> args)
     {
         // TODO
     }

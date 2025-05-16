@@ -7,15 +7,10 @@ namespace UFO.Types.Literal;
 public class Closure : Literal
 {
 
-    public class ArgumentMismatchException : Exception
+    public class ArgumentMismatchException(Function fun, List<UFOObject> args) : Exception
     {
-        public Function Fun { get; private set; }
-        public List Args { get; private set; }
-        public ArgumentMismatchException(Function fun, List args)
-        {
-            Fun = fun;
-            Args = args;
-        }
+        public Function Fun { get; private set; } = fun;
+        public List<UFOObject> Args { get; private set; } = args;
     }
 
     public Function Fun { get; private set; }
@@ -27,15 +22,14 @@ public class Closure : Literal
         LexicalEnv = lexicalEnv;
     }
 
-    public override UFOObject Apply(Evaluator.Evaluator etor, List args)
+    public override UFOObject Apply(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        List argValues = (List)args.Eval(etor);
+        List<UFOObject> argValues = etor.EvalEach(args);
         Binding env = etor.Env;
         Function? fun = Fun;
         while (fun != null)
         {
-            List parameters = fun.Parameters;
-            if (parameters.Match(args, ref etor))
+            if (UFOObject.Match(fun.Parameters, args, etor))
             {
                 return fun.Body.Eval(etor);
             }

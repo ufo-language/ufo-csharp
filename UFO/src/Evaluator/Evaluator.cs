@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Data;
@@ -7,7 +8,7 @@ namespace UFO.Evaluator;
 
 public class Evaluator
 {
-    public Binding Env { get; private set; }
+    public Binding Env { get; set; }
 
     public Evaluator()
     {
@@ -18,6 +19,16 @@ public class Evaluator
     public void Bind(Identifier name, UFOObject value)
     {
         Env = Binding.Create(name, value, Env);
+    }
+
+    public List<UFOObject> EvalEach(List<UFOObject> elems)
+    {
+        List<UFOObject> elemVals = [];
+        foreach (UFOObject elem in elems)
+        {
+            elemVals.Add(elem.Eval(this));
+        }
+        return elemVals;
     }
 
     public bool Lookup(Identifier name, ref UFOObject value)

@@ -7,15 +7,15 @@ namespace UFO.Types.Expression;
 public class Apply : Expression
 {
     public UFOObject Abstr { get; private set; }
-    public List Args { get; private set; }
+    public List<UFOObject> Args { get; private set; }
 
-    private Apply(UFOObject abstr, List args)
+    private Apply(UFOObject abstr, List<UFOObject> args)
     {
         Abstr = abstr;
         Args = args;
     }
 
-    public static Apply Create(UFOObject abstr, List args)
+    public static Apply Create(UFOObject abstr, List<UFOObject> args)
     {
         return new Apply(abstr, args);
     }
@@ -24,12 +24,12 @@ public class Apply : Expression
     {
         UFOObject abstr = (UFOObject)parts[0];
         Parser.List argsList = (Parser.List)parts[1];
-        Queue argsQ = new();
+        List<UFOObject> argsList2 = [];
         foreach (object argObj in argsList)
         {
-            argsQ.Enq((UFOObject)argObj);
+            argsList2.Add((UFOObject)argObj);
         }
-        return new Apply(abstr, argsQ.AsList());
+        return new Apply(abstr, argsList2);
     }
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
@@ -50,6 +50,6 @@ public class Apply : Expression
             Abstr.ShowOn(writer);
             writer.Write(')');
         }
-        Utils.ShowOn.ShowOnWith(writer, Args.EachElem(), "(", ", ", ")");
+        Utils.ShowOn.ShowOnWith(writer, Args, "(", ", ", ")");
     }
 }

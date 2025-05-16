@@ -13,9 +13,9 @@ public class Length : Primitive
         ];
     }
 
-    public override UFOObject Call(Evaluator.Evaluator etor, List args)
+    public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        Types.Data.Array array = (Types.Data.Array)args.First;
+        Types.Data.Array array = (Types.Data.Array)args[0];
         return Integer.Create(array.Count);
     }
 }

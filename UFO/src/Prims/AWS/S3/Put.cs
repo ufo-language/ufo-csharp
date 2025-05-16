@@ -14,7 +14,7 @@ public class Put : Primitive
         ];
     }
 
-    public override UFOObject Call(Evaluator.Evaluator etor, List args)
+    public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         throw new NotImplementedException();
     }

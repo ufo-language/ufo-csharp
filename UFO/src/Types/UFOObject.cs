@@ -18,7 +18,7 @@ public abstract class UFOObject
         return EqualsAux(other);
     }
 
-    public virtual UFOObject Apply(Evaluator.Evaluator etor, List args)
+    public virtual UFOObject Apply(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         throw new Exception("Object is not applyable");
     }
@@ -44,6 +44,28 @@ public abstract class UFOObject
     }
 
     public override abstract int GetHashCode();
+
+    public static bool Match(List<UFOObject> patterns, List<UFOObject> values, Evaluator.Evaluator etor)
+    {
+        int nPatterns = patterns.Count;
+        int nValues = values.Count;
+        if (nPatterns != nValues)
+        {
+            return false;
+        }
+        Binding savedEnv = etor.Env;
+        for (int n=0; n<nPatterns; n++)
+        {
+            UFOObject pattern = patterns[n];
+            UFOObject value = values[n];
+            if (!pattern.Match(value, ref etor))
+            {
+                etor.Env = savedEnv;
+                return false;
+            }
+        }
+        return true;
+    }
 
     public virtual bool Match(UFOObject other, ref Evaluator.Evaluator etor)
     {

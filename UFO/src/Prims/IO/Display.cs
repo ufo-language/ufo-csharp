@@ -9,9 +9,9 @@ public class Display : Primitive
     public Display() : base("disp")
     {}
 
-    public override UFOObject Call(Evaluator.Evaluator etor, List args)
+    public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        foreach (UFOObject arg in args.EachElem())
+        foreach (UFOObject arg in args)
         {
             arg.DisplayOn(Console.Out);
         }

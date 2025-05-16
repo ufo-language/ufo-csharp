@@ -13,7 +13,7 @@ public class FunctionTests
         // Arrange
         UFO.Evaluator.Evaluator etor = new();
         Identifier id_x = Identifier.Create("x");
-        List parameters = List.Create(id_x);
+        List<UFOObject> parameters = [id_x];
         Function fun = Function.Create(parameters, id_x);
 
         // Act
