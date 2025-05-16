@@ -16,6 +16,7 @@ using UFONil = UFO.Types.Literal.Nil;
 using UFOQueue = UFO.Types.Data.Queue;
 using UFOQuote = UFO.Types.Expression.Quote;
 using UFOReal = UFO.Types.Literal.Real;
+using UFOScopeResolution = UFO.Types.Expression.ScopeResolution;
 using UFOSeq = UFO.Types.Expression.Seq;
 using UFOSet = UFO.Types.Data.Set;
 using UFOString = UFO.Types.Literal.String;
@@ -41,6 +42,7 @@ public class UFOGrammar
     private static RecursionBarrier RecursionBarrier() => new();
     private static Require Require(object parser) => new(parser);
     private static Require Require(object parser, string message) => new(parser, message);
+    private static SepBy SepBy(object elem, object sep, int min=0) => new(elem, sep, min);
     private static Seq Seq(params object[] parsers) => new(parsers);
     private static Spot Spot(TokenType tokenType) => new(tokenType);
 
@@ -57,6 +59,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeQueue = tokenObj => UFOQueue.Create((List)tokenObj);
     private static readonly Func<object, object> MakeQuote = UFOQuote.Create;
     private static readonly Func<object, object> MakeReal = tokenObj => UFOReal.Create(double.Parse(((Token)tokenObj).Lexeme));
+    private static readonly Func<object, object> MakeScopeResolution = tokenObj => UFOScopeResolution.Create((List)tokenObj);
     private static readonly Func<object, object> MakeSeq = tokenObj => UFOSeq.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
     private static readonly Func<object, object> MakeSet = tokenObj => UFOSet.Create((List)tokenObj);
     private static readonly Func<object, object> MakeString = tokenObj => UFOString.Create(((Token)tokenObj).Lexeme);
@@ -71,7 +74,7 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes",*/ "Subscript", "Data"),
+        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", "ScopeRes", "Subscript", "Data"),
         ["Apply"]        = Apply(MakeApply, Seq(RecursionBarrier(), "Any", "ArgList")),
         ["ArgList"]      = ListOf("(", "Any", ",", ")"),
         ["Assign"]       = Apply(MakeAssign, Seq("Data", ":=", "!Any")),
@@ -86,7 +89,7 @@ public class UFOGrammar
         ["!then"]        = Require("then"),
         // "PrefixOp"      = Apply(PrefixOp.from_parser, Seq("Operator", "Any")),
         ["Quote"]        = Apply(MakeQuote, Seq("'", "Any", "'")),
-        // "ScopeRes"      = Apply(ScopeResolution.from_parser, SepBy("Identifier", ":", 2)),
+        ["ScopeRes"]     = Apply(MakeScopeResolution, SepBy("Identifier", ":", 2)),
         ["Subscript"]    = Apply(MakeSubscript, Seq(RecursionBarrier(), "Any", "[", "Any", "]")),
 
         ["Data"]         = OneOf("Array", "Binding", "HashTable", "List", "Queue", "Set", "Term", "Literal"),

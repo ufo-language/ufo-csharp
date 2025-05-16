@@ -2,11 +2,12 @@ using UFO.Types.Data;
 
 namespace UFO.Parser.Prims;
 
-public class SepBy(object elem, object sep) : IParser
+public class SepBy(object elem, object sep, int min=0) : IParser
 {
 
     private readonly object _elemParser = elem;
     private readonly object _sepParser = sep;
+    private int _min = min;
 
     public bool Parse(ParserState parserState)
     {
@@ -27,6 +28,10 @@ public class SepBy(object elem, object sep) : IParser
                 elems.Add(parserState.Value);
             }
             // Console.WriteLine($"==== SepBy did not find separator, returning {elems}");
+        }
+        if (elems.Count < _min)
+        {
+            return false;
         }
         parserState.Value = elems;
         return true;
