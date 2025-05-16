@@ -44,7 +44,7 @@ public class Binding : Data
         while (!binding.IsEmpty())
         {
             yield return binding;
-            binding = Next!;
+            binding = binding.Next!;
         }
         yield break;
     }

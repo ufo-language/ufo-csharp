@@ -1,4 +1,4 @@
-using Prims;
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Expression;

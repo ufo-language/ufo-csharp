@@ -1,20 +1,18 @@
-using UFO.Evaluator;
 using UFO.Prims.IO;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace Prims;
+namespace UFO.Prims;
 
 public class DefinePrims
 {
 
-    private static void DefinePrim(Primitive prim, Evaluator etor)
+    private static void DefinePrim(Primitive prim, Evaluator.Evaluator etor)
     {
-        string name = prim.Name;
-        etor.Bind(Identifier.Create(name), prim);
+        etor.Bind(Identifier.Create(prim.Name), prim);
     }
 
-    public static void DefineAllPrims(Evaluator etor)
+    public static void DefineAllPrims(Evaluator.Evaluator etor)
     {
         DefinePrim(new Display(), etor);
         DefinePrim(new Show(), etor);
