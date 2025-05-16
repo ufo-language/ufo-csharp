@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
 
@@ -8,6 +9,14 @@ public class IfThen(UFOObject cond, UFOObject conseq, UFOObject alt) : Expressio
     private readonly UFOObject _cond = cond;
     private readonly UFOObject _conseq = conseq;
     private readonly UFOObject _alt = alt;
+
+    public static IfThen Create(Parser.List elems)
+    {
+        UFOObject cond = (UFOObject)elems[0];
+        UFOObject conseq = (UFOObject)elems[1];
+        UFOObject alt = elems.Count == 3 ? (UFOObject)elems[2] : Nil.NIL;
+        return new(cond, conseq, alt);
+    }
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
@@ -20,8 +29,11 @@ public class IfThen(UFOObject cond, UFOObject conseq, UFOObject alt) : Expressio
         _cond.ShowOn(writer);
         writer.Write(" then ");
         _conseq.ShowOn(writer);
-        writer.Write(" else ");
-        _alt.ShowOn(writer);
+        if (_alt != Nil.NIL)
+        {
+            writer.Write(" else ");
+            _alt.ShowOn(writer);
+        }
     }
 
 }

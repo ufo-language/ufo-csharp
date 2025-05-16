@@ -1,11 +1,13 @@
 using UFO.Lexer;
 using UFO.Parser.Prims;
 using UFO.Utils;
+
 using UFOArray = UFO.Types.Data.Array;
 using UFOBinding = UFO.Types.Data.Binding;
 using UFOBool = UFO.Types.Literal.Boolean;
 using UFOHashTable = UFO.Types.Data.HashTable;
 using UFOIdentifier = UFO.Types.Expression.Identifier;
+using UFOIfThen = UFO.Types.Expression.IfThen;
 using UFOInt = UFO.Types.Literal.Integer;
 using UFOList = UFO.Types.Data.List;
 using UFONil = UFO.Types.Literal.Nil;
@@ -30,6 +32,7 @@ public class UFOGrammar
     private static IfThen IfThen(object returnValue, object parser) => new(returnValue, parser);
     private static ListOf ListOf(object open, object elem, object sep, object close) => new(open, elem, sep, close);
     private static ListOf ListOf(object open, object elem, object sep, object close, object bar) => new(open, elem, sep, close, bar);
+    private static Maybe Maybe(object parser) => new(parser);
     private static OneOf OneOf(params object[] parsers) => new(parsers);
     private static RecursionBarrier RecursionBarrier() => new();
     private static Require Require(object parser) => new(parser);
@@ -42,6 +45,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeBinding = tokenObj => UFOBinding.Create((List)tokenObj);
     private static readonly Func<object, object> MakeHashTable = tokenObj => UFOHashTable.ProtoHash.Create((List)tokenObj);
     private static readonly Func<object, object> MakeIdentifier = tokenObj => UFOIdentifier.Create(((Token)tokenObj).Lexeme);
+    private static readonly Func<object, object> MakeIfThen = tokenObj => UFOIfThen.Create((List)tokenObj);
     private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeList = tokenObj => UFOList.Create((List)tokenObj);
     private static readonly Func<object, object> MakeQueue = tokenObj => UFOQueue.Create((List)tokenObj);
@@ -59,7 +63,7 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf(/*"Apply", "Assign", "BinOp", "Function", "If", "PrefixOp", "Quote", "ScopeRes", "Subscript",*/ "Data"),
+        ["Any"]          = OneOf(/*"Apply", "Assign", "BinOp", "Function",*/ "IfThen", /*"PrefixOp", "Quote", "ScopeRes", "Subscript",*/ "Data"),
         // "Apply"       : apply(Apply.from_parser, seq(recursion_barrier, "Any", "ArgList")),
         // "ArgList"     : list_of("(", "Any", ",", ")"),
         // "Assign"      : apply(Assign.from_parser, seq("Data", ":=", "!Any")),
@@ -70,8 +74,8 @@ public class UFOGrammar
         // "macro"       : returning(True, spot("Reserved", "macro")),
         // "FunctionRule": seq("ParamList", "=", "Any"),
         // "ParamList"   : list_of("(", "Any", ",", ")"),
-        // "If"          : apply(IfThen.from_parser, seq("if", "!Any", "!then", "!Any", maybe(seq("else", "!Any")))),
-        // "!then"       : require("then"),
+        ["IfThen"]       = Apply(MakeIfThen, Seq("if", "!Any", "!then", "!Any", Maybe(Seq("else", "!Any")))),
+        ["!then"]        = Require("then"),
         // "PrefixOp"    : apply(PrefixOp.from_parser, seq("Operator", "Any")),
         // "Quote"       : apply(Quote, seq("\"", "Any", "\"")),
         // "ScopeRes"    : apply(ScopeResolution.from_parser, sep_by("Identifier", ":", 2)),

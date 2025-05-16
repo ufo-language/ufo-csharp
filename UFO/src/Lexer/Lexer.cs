@@ -6,7 +6,15 @@ public static class Constants
 {
     public static readonly string Operators = "+-*/&|=<>!";
     public static readonly List<string> ReservedWords = [
-        "false", "fun", "for", "in", "nil", "true"
+        "else",
+        "false",
+        "fun",
+        "for",
+        "if",
+        "in",
+        "nil",
+        "then",
+        "true"
     ];
 }
 
