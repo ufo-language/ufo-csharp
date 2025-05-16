@@ -3,6 +3,7 @@ using UFO.Parser.Prims;
 using UFO.Utils;
 
 using UFOArray = UFO.Types.Data.Array;
+using UFOAssign = UFO.Types.Expression.Assign;
 using UFOBinding = UFO.Types.Data.Binding;
 using UFOBool = UFO.Types.Literal.Boolean;
 using UFOHashTable = UFO.Types.Data.HashTable;
@@ -43,6 +44,7 @@ public class UFOGrammar
 
     // Type conversion functions
     private static readonly Func<object, object> MakeArray = tokenObj => UFOArray.Create((List)tokenObj);
+    private static readonly Func<object, object> MakeAssign = tokenObj => UFOAssign.Create((List)tokenObj);
     private static readonly Func<object, object> MakeBinding = tokenObj => UFOBinding.Create((List)tokenObj);
     private static readonly Func<object, object> MakeHashTable = tokenObj => UFOHashTable.ProtoHash.Create((List)tokenObj);
     private static readonly Func<object, object> MakeIdentifier = tokenObj => UFOIdentifier.Create(((Token)tokenObj).Lexeme);
@@ -50,7 +52,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeList = tokenObj => UFOList.Create((List)tokenObj);
     private static readonly Func<object, object> MakeQueue = tokenObj => UFOQueue.Create((List)tokenObj);
-    private static readonly Func<object, object> MakeQuote = tokenObj => UFOQuote.Create(tokenObj);
+    private static readonly Func<object, object> MakeQuote = UFOQuote.Create;
     private static readonly Func<object, object> MakeReal = tokenObj => UFOReal.Create(double.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeSeq = tokenObj => UFOSeq.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
     private static readonly Func<object, object> MakeSet = tokenObj => UFOSet.Create((List)tokenObj);
@@ -65,23 +67,23 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf(/*"Apply", "Assign", "BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes", "Subscript",*/ "Data"),
-        // "Apply"       : apply(Apply.from_parser, seq(recursion_barrier, "Any", "ArgList")),
-        // "ArgList"     : list_of("(", "Any", ",", ")"),
-        // "Assign"      : apply(Assign.from_parser, seq("Data", ":=", "!Any")),
-        // "BinOp"       : apply(BinOp.from_parser, seq(recursion_barrier, "Any", "Operator", "!Any")),
-        // "Operator"    : apply(Identifier, spot("Operator")),
-        // "Function"    : apply(Function.from_parser, seq(one_of("fun", "macro"), one_of("Identifier", succeed(None)), sep_by("FunctionRule", "|"))),
-        // "fun"         : returning(False, spot("Reserved", "fun")),
-        // "macro"       : returning(True, spot("Reserved", "macro")),
-        // "FunctionRule": seq("ParamList", "=", "Any"),
-        // "ParamList"   : list_of("(", "Any", ",", ")"),
+        ["Any"]          = OneOf(/*"Apply",*/ "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes", "Subscript",*/ "Data"),
+        // "Apply"       : Apply(Apply.from_parser, Seq(RecursionBarrier(), "Any", "ArgList")),
+        // "ArgList"     : ListOf("(", "Any", ",", ")"),
+        ["Assign"]       = Apply(MakeAssign, Seq("Data", ":=", "!Any")),
+        // "BinOp"       : Apply(BinOp.from_parser, Seq(RecursionBarrier(), "Any", "Operator", "!Any")),
+        // "Operator"    : Apply(Identifier, Spot("Operator")),
+        // "Function"    : Apply(Function.from_parser, Seq(OneOf("fun", "macro"), OneOf("Identifier", Succeed(None)), SepBy("FunctionRule", "|"))),
+        // "fun"         : IfThen(Spot("Reserved", "fun"), false),
+        // "macro"       : IfThen(Spot("Reserved", "macro"), true),
+        // "FunctionRule": Seq("ParamList", "=", "Any"),
+        // "ParamList"   : ListOf("(", "Any", ",", ")"),
         ["IfThen"]       = Apply(MakeIfThen, Seq("if", "!Any", "!then", "!Any", Maybe(Seq("else", "!Any")))),
         ["!then"]        = Require("then"),
-        // "PrefixOp"    : apply(PrefixOp.from_parser, seq("Operator", "Any")),
+        // "PrefixOp"    : Apply(PrefixOp.from_parser, Seq("Operator", "Any")),
         ["Quote"]        = Apply(MakeQuote, Seq("'", "Any", "'")),
-        // "ScopeRes"    : apply(ScopeResolution.from_parser, sep_by("Identifier", ":", 2)),
-        // "Subscript"   : apply(Subscript.from_parser, seq(recursion_barrier, "Any", "[", "Any", "]")),
+        // "ScopeRes"    : Apply(ScopeResolution.from_parser, SepBy("Identifier", ":", 2)),
+        // "Subscript"   : Apply(Subscript.from_parser, Seq(RecursionBarrier(), "Any", "[", "Any", "]")),
 
         ["Data"]         = OneOf("Array", "Binding", "HashTable", "List", "Queue", "Set", "Term", "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),

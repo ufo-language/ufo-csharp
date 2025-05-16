@@ -4,7 +4,7 @@ namespace UFO.Lexer;
 
 public static class Constants
 {
-    public static readonly string Operators = "+-*/&|=<>!";
+    public static readonly string Operators = "+-*/&|:=<>!";
     public static readonly List<string> ReservedWords = [
         "else",
         "false",

@@ -7,10 +7,9 @@ namespace UFO.CLI;
 public class REP
 {
     private readonly Evaluator.Evaluator _etor = new();
-    // private readonly Lexer.Lexer _lexer = new();
-    private List<Token> _lexerTokens = [];
-    private UFOObject _expr = Nil.NIL;
-    private UFOObject _value = Nil.NIL;
+    public List<Token> Tokens { get; private set; } = [];
+    public UFOObject Expr { get; private set; } = Nil.NIL;
+    public UFOObject Value { get; private set; } = Nil.NIL;
     public bool EOI { get; private set; } = false;
     private string _promptString = "UFO> ";
     private readonly string _PARSER_START = "Program";
@@ -28,12 +27,12 @@ public class REP
         Prompt();
         try
         {
-            if (!Read(out _expr))
+            if (!Read())
             {
                 return false;
             }
-            _value = Eval(_expr);
-            Print(_value);
+            Value = Eval(Expr);
+            Print(Value);
         }
         catch (Exception exn)
         {
@@ -43,9 +42,9 @@ public class REP
         return true;
     }
 
-    public bool Read(out UFOObject expr)
+    public bool Read()
     {
-        expr = Nil.NIL;
+        Expr = Nil.NIL;
         string? inputString = Console.In.ReadLine();
         if (inputString == null)
         {
@@ -53,18 +52,24 @@ public class REP
             return false;
         }
         inputString = inputString.Trim();
-        if (inputString == "") {
+        if (inputString == "")
+        {
+            return false;
+        }
+        if (inputString[0] == ':')
+        {
+            ColonCommand.Exec(inputString, this);
             return false;
         }
         Lexer.Lexer lexer = new();
-        _lexerTokens = lexer.Tokenize(inputString);
+        Tokens = lexer.Tokenize(inputString);
         // Lexer.Lexer.PrintTokens(_lexerTokens);
-        Parser.ParserState parserState = new(Parser.UFOGrammar.Parsers, _lexerTokens);
+        Parser.ParserState parserState = new(Parser.UFOGrammar.Parsers, Tokens);
         try
         {
             if (Parser.Parser.Parse(_PARSER_START, parserState))
             {
-                expr = (UFOObject)parserState.Value;
+                Expr = (UFOObject)parserState.Value;
                 return true;
             }
             return false;
