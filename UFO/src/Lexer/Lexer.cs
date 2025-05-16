@@ -155,25 +155,24 @@ public class Lexer {
             }
 
             // Word (lower or upper case start)
-            if (char.IsLetter(c)) {
+            if (char.IsLetter(c) || c == '_') {
                 var sb = new StringBuilder();
                 sb.Append(Peek());
                 Advance();
-                while (_index < _inputString.Length && char.IsLetterOrDigit(Peek())) {
-                    sb.Append(Peek());
+
+                while (_index < _inputString.Length) {
+                    char c1 = Peek();
+                    if (!char.IsLetterOrDigit(c1) && c1 != '_') break;
+                    sb.Append(c1);
                     Advance();
                 }
-                TokenType type;
+
                 string word = sb.ToString();
-                if (char.IsUpper(sb[0]))
-                {
-                    type = TokenType.Symbol;
-                }
-                else
-                {
-                    type = Constants.ReservedWords.Contains(word) ? TokenType.ReservedWord : TokenType.Word;
-                }
-                tokens.Add(new Token(type, sb.ToString(), (startCol, startLine, startIdx)));
+                TokenType type = char.IsUpper(word[0])
+                    ? TokenType.Symbol
+                    : Constants.ReservedWords.Contains(word) ? TokenType.ReservedWord : TokenType.Word;
+
+                tokens.Add(new Token(type, word, (startCol, startLine, startIdx)));
                 continue;
             }
 
