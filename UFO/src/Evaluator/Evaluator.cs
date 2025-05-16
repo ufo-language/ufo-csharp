@@ -12,7 +12,7 @@ public class Evaluator
     public Evaluator()
     {
         Env = Binding.Create();
-        DefinePrims.DefineAllPrims(this);
+        DefineAllPrims.DefPrims(this);
     }
 
     public void Bind(Identifier name, UFOObject value)

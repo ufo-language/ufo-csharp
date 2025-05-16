@@ -6,7 +6,7 @@ namespace UFO.Prims.IO;
 
 public class Display : Primitive
 {
-    public Display() : base("io_disp")
+    public Display() : base("disp")
     {}
 
     public override UFOObject Call(Evaluator.Evaluator etor, List args)

@@ -2,7 +2,7 @@
 
 namespace UFO;
 
-class UFO
+class UFOMain
 {
     static void Main(string[] args)
     {

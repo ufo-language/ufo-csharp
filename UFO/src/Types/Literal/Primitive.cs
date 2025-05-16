@@ -12,7 +12,7 @@ public abstract class Primitive(string name) : Literal
 
     public readonly string Name = name;
 
-    private IEnumerable<TypeId>[] ParamTypes = [];
+    protected IEnumerable<TypeId>[] ParamTypes = [];
 
     private enum ParamTypeTypes
     {
