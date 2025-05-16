@@ -68,6 +68,21 @@ public class Array : Data
         return true;
     }
 
+    public override bool Get(UFOObject indexObj, out UFOObject value)
+    {
+        if (indexObj is Integer integer)
+        {
+            int index = integer.Value;
+            if (index < 0 || index >= _elems.Count)
+            {
+                throw new Exception($"Index {index} is out of bounds for array {this}");
+            }
+            value = _elems[index];
+            return true;
+        }
+        throw new Exception($"Invalid index type {indexObj} :: {indexObj.GetType().Name} for array {this}");
+    }
+
     public UFOObject Get_Unsafe(int index)
     {
         return _elems[index];

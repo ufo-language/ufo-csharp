@@ -1,6 +1,7 @@
 using System.Text;
 using UFO.Evaluator;
 using UFO.Types.Data;
+using UFO.Types.Literal;
 
 namespace UFO.Types;
 
@@ -36,6 +37,12 @@ public abstract class UFOObject
 
     public abstract UFOObject Eval(Evaluator.Evaluator etor);
 
+    public virtual bool Get(UFOObject indexObj, out UFOObject value)
+    {
+        value = Nil.NIL;
+        return false;
+    }
+
     public override abstract int GetHashCode();
 
     public virtual bool Match(UFOObject other, ref Evaluator.Evaluator etor)
@@ -49,7 +56,7 @@ public abstract class UFOObject
         writer.Write("{}");
     }
 
-    public override String ToString()
+    public override string ToString()
     {
         StringWriter sw = new();
         ShowOn(sw);

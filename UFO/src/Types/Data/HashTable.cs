@@ -114,7 +114,7 @@ public class HashTable : Data
         return newHashTable;
     }
 
-    public bool Get(UFOObject key, out UFOObject elem)
+    public override bool Get(UFOObject key, out UFOObject elem)
     {
         bool found = _dict.TryGetValue(key, out UFOObject? elem1);
         elem = found ? elem1! : Nil.Create();

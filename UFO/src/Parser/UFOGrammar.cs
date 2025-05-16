@@ -19,6 +19,7 @@ using UFOReal = UFO.Types.Literal.Real;
 using UFOSeq = UFO.Types.Expression.Seq;
 using UFOSet = UFO.Types.Data.Set;
 using UFOString = UFO.Types.Literal.String;
+using UFOSubscript = UFO.Types.Expression.Subscript;
 using UFOSymbol = UFO.Types.Literal.Symbol;
 using UFOTerm = UFO.Types.Data.Term;
 
@@ -59,6 +60,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeSeq = tokenObj => UFOSeq.Create([.. ParserListToUFOList.Convert((List)tokenObj)]);
     private static readonly Func<object, object> MakeSet = tokenObj => UFOSet.Create((List)tokenObj);
     private static readonly Func<object, object> MakeString = tokenObj => UFOString.Create(((Token)tokenObj).Lexeme);
+    private static readonly Func<object, object> MakeSubscript = tokenObj => UFOSubscript.Create((List)tokenObj);
     private static readonly Func<object, object> MakeSymbol = tokenObj => UFOSymbol.Create(((Token)tokenObj).Lexeme);
     private static readonly Func<object, object> MakeTerm = tokenObj => UFOTerm.Create((List)tokenObj);
 
@@ -69,7 +71,7 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes", "Subscript",*/ "Data"),
+        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", /*"ScopeRes",*/ "Subscript", "Data"),
         ["Apply"]        = Apply(MakeApply, Seq(RecursionBarrier(), "Any", "ArgList")),
         ["ArgList"]      = ListOf("(", "Any", ",", ")"),
         ["Assign"]       = Apply(MakeAssign, Seq("Data", ":=", "!Any")),
@@ -85,7 +87,7 @@ public class UFOGrammar
         // "PrefixOp"      = Apply(PrefixOp.from_parser, Seq("Operator", "Any")),
         ["Quote"]        = Apply(MakeQuote, Seq("'", "Any", "'")),
         // "ScopeRes"      = Apply(ScopeResolution.from_parser, SepBy("Identifier", ":", 2)),
-        // "Subscript"     = Apply(Subscript.from_parser, Seq(RecursionBarrier(), "Any", "[", "Any", "]")),
+        ["Subscript"]    = Apply(MakeSubscript, Seq(RecursionBarrier(), "Any", "[", "Any", "]")),
 
         ["Data"]         = OneOf("Array", "Binding", "HashTable", "List", "Queue", "Set", "Term", "Literal"),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
@@ -103,8 +105,7 @@ public class UFOGrammar
         ["Nil"]          = IfThen("nil", UFONil.NIL),
         ["String"]       = Apply(MakeString, Spot(TokenType.String)),
         ["Symbol"]       = Apply(MakeSymbol, Spot(TokenType.Symbol)),
-
-        // # these are not literals, but they are parsed as literals:
+        // # these are not literals but they can be used anywhere literals can be used:
         ["Identifier"]   = Apply(MakeIdentifier, Spot(TokenType.Word)),
         ["Seq"]          = Apply(MakeSeq, ListOf("(", "Any", ";", ")"))
     };
