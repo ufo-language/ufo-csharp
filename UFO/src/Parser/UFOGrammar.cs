@@ -2,7 +2,9 @@ using UFO.Lexer;
 using UFO.Parser.Prims;
 using UFO.Utils;
 using UFOArray = UFO.Types.Data.Array;
+using UFOBinding = UFO.Types.Data.Binding;
 using UFOBool = UFO.Types.Literal.Boolean;
+using UFOHashTable = UFO.Types.Data.HashTable;
 using UFOIdentifier = UFO.Types.Expression.Identifier;
 using UFOInt = UFO.Types.Literal.Integer;
 using UFOList = UFO.Types.Data.List;
@@ -23,16 +25,19 @@ public class UFOGrammar
     // Parser shortcut functions
     private static Apply Apply(Func<object, object> function, object parser) => new(function, parser);
     private static Debug Debug(object parser) => new(parser);
+    private static Debug Debug(string message, object parser) => new(message, parser);
     private static IfThen IfThen(object returnValue, object parser) => new(returnValue, parser);
     private static ListOf ListOf(object open, object elem, object sep, object close) => new(open, elem, sep, close);
     private static ListOf ListOf(object open, object elem, object sep, object close, object bar) => new(open, elem, sep, close, bar);
     private static OneOf OneOf(params object[] parsers) => new(parsers);
-    // private static Returning Returning(object returnValue, object parser) => new(returnValue, parser);
+    private static RecursionBarrier RecursionBarrier() => new();
     private static Seq Seq(params object[] parsers) => new(parsers);
     private static Spot Spot(TokenType tokenType) => new(tokenType);
 
     // Type conversion functions
     private static readonly Func<object, object> MakeArray = tokenObj => UFOArray.Create((List)tokenObj);
+    private static readonly Func<object, object> MakeBinding = tokenObj => UFOBinding.Create((List)tokenObj);
+    private static readonly Func<object, object> MakeHashTable = tokenObj => UFOHashTable.ProtoHash.Create((List)tokenObj);
     private static readonly Func<object, object> MakeIdentifier = tokenObj => UFOIdentifier.Create(((Token)tokenObj).Lexeme);
     private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
     private static readonly Func<object, object> MakeList = tokenObj => UFOList.Create((List)tokenObj);
@@ -72,22 +77,22 @@ public class UFOGrammar
         // 'ScopeRes'    : apply(ScopeResolution.from_parser, sep_by('Identifier', ':', 2)),
         // 'Subscript'   : apply(Subscript.from_parser, seq(recursion_barrier, 'Any', '[', 'Any', ']')),
 
-        ["Data"]         = OneOf("Array", /*'HashTable',*/ "List", "Queue", "Set", "Term", "Literal"),
+        ["Data"]         = Debug("ANY", OneOf("Array", "Binding", /*"HashTable",*/ "List", "Queue", "Set", "Term", "Literal")),
         ["Array"]        = Apply(MakeArray, ListOf("{", "Any", ",", "}")),
-        // # 'Binding'     : apply(Binding.from_parser, seq(recursion_barrier, 'Any', '=', 'Any')),
-        // 'HashTable'   : apply(HashTable.ProtoHash.from_parser, seq('#', list_of('{', 'Any', ',', '}'))),
+        ["Binding"]      = Debug(Apply(MakeBinding, Debug(Seq(/*RecursionBarrier(),*/ "Any", "=", "Any")))),
+        ["HashTable"]    = Apply(MakeHashTable, Seq("#", ListOf("{", "Any", ",", "}"))),
         ["List"]         = Apply(MakeList, ListOf("[", "Any", ",", "]", "|")),
         ["Queue"]        = Apply(MakeQueue, Seq("~", ListOf("[", "Any", ",", "]"))),
         ["Set"]          = Apply(MakeSet, Seq("$", ListOf("{", "Any", ",", "}"))),
         ["Term"]         = Apply(MakeTerm, Seq("Symbol", "Array")),
 
-        ["Literal"]      = OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol"),
+        ["Literal"]      = Debug("LITERAL", OneOf("Boolean", "Integer", "Real", "Identifier", "Nil", "Seq", "String", "Symbol")),
         ["Boolean"]      = OneOf(IfThen("true", UFOBool.TRUE), IfThen("false", UFOBool.FALSE)),
         ["Integer"]      = Apply(MakeInt, Spot(TokenType.Integer)),
         ["Real"]         = Apply(MakeReal, Spot(TokenType.Real)),
         ["Nil"]          = IfThen("nil", UFONil.NIL),
         ["String"]       = Apply(MakeString, Spot(TokenType.String)),
-        ["Symbol"]       = Apply(MakeSymbol, Spot(TokenType.Symbol)),
+        ["Symbol"]       = Debug("SYMBOL", Apply(MakeSymbol, Spot(TokenType.Symbol))),
 
         // # these are not literals, but they are parsed as literals:
         ["Identifier"]   = Apply(MakeIdentifier, Spot(TokenType.Word)),

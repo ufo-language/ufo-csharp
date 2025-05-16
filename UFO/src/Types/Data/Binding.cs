@@ -33,6 +33,11 @@ public class Binding : Data
         return new(key, value, next);
     }
 
+    public static Binding Create(Parser.List elems)
+    {
+        return Create((UFOObject)elems[0], (UFOObject)elems[1]);
+    }
+
     public IEnumerable<Binding> EachElem()
     {
         Binding binding = this;

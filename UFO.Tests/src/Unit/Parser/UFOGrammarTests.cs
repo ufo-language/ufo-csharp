@@ -313,16 +313,7 @@ public class UFOGrammarTests
         ParserState parserState = new(UFOGrammar.Parsers, tokens);
 
         // Act
-        bool success = false;
-        try
-        {
-            success = UFO.Parser.Parser.Parse("List", parserState);
-        }
-        catch (ParseException exn)
-        {
-            Console.WriteLine($"Grammar_List_2 caught exception\n{exn.ToString()}");
-            return;
-        }
+        bool success = UFO.Parser.Parser.Parse("List", parserState);
 
         // Assert
         Assert.True(success);
@@ -532,4 +523,94 @@ public class UFOGrammarTests
         Assert.Equal(inputString, term.ToString());
     }
 
+    [Fact]
+    public void Grammar_Binding()
+    {
+        // Arrange
+        string inputString = "A=B";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("Binding", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.Binding>(value);
+        UFO.Types.Data.Binding binding = (UFO.Types.Data.Binding)value;
+        Assert.Equal(inputString, binding.ToString());
+    }
+
+    [Fact]
+    public void Grammar_HashTable_0()
+    {
+        // Arrange
+        string inputString = "#{}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("HashTable", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.HashTable.ProtoHash>(value);
+        UFO.Types.Data.HashTable.ProtoHash protoHash = (UFO.Types.Data.HashTable.ProtoHash)value;
+        Assert.Equal(inputString, protoHash.ToString());
+    }
+
+    [Fact]
+    public void Grammar_HashTable_1()
+    {
+        // Arrange
+        string inputString = "#{A=10}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = false;
+        try
+        {
+            success = UFO.Parser.Parser.Parse("HashTable", parserState);
+        }
+        catch (ParseException exn)
+        {
+            Console.WriteLine($"Grammar_HashTable_1 caught exception\n{exn.ToString()}");
+            return;
+        }
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.HashTable.ProtoHash>(value);
+        UFO.Types.Data.HashTable.ProtoHash protoHash = (UFO.Types.Data.HashTable.ProtoHash)value;
+        Assert.Equal(inputString, protoHash.ToString());
+    }
+
+#if false
+    [Fact]
+    public void Grammar_HashTable_2()
+    {
+        // Arrange
+        string inputString = "#{A=10, B=20}";
+        UFO.Lexer.Lexer lexer = new(inputString);
+        List<Token> tokens = lexer.Tokenize();
+        ParserState parserState = new(UFOGrammar.Parsers, tokens);
+
+        // Act
+        bool success = UFO.Parser.Parser.Parse("HashTable", parserState);
+
+        // Assert
+        Assert.True(success);
+        object value = parserState.Value;
+        Assert.IsType<UFO.Types.Data.HashTable.ProtoHash>(value);
+        UFO.Types.Data.HashTable.ProtoHash protoHash = (UFO.Types.Data.HashTable.ProtoHash)value;
+        Assert.Equal(inputString, protoHash.ToString());
+    }
+#endif
 }

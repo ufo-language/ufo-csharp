@@ -1,20 +1,51 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Formats.Asn1;
-using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
 
 public class HashTable : Data
 {
+    public class ProtoHash : Expression.Expression
+    {
+        private readonly List<UFOObject> _elems = [];
+        public static ProtoHash Create(Parser.List elems)
+        {
+            ProtoHash protoHash = new();
+            foreach (object elem in elems)
+            {
+                protoHash._elems.Add((UFOObject)elem);
+            }
+            return protoHash;
+        }
+
+        public override UFOObject Eval(Evaluator.Evaluator etor)
+        {
+            HashTable hashTable = new();
+            foreach (UFOObject elem in _elems)
+            {
+                UFOObject value = elem.Eval(etor);
+                if (value is not Binding)
+                {
+                    throw new Exception($"Binding expected, found {value}");
+                }
+                Binding binding = (Binding)value;
+                hashTable[binding.Key] = binding.Value;
+            }
+            return hashTable;
+        }
+
+        public override void ShowOn(TextWriter writer)
+        {
+            Utils.ShowOn.ShowOnWith(writer, _elems, "#{", ", ", "}");
+        }
+
+    }
+
     private readonly Dictionary<UFOObject, UFOObject> _dict;
 
-    public int Count { get { return _dict.Count; } }
-
     /// <summary>
-    /// Creates a new HashTable.
+    /// Creates a new HashTable. This is a convenience constructor.
     /// </summary>
-    /// <param name="elems">The bindings of the HashTable as a linear array in key / value order.</param>
+    /// <param name="elems">The bindings of the HashTable are a linear array in key / value order.</param>
     /// <returns>The new HashTable.</returns>
     private HashTable(params UFOObject[] elems)
     {
@@ -50,6 +81,8 @@ public class HashTable : Data
     }
 
     public override bool BoolValue => _dict.Count > 0;
+
+    public int Count { get { return _dict.Count; } }
 
     public IEnumerable<KeyValuePair<UFOObject, UFOObject>> EachElem()
     {

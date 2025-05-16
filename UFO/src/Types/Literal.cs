@@ -9,4 +9,10 @@ public abstract class Literal : UFOObject
     {
         return this;
     }
+
+    public override int GetHashCode()
+    {
+        throw new NotImplementedException();
+    }
+
 }

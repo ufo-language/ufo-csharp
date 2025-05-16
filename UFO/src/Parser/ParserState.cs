@@ -7,11 +7,11 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
 {
 
     public Dictionary<string, IParser> ParserTable { get; private set; } = parserTable;
-    public int TokenIndex { get; private set; } = 0;
+    public int TokenIndex = 0;
     public string CurrentParserName = "";
     public object Value = new();
     public (string, int) MemoKey = ("", -1);
-    private readonly Dictionary<(string, int), (bool, object)> MemoTable = [];
+    private readonly Dictionary<(string, int), (bool, object, int)> MemoTable = [];
     public readonly List<Token> Tokens = tokens;
 
     public void Advance()
@@ -19,16 +19,14 @@ public class ParserState(Dictionary<string, IParser> parserTable, List<Token> to
         TokenIndex++;
     }
 
-    public bool FindMemo((string, int) memoKey, out (bool, object) value)
+    public bool FindMemo((string, int) memoKey, out (bool, object, int) value)
     {
-        string parserName = memoKey.Item1;
-        int tokenIndex = memoKey.Item2;
-        return MemoTable.TryGetValue((parserName, tokenIndex), out value);
+        return MemoTable.TryGetValue(memoKey, out value);
     }
 
-    public void Memoize(string name, int index, bool success, object value)
+    public void Memoize((string, int) memoKey, bool success, object value, int index)
     {
-        MemoTable[(name, index)] = (success, value);
+        MemoTable[memoKey] = (success, value, index);
     }
 
     public Token NextToken => Tokens[TokenIndex];
