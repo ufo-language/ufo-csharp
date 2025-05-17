@@ -5,7 +5,7 @@ public enum TypeId
     // Data
     ARRAY, BINDING, HASH_TABLE, PAIR, PROTO_HASH, QUEUE, SET, TERM,
     // Expression
-    APPLY, ASSIGN, FUNCTION, IDENTIFIER, IF_THEN, QUOTE, SCOPE_RESOLUTION, SEQ, SUBSCRIPT,
+    APPLY, ASSIGN, FUNCTION, IDENTIFIER, IF_THEN, METHOD_CALL, QUOTE, SCOPE_RESOLUTION, SEQ, SUBSCRIPT,
      // Literal
     BOOLEAN, CLOSURE, INTEGER, NIL, PRIMITIVE, REAL, STRING, SYMBOL,
     // Other
@@ -32,6 +32,7 @@ public static class TypeIdExtensions
             TypeId.FUNCTION => "Function",
             TypeId.IDENTIFIER => "Identifier",
             TypeId.IF_THEN => "IfThen",
+            TypeId.METHOD_CALL => "IfThen",
             TypeId.QUOTE => "Quote",
             TypeId.SCOPE_RESOLUTION => "ScopeResolution",
             TypeId.SEQ => "Seq",

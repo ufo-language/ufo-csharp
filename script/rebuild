@@ -1,0 +1,3 @@
+cleanall
+rm UFO.Plugins/*
+dotnet build

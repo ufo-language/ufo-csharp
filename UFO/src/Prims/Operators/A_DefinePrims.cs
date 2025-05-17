@@ -1,5 +1,4 @@
-using UFO.Types.Data;
-using UFO.Types.Expression;
+using UFO.Prims.Operator;
 
 namespace UFO.Prims.Operators;
 
@@ -9,6 +8,6 @@ public class A_DefinePrims
     public static void DefinePrims(Evaluator.Evaluator etor)
     {
         // Operators are defined at the top level.
-        // DefineAllPrims.DefPrim(new Load(), etor);
+        DefineAllPrims.DefPrim(new Load(), etor);
     }
 }

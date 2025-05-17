@@ -2,15 +2,15 @@ using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.AWS.S3;
+namespace UFO.DLL.AWS.S3;
 
-public class Credentials : Primitive
+public class Client : Primitive
 {
     public static readonly Symbol URLSymbol = Symbol.Create("URL");
     public static readonly Symbol AccessKeySymbol = Symbol.Create("AccessKey");
     public static readonly Symbol SecretKeySymbol = Symbol.Create("SecretKey");
 
-    public Credentials() : base("credentials")
+    public Client() : base("client")
     {
         ParamTypes = [
             [TypeId.Z_ANY,  // AWS URL; String, or "" or nil or false for default

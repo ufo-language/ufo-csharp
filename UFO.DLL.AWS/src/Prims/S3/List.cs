@@ -2,7 +2,7 @@ using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.AWS.S3;
+namespace UFO.DLL.AWS.S3;
 
 public class List : Primitive
 {

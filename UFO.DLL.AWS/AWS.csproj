@@ -10,4 +10,25 @@
     <ProjectReference Include="../UFO/UFO.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.Core" Version="4.0.0.5" />
+    <PackageReference Include="AWSSDK.S3" Version="4.0.0.5" />
+  </ItemGroup>
+
+  <Target Name="CopyToPlugins" AfterTargets="Build">
+  <ItemGroup>
+    <PluginDlls Include="$(OutputPath)\*.dll" />
+  </ItemGroup>
+  <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(SolutionDir)\UFO.Plugins\" SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyAWSDllsToPlugins" AfterTargets="Build">
+    <ItemGroup>
+      <AwsDlls Include="@(ReferenceCopyLocalPaths)" Condition="'%(Filename)' == 'AWSSDK.Core' Or '%(Filename)' == 'AWSSDK.S3'" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AwsDlls)"
+          DestinationFolder="$(SolutionDir)\UFO.Plugins\"
+          SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>

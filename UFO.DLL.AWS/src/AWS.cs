@@ -2,5 +2,8 @@
 
 public class AWS
 {
-
+    public static void OnLoad(Evaluator.Evaluator etor)
+    {
+        Console.WriteLine("AWS.OnLoad called");
+    }
 }

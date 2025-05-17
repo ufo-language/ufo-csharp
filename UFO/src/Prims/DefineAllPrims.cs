@@ -12,6 +12,11 @@ public class DefineAllPrims
         ns[Identifier.Create(prim.Name)] = prim;
     }
 
+    public static void DefPrim(Primitive prim, Evaluator.Evaluator etor)
+    {
+        etor.Bind(Identifier.Create(prim.Name), prim);
+    }
+
     public static void DefPrims(Evaluator.Evaluator etor)
     {
         // The A_DefinePrims classes have an A_ prefix just for the purposes of sort order.

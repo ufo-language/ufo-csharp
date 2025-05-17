@@ -5,12 +5,12 @@ using System.Text;
 using UFO.Types;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.AWS.S3;
+namespace UFO.DLL.AWS.S3;
 
 public class Put : Primitive
 {
 
-    private readonly string _DEFAULT_URL = "http://localhost:4566";
+    // private readonly string _DEFAULT_URL = "http://localhost:4566";
 
     public Put() : base("put")
     {
@@ -29,12 +29,12 @@ public class Put : Primitive
         string key = args[2].ToDisplayString();
         string data = args[3].ToDisplayString();
         // extract credentials strings
-        string url = credentials.Get(Credentials.URLSymbol, Types.Literal.String.Create(_DEFAULT_URL)).ToDisplayString();
-        string accessKey = credentials.Get(Credentials.AccessKeySymbol, Types.Literal.String.Create("")).ToDisplayString();
-        string secretKey = credentials.Get(Credentials.SecretKeySymbol, Types.Literal.String.Create("")).ToDisplayString();
+        // string url = credentials.Get(Credentials.URLSymbol, Types.Literal.String.Create(_DEFAULT_URL)).ToDisplayString();
+        // string accessKey = credentials.Get(Credentials.AccessKeySymbol, Types.Literal.String.Create("")).ToDisplayString();
+        // string secretKey = credentials.Get(Credentials.SecretKeySymbol, Types.Literal.String.Create("")).ToDisplayString();
         // upload the data
-        Task task = Upload(url, accessKey, secretKey, bucketName, key, data);
-        task.GetAwaiter().GetResult();
+        // Task task = Upload(url, accessKey, secretKey, bucketName, key, data);
+        // task.GetAwaiter().GetResult();
         return Nil.NIL;
     }
 
