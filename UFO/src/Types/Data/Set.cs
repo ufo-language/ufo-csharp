@@ -7,6 +7,7 @@ public class Set : Data
     public int Count { get { return _elems.Count; } }
 
     private Set(params UFOObject[] elems)
+        : base(TypeId.SET)
     {
         _elems = [];
         foreach (UFOObject elem in elems)

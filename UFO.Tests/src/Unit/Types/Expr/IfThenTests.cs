@@ -14,7 +14,7 @@ public class IfThenTests
         UFO.Types.Literal.Boolean cond = UFO.Types.Literal.Boolean.TRUE;
         Integer conseq = Integer.Create(100);
         Integer alt = Integer.Create(200);
-        IfThen ifThen = new(cond, conseq, alt);
+        IfThen ifThen = IfThen.Create(cond, conseq, alt);
 
         // Act
         UFOObject value = ifThen.Eval(etor);
@@ -31,7 +31,7 @@ public class IfThenTests
         UFO.Types.Literal.Boolean cond = UFO.Types.Literal.Boolean.FALSE;
         Integer conseq = Integer.Create(100);
         Integer alt = Integer.Create(200);
-        IfThen ifThen = new(cond, conseq, alt);
+        IfThen ifThen = IfThen.Create(cond, conseq, alt);
 
         // Act
         UFOObject value = ifThen.Eval(etor);

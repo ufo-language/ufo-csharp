@@ -11,6 +11,7 @@ public class Integer : Literal
     public readonly int Value;
 
     private Integer(int value)
+        : base(TypeId.INTEGER)
     {
         Value = value;
     }

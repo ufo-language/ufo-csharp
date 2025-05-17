@@ -12,6 +12,7 @@ public class Boolean : Literal
     private static readonly int _HASH_SEED = typeof(Integer).GetHashCode();
 
     private Boolean()
+        : base(TypeId.BOOLEAN)
     {}
 
     public static Boolean Create(bool b)

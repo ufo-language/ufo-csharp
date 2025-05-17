@@ -4,11 +4,24 @@ using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
 
-public class IfThen(UFOObject cond, UFOObject conseq, UFOObject alt) : Expression
+public class IfThen : Expression
 {
-    private readonly UFOObject _cond = cond;
-    private readonly UFOObject _conseq = conseq;
-    private readonly UFOObject _alt = alt;
+    private readonly UFOObject _cond;
+    private readonly UFOObject _conseq;
+    private readonly UFOObject _alt;
+
+    private IfThen(UFOObject cond, UFOObject conseq, UFOObject alt)
+        : base(TypeId.IF_THEN)
+    {
+        _cond = cond;
+        _conseq = conseq;
+        _alt = alt;
+    }
+
+    public static IfThen Create(UFOObject cond, UFOObject conseq, UFOObject alt)
+    {
+        return new(cond, conseq, alt);
+    }
 
     public static IfThen Create(Parser.List elems)
     {

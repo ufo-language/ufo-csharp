@@ -10,7 +10,8 @@ public class Queue : Data
     private List _last;
     public int Count { get; private set; }
 
-    public Queue()
+    private Queue()
+        : base(TypeId.QUEUE)
     {
         _first = _last = List.EMPTY;
     }

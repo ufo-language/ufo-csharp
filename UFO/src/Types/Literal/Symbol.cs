@@ -14,6 +14,7 @@ public class Symbol : Literal
     private static readonly int _HASH_SEED = typeof(Symbol).GetHashCode();
 
     private Symbol(string name)
+        : base(TypeId.SYMBOL)
     {
         Name = name;
         _hashCode = Utils.Hash.CombineHash(_HASH_SEED, Name.GetHashCode());

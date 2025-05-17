@@ -8,15 +8,16 @@ public class String : Literal
     private static readonly Dictionary<string, String> _INTERNED_STRINGS = [];
     private static readonly Lock _DICTIONARY_LOCK = new();
 
-    public string Name { get; private set; }
+    public string Value { get; private set; }
     private readonly int _hashCode;
 
     private static readonly int _HASH_SEED = typeof(String).GetHashCode();
 
     private String(string name)
+        : base(TypeId.STRING)
     {
-        Name = name;
-        _hashCode = Utils.Hash.CombineHash(_HASH_SEED, Name.GetHashCode());
+        Value = name;
+        _hashCode = Utils.Hash.CombineHash(_HASH_SEED, Value.GetHashCode());
     }
 
     public static String Create(string name)
@@ -32,17 +33,17 @@ public class String : Literal
         }
     }
 
-    public override bool BoolValue => Name.Length > 0;
+    public override bool BoolValue => Value.Length > 0;
 
     public override void DisplayOn(TextWriter writer)
     {
-        writer.Write(Name);
+        writer.Write(Value);
     }
 
     public override bool EqualsAux(UFOObject other)
     {
         String otherString = (String)other;
-        return Name == otherString.Name;
+        return Value == otherString.Value;
     }
 
     public override int GetHashCode()
@@ -53,7 +54,7 @@ public class String : Literal
     public override void ShowOn(TextWriter writer)
     {
         writer.Write('"');
-        writer.Write(Name);
+        writer.Write(Value);
         writer.Write('"');
     }
 

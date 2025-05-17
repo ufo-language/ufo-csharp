@@ -12,6 +12,7 @@ public class List : Data
     public UFOObject Rest { get; set; }
 
     private List(UFOObject first, UFOObject rest)
+        : base(TypeId.PAIR)
     {
         First = first;
         Rest = rest;

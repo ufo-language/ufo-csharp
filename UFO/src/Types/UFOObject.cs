@@ -5,8 +5,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Types;
 
-public abstract class UFOObject
+public abstract class UFOObject(TypeId typeId)
 {
+    public TypeId TypeId { get; private init; } = typeId;
+
     public bool Equals(UFOObject other)
     {
         if (ReferenceEquals(this, other))
@@ -85,4 +87,15 @@ public abstract class UFOObject
         return sw.ToString();
     }
 
+    public string ToDisplayString()
+    {
+        StringWriter sw = new();
+        DisplayOn(sw);
+        return sw.ToString();
+    }
+
+    public Symbol TypeSymbol()
+    {
+        return Symbol.Create(this.TypeId.AsString());
+    }
 }

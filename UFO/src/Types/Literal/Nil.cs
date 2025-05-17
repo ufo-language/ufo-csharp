@@ -11,6 +11,7 @@ public class Nil : Literal
     private static readonly int HashCode = typeof(Nil).GetHashCode();
 
     private Nil()
+        : base(TypeId.NIL)
     {}
 
     public static Nil Create()

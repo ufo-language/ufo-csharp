@@ -6,6 +6,7 @@ public class ScopeResolution : Expression
     private List<UFOObject> _segments = [];
 
     private ScopeResolution()
+        : base(TypeId.SCOPE_RESOLUTION)
     {}
 
     public static ScopeResolution Create(Parser.List parts)

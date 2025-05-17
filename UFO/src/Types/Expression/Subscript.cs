@@ -10,6 +10,7 @@ public class Subscript : Expression
     private UFOObject _index;
 
     private Subscript(UFOObject collection, UFOObject index)
+        : base(TypeId.SUBSCRIPT)
     {
         _collection = collection;
         _index = index;

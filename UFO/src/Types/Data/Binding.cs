@@ -12,6 +12,7 @@ public class Binding : Data
     public Binding? Next { get; set; }
 
     private Binding(UFOObject key, UFOObject value, Binding? next)
+        : base(TypeId.BINDING)
     {
         Key = key;
         Value = value;

@@ -5,7 +5,7 @@ using UFO.Types.Data;
 
 namespace UFO.Types.Literal;
 
-public abstract class Primitive(string name) : Literal
+public abstract class Primitive(string name) : Literal(TypeId.PRIMITIVE)
 {
 
     private static readonly int _HASH_SEED = typeof(Primitive).GetHashCode();

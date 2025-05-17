@@ -10,7 +10,7 @@ public class QueueTests
     public void Deq_Empty_ReturnsFalse()
     {
         // Arrange
-        Queue q = new();
+        Queue q = Queue.Create();
 
         // Act
         bool success = q.Deq(out UFOObject elem);

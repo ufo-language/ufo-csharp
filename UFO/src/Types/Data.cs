@@ -2,7 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace UFO.Types.Data;
 
-public abstract class Data : UFOObject
+public abstract class Data(TypeId typeId) : UFOObject(typeId)
 {
     public abstract override UFOObject Eval(Evaluator.Evaluator etor);
 

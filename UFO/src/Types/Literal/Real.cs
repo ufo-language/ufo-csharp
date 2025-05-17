@@ -11,6 +11,7 @@ public class Real : Literal
     public readonly double Value;
 
     private Real(double value)
+        : base(TypeId.REAL)
     {
         Value = value;
     }

@@ -8,6 +8,7 @@ public class Quote : Expression
     private UFOObject _expr;
 
     private Quote(UFOObject expr)
+        : base(TypeId.QUOTE)
     {
         _expr = expr;
     }

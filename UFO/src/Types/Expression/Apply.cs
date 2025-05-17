@@ -10,6 +10,7 @@ public class Apply : Expression
     public List<UFOObject> Args { get; private set; }
 
     private Apply(UFOObject abstr, List<UFOObject> args)
+        : base(TypeId.APPLY)
     {
         Abstr = abstr;
         Args = args;

@@ -12,6 +12,7 @@ public class Function : Expression
     public Function? NextRule { get; private set; }
 
     private Function(UFOObject name, List<UFOObject> parameters, UFOObject body, Function? nextRule)
+        : base(TypeId.FUNCTION)
     {
         _name = name;
         Parameters = parameters;

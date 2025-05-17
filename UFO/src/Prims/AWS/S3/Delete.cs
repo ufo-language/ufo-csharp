@@ -1,0 +1,21 @@
+using UFO.Types;
+using UFO.Types.Data;
+using UFO.Types.Literal;
+
+namespace UFO.Prims.AWS.S3;
+
+public class Delete : Primitive
+{
+
+    public Delete() : base("delete")
+    {
+        ParamTypes = [
+            // [TypeId.STRING, TypeId.STRING, TypeId.STRING],
+        ];
+    }
+
+    public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
+    {
+        return Nil.NIL;
+    }
+}

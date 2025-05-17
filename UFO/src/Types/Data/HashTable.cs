@@ -7,6 +7,11 @@ public class HashTable : Data
     public class ProtoHash : Expression.Expression
     {
         private readonly List<UFOObject> _elems = [];
+
+        public ProtoHash()
+            : base(TypeId.PROTO_HASH)
+        {}
+
         public static ProtoHash Create(Parser.List elems)
         {
             ProtoHash protoHash = new();
@@ -48,6 +53,7 @@ public class HashTable : Data
     /// <param name="elems">The bindings of the HashTable are a linear array in key / value order.</param>
     /// <returns>The new HashTable.</returns>
     private HashTable(params UFOObject[] elems)
+        : base(TypeId.HASH_TABLE)
     {
         _dict = [];
         bool keyIter = true;
@@ -119,6 +125,15 @@ public class HashTable : Data
         bool found = _dict.TryGetValue(key, out UFOObject? elem1);
         elem = found ? elem1! : Nil.Create();
         return found;
+    }
+
+    public UFOObject Get(UFOObject key, UFOObject defaultValue)
+    {
+        if (Get(key, out UFOObject value))
+        {
+            return value;
+        }
+        return defaultValue;
     }
 
     public override void ShowOn(TextWriter writer)

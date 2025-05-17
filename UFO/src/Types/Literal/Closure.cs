@@ -17,6 +17,7 @@ public class Closure : Literal
     public Binding LexicalEnv { get; private set; }
 
     private Closure(Function function, Binding lexicalEnv)
+        : base(TypeId.CLOSURE)
     {
         Fun = function;
         LexicalEnv = lexicalEnv;

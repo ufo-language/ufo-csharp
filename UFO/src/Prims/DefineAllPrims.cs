@@ -6,6 +6,7 @@ namespace UFO.Prims;
 
 public class DefineAllPrims
 {
+    // Helper method to define a primitive in a namespace.
     public static void DefPrim(Primitive prim, HashTable ns, string ns_name)
     {
         ns[Identifier.Create(prim.Name)] = prim;
@@ -14,7 +15,9 @@ public class DefineAllPrims
     public static void DefPrims(Evaluator.Evaluator etor)
     {
         // The A_DefinePrims classes have an A_ prefix just for the purposes of sort order.
-        IO.A_DefinePrims.DefinePrims(etor);
         Array.A_DefinePrims.DefinePrims(etor);
+        AWS.A_DefinePrims.DefinePrims(etor);
+        IO.A_DefinePrims.DefinePrims(etor);
+        Operators.A_DefinePrims.DefinePrims(etor);
     }
 }

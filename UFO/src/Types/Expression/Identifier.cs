@@ -27,6 +27,7 @@ public class Identifier : Expression
     private static readonly int _HASH_SEED = typeof(Identifier).GetHashCode();
 
     private Identifier(string name)
+        : base(TypeId.IDENTIFIER)
     {
         Name = name;
         _hashCode = Utils.Hash.CombineHash(_HASH_SEED, Name.GetHashCode());

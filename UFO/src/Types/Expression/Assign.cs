@@ -7,6 +7,7 @@ public class Assign : Expression
     private UFOObject _rhs;
 
     private Assign(UFOObject lhs, UFOObject rhs)
+        : base(TypeId.ASSIGN)
     {
         _lhs = lhs;
         _rhs = rhs;

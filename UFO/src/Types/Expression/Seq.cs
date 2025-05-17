@@ -8,6 +8,7 @@ public class Seq : Expression
     private readonly UFOObject[] _exprs;
 
     private Seq(params UFOObject[] exprs)
+        : base(TypeId.SEQ)
     {
         _exprs = exprs;
     }

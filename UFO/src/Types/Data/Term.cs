@@ -10,6 +10,7 @@ public class Term : Data
     public UFOObject Attrib;
 
     private Term(Symbol name, Array args, UFOObject attrib)
+        : base(TypeId.TERM)
     {
         Name = name;
         Args = args;

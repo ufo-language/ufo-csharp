@@ -8,9 +8,10 @@ public class Array : Data
 
     private readonly List<UFOObject> _elems;
 
-    public int Count { get { return _elems.Count; } }
+    public int Count => _elems.Count;
 
     private Array(params UFOObject[] elems)
+        : base(TypeId.ARRAY)
     {
         _elems = [.. elems];
     }
