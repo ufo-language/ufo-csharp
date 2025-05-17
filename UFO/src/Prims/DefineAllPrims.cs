@@ -16,7 +16,6 @@ public class DefineAllPrims
     {
         // The A_DefinePrims classes have an A_ prefix just for the purposes of sort order.
         Array.A_DefinePrims.DefinePrims(etor);
-        AWS.A_DefinePrims.DefinePrims(etor);
         IO.A_DefinePrims.DefinePrims(etor);
         Operators.A_DefinePrims.DefinePrims(etor);
     }
