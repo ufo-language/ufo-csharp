@@ -8,7 +8,10 @@ namespace UFO.Prims.Operator;
 
 public class Load : Primitive
 {
-    private static string _PLUGIN_DIR = "../UFO.Plugins";
+    private static readonly string _PLUGIN_DIR = "../UFO.Plugins";
+    private static readonly string _NAMESPACE_PREFIX = "UFO.DLL";
+    private static readonly string _PATH_SEP = "/";
+    private static readonly string _DLL_SUFFIX = ".dll";
 
     private static HashSet<string> _ALREADY_LOADED = [];
 
@@ -36,25 +39,10 @@ public class Load : Primitive
 
     private static UFOObject LoadDll(string dllPrefix, Evaluator.Evaluator etor)
     {
-        string fileName = _PLUGIN_DIR + "/" + dllPrefix + ".dll";
+        string fileName = $"{_PLUGIN_DIR}{_PATH_SEP}{dllPrefix}{_DLL_SUFFIX}";
         string fullPath = Path.GetFullPath(fileName);
         Assembly? assembly = Assembly.LoadFrom(fullPath);
-#if false
-        List<string> namespaceList =
-            [.. assembly
-                .GetTypes()
-                .Select(t => t.Namespace)
-                .Where(ns => ns != null)
-                .Where(ns => ns!.EndsWith(dllPrefix))
-            ];
-        if (namespaceList.Count < 1)
-        {
-            throw new Exception($"Did not find a primary namespace in the {dllPrefix} plugin. It should end with {dllPrefix}.");
-        }
-        string namespaceName = namespaceList[0];
-        string className = $"{namespaceName}.{dllPrefix}";
-#endif
-        string className = $"UFO.DLL.{dllPrefix}.{dllPrefix}";
+        string className = $"{_NAMESPACE_PREFIX}.{dllPrefix}.{dllPrefix}";
         Type? type = assembly!.GetType(className)
             ?? throw new Exception($"Unable to load plugin '{dllPrefix}' from file {fullPath}");
         MethodInfo? method = type.GetMethod("OnLoad", BindingFlags.Public | BindingFlags.Static)
