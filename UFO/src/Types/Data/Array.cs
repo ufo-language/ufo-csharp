@@ -16,7 +16,18 @@ public class Array : Data
         _elems = [.. elems];
     }
 
+    private Array(List<UFOObject> elems)
+        : base(TypeId.ARRAY)
+    {
+        _elems = elems;
+    }
+
     public static Array Create(params UFOObject[] elems)
+    {
+        return new(elems);
+    }
+
+    public static Array Create(List<UFOObject> elems)
     {
         return new(elems);
     }

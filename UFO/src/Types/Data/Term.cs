@@ -17,6 +17,11 @@ public class Term : Data
         Attrib = attrib;
     }
 
+    public static Term Create(Symbol name, params UFOObject[] args)
+    {
+        return new Term(name, Array.Create(args), Nil.Create());
+    }
+
     public static Term Create(Parser.List elems)
     {
         Symbol name = (Symbol)elems[0];

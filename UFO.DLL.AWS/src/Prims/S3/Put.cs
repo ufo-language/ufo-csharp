@@ -1,6 +1,4 @@
-using Amazon.S3;
 using Amazon.S3.Model;
-using System.Net;
 using System.Text;
 
 using UFO.Types;
@@ -10,16 +8,14 @@ namespace UFO.DLL.AWS.S3;
 
 public class Put : Primitive
 {
-
-    // private readonly string _DEFAULT_URL = "http://localhost:4566";
-
     public Put() : base("put")
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client
              TypeId.STRING,    // bucket name
              TypeId.STRING,    // key
-             TypeId.STRING],   // data
+             TypeId.STRING     // data
+            ]
         ];
     }
 
@@ -34,27 +30,12 @@ public class Put : Primitive
         string bucketName = args[1].ToDisplayString();
         string key = args[2].ToDisplayString();
         string data = args[3].ToDisplayString();
-        PutObjectResponse response = Upload(s3ClientObj, bucketName, key, data).GetAwaiter().GetResult();
+        PutObjectResponse response = DoPut(s3ClientObj, bucketName, key, data).GetAwaiter().GetResult();
         Symbol statusCodeSymbol = Symbol.Create(response.HttpStatusCode.ToString());
         return statusCodeSymbol;
     }
 
-    static async Task Upload_X(S3Client s3Client, string bucketName, string key, string data)
-    {
-        // Make sure the bucket exists
-        await s3Client.Client.PutBucketAsync(bucketName);
-
-        PutObjectRequest request = new()
-        {
-            BucketName = bucketName,
-            Key = key,
-            InputStream = new MemoryStream(Encoding.UTF8.GetBytes(data))
-        };
-        PutObjectResponse response = await s3Client.Client.PutObjectAsync(request);
-        Console.WriteLine($"Stored {key} in {bucketName}: {response.HttpStatusCode}");
-    }
-
-    static async Task<PutObjectResponse> Upload(S3Client s3Client, string bucketName, string key, string data)
+    static async Task<PutObjectResponse> DoPut(S3Client s3Client, string bucketName, string key, string data)
     {
         // Create the bucket if it does not exist.
         await s3Client.Client.PutBucketAsync(bucketName);
@@ -67,5 +48,4 @@ public class Put : Primitive
         };
         return await s3Client.Client.PutObjectAsync(request);
     }
-
 }
