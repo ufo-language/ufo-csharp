@@ -1,9 +1,11 @@
-﻿namespace UFO.DLL.AWS;
+﻿using UFO.Types;
+
+namespace UFO.DLL.AWS;
 
 public class AWS
 {
-    public static void OnLoad(Evaluator.Evaluator etor)
+    public static UFOObject OnLoad(Evaluator.Evaluator etor)
     {
-        Console.WriteLine("AWS.OnLoad called");
+        return Prims.A_DefinePrims.DefinePrims(etor);
     }
 }
