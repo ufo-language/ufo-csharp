@@ -1,5 +1,6 @@
 using Amazon.S3;
 using Amazon.S3.Model;
+using System.Net;
 using System.Text;
 
 using UFO.Types;
@@ -15,51 +16,56 @@ public class Put : Primitive
     public Put() : base("put")
     {
         ParamTypes = [
-            [TypeId.HASH_TABLE,  // credentials
-             TypeId.STRING,      // bucket name
-             TypeId.STRING,      // key
-             TypeId.STRING],     // data
+            [TypeId.Z_CUSTOM,  // client
+             TypeId.STRING,    // bucket name
+             TypeId.STRING,    // key
+             TypeId.STRING],   // data
         ];
     }
 
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        Types.Data.HashTable credentials = (Types.Data.HashTable)args[0];
+        UFOObject clientObj = args[0];
+        if (clientObj is not S3Client)
+        {
+            throw new Exception($"Expected S3Client, found {clientObj} :: {clientObj.TypeSymbol()}");
+        }
+        S3Client s3ClientObj = (S3Client)clientObj;
         string bucketName = args[1].ToDisplayString();
         string key = args[2].ToDisplayString();
         string data = args[3].ToDisplayString();
-        // extract credentials strings
-        // string url = credentials.Get(Credentials.URLSymbol, Types.Literal.String.Create(_DEFAULT_URL)).ToDisplayString();
-        // string accessKey = credentials.Get(Credentials.AccessKeySymbol, Types.Literal.String.Create("")).ToDisplayString();
-        // string secretKey = credentials.Get(Credentials.SecretKeySymbol, Types.Literal.String.Create("")).ToDisplayString();
-        // upload the data
-        // Task task = Upload(url, accessKey, secretKey, bucketName, key, data);
-        // task.GetAwaiter().GetResult();
-        return Nil.NIL;
+        PutObjectResponse response = Upload(s3ClientObj, bucketName, key, data).GetAwaiter().GetResult();
+        Symbol statusCodeSymbol = Symbol.Create(response.HttpStatusCode.ToString());
+        return statusCodeSymbol;
     }
 
-    static async Task Upload(string url, string accessKey, string secretKey, string bucketName, string key, string data)
+    static async Task Upload_X(S3Client s3Client, string bucketName, string key, string data)
     {
-        var config = new AmazonS3Config
-        {
-            ServiceURL = url,
-            ForcePathStyle = true // Required for LocalStack
-        };
-
-        var client = new AmazonS3Client("fake-access-key", "fake-secret-key", config);
-
         // Make sure the bucket exists
-        await client.PutBucketAsync(bucketName);
+        await s3Client.Client.PutBucketAsync(bucketName);
 
-        var request = new PutObjectRequest
+        PutObjectRequest request = new()
         {
             BucketName = bucketName,
             Key = key,
             InputStream = new MemoryStream(Encoding.UTF8.GetBytes(data))
         };
-
-        var response = await client.PutObjectAsync(request);
+        PutObjectResponse response = await s3Client.Client.PutObjectAsync(request);
         Console.WriteLine($"Stored {key} in {bucketName}: {response.HttpStatusCode}");
+    }
+
+    static async Task<PutObjectResponse> Upload(S3Client s3Client, string bucketName, string key, string data)
+    {
+        // Create the bucket if it does not exist.
+        await s3Client.Client.PutBucketAsync(bucketName);
+        // Create the request and then send it.
+        PutObjectRequest request = new()
+        {
+            BucketName = bucketName,
+            Key = key,
+            InputStream = new MemoryStream(Encoding.UTF8.GetBytes(data))
+        };
+        return await s3Client.Client.PutObjectAsync(request);
     }
 
 }
