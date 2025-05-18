@@ -1,2 +1,2 @@
 load(AWS)
-io:disp("Hello, World")
+io:disp("Hello, World\n")

@@ -2,27 +2,43 @@ namespace UFO.ReadEvalPrint;
 
 public class REPL
 {
-    public bool ShowPrompt
-    {
-        set => _rep.ShowPrompt = value;
-    }
+    public TextReader InputStream;
 
-    public bool ShowPrint
+    public REPL()
     {
-        set => _rep.ShowPrint = value;
+        InputStream = Console.In;
     }
 
     private readonly REP _rep = new();
 
     public Evaluator.Evaluator Evaluator => _rep.Evaluator;
 
-    public void Run(TextReader inputStream)
+    public void Run()
     {
-        while (_rep.ReadEvalPrint(inputStream)) ;
-        if (inputStream == Console.In)
+        _rep.EOI = false;
+        while (!_rep.EOI)
+        {
+            _rep.ReadEvalPrint(InputStream);
+        }
+        if (InputStream == Console.In)
         {
             Console.WriteLine();
         }
     }
 
+    public void RunFile(string fileName)
+    {
+        try
+        {
+            using StreamReader reader = new(fileName);
+            TextReader savedInputStream = InputStream;
+            InputStream = reader;
+            Run();
+            InputStream = savedInputStream;
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine($"REPL.RunFile file not found: {ex.FileName}");
+        }
+    }
 }

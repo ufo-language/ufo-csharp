@@ -6,18 +6,16 @@ namespace UFO.ReadEvalPrint;
 
 public class REP
 {
-    public bool ShowPrompt = true;
-    public bool ShowPrint = true;
     public readonly Evaluator.Evaluator Evaluator = new();
     public List<Token> Tokens { get; private set; } = [];
     public UFOObject Expr { get; private set; } = Nil.NIL;
     public UFOObject Value { get; private set; } = Nil.NIL;
-    // public bool EOI { get; private set; } = false;
     private string _promptString = "UFO> ";
     private readonly string _PARSER_START = "Program";
+    public bool EOI;
 
     public REP()
-    {}
+    { }
 
     private void Prompt()
     {
@@ -26,7 +24,7 @@ public class REP
 
     public bool ReadEvalPrint(TextReader inputStream)
     {
-        if (ShowPrompt)
+        if (inputStream == Console.In)
         {
             Prompt();
         }
@@ -34,10 +32,10 @@ public class REP
         {
             if (!Read(inputStream))
             {
-                return false;
+                return inputStream == Console.In;
             }
             Value = Eval(Expr);
-            if (ShowPrint)
+            if (inputStream == Console.In)
             {
                 Print(Value);
             }
@@ -49,7 +47,6 @@ public class REP
             if (inputStream != Console.In)
             {
                 UFOMain.ExitCode = 1;
-                // EOI = true;
             }
         }
         return true;
@@ -57,11 +54,12 @@ public class REP
 
     public bool Read(TextReader inputStream)
     {
+        EOI = false;
         Expr = Nil.NIL;
         string? inputString = inputStream.ReadLine();
         if (inputString == null)
         {
-            // EOI = true;
+            EOI = true;
             return false;
         }
         inputString = inputString.Trim();
@@ -76,7 +74,6 @@ public class REP
         }
         Lexer.Lexer lexer = new();
         Tokens = lexer.Tokenize(inputString);
-        // Lexer.Lexer.PrintTokens(_lexerTokens);
         Parser.ParserState parserState = new(Parser.UFOGrammar.Parsers, Tokens);
         try
         {
@@ -85,6 +82,7 @@ public class REP
                 Expr = (UFOObject)parserState.Value;
                 return true;
             }
+            Console.Error.WriteLine($"No parse: \"{inputString}\"");
             return false;
         }
         catch (Parser.ParseException exn)

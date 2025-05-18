@@ -10,19 +10,14 @@ class UFOMain
 
     static int Main(string[] args)
     {
-        // Don't do this, it's ugly. The path is
-        // ~/workspace/ufo/csharp/UFO/bin/Debug/net9.0
-#if false
-        string exeDir = AppContext.BaseDirectory;
-        Directory.SetCurrentDirectory(exeDir);
-#endif
         int exitCode = 0;
         ReadEvalPrint.REPL repl = new();
         CLI.Result result = CLI.HandleArgs(args, repl);
-        if (result == CLI.Result.CONTINUE)
+        if (result == CLI.Result.EXIT)
         {
-            repl.Run(Console.In);
+            return exitCode;
         }
+        repl.Run();
         return exitCode;
     }
 }
