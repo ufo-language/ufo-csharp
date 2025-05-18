@@ -30,7 +30,6 @@ public class Receive : Primitive
         Symbol statusCodeSymbol = Symbol.Create(response.HttpStatusCode.ToString());
         if (response.HttpStatusCode == System.Net.HttpStatusCode.OK && response.Messages.Count > 0)
         {
-            Console.WriteLine($"SQS Receive got status {response.HttpStatusCode}, message count {response.Messages.Count}");
             string messageBody = response.Messages[0].Body;
             // You might want to delete the message after receiving it or handle receipt handle separately.
             return Term.Create(statusCodeSymbol, Types.Literal.String.Create(messageBody));

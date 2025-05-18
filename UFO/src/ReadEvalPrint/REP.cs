@@ -2,15 +2,17 @@ using UFO.Lexer;
 using UFO.Types;
 using UFO.Types.Literal;
 
-namespace UFO.CLI;
+namespace UFO.ReadEvalPrint;
 
 public class REP
 {
-    private readonly Evaluator.Evaluator _etor = new();
+    public bool ShowPrompt = true;
+    public bool ShowPrint = true;
+    public readonly Evaluator.Evaluator Evaluator = new();
     public List<Token> Tokens { get; private set; } = [];
     public UFOObject Expr { get; private set; } = Nil.NIL;
     public UFOObject Value { get; private set; } = Nil.NIL;
-    public bool EOI { get; private set; } = false;
+    // public bool EOI { get; private set; } = false;
     private string _promptString = "UFO> ";
     private readonly string _PARSER_START = "Program";
 
@@ -22,33 +24,44 @@ public class REP
         Console.Out.Write(_promptString);
     }
 
-    public bool ReadEvalPrint()
+    public bool ReadEvalPrint(TextReader inputStream)
     {
-        Prompt();
+        if (ShowPrompt)
+        {
+            Prompt();
+        }
         try
         {
-            if (!Read())
+            if (!Read(inputStream))
             {
                 return false;
             }
             Value = Eval(Expr);
-            Print(Value);
+            if (ShowPrint)
+            {
+                Print(Value);
+            }
         }
         catch (Exception exn)
         {
             Console.Error.WriteLine("REP caught exception:");
-            Console.Error.WriteLine(exn.ToString());
+            Console.Error.WriteLine(exn.Message);
+            if (inputStream != Console.In)
+            {
+                UFOMain.ExitCode = 1;
+                // EOI = true;
+            }
         }
         return true;
     }
 
-    public bool Read()
+    public bool Read(TextReader inputStream)
     {
         Expr = Nil.NIL;
-        string? inputString = Console.In.ReadLine();
+        string? inputString = inputStream.ReadLine();
         if (inputString == null)
         {
-            EOI = true;
+            // EOI = true;
             return false;
         }
         inputString = inputString.Trim();
@@ -83,7 +96,7 @@ public class REP
 
     public UFOObject Eval(UFOObject expr)
     {
-        return expr.Eval(_etor);
+        return expr.Eval(Evaluator);
     }
 
     public static void Print(UFOObject value)

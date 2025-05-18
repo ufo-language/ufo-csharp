@@ -1,0 +1,1 @@
+(cred := aws:credentials(nil, "abc", "def"); aws:s3:put(cred, "my-bucket", "my-object.txt", "Hello from UFO!"))

@@ -1,2 +1,2 @@
 cd UFO
-dotnet run
+dotnet run "$@"

@@ -1,5 +1,5 @@
 
-namespace UFO.CLI;
+namespace UFO.ReadEvalPrint;
 
 public class ColonCommand
 {

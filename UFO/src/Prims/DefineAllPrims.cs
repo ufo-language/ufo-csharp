@@ -23,5 +23,6 @@ public class DefineAllPrims
         Array.A_DefinePrims.DefinePrims(etor);
         IO.A_DefinePrims.DefinePrims(etor);
         Operators.A_DefinePrims.DefinePrims(etor);
+        OS.A_DefinePrims.DefinePrims(etor);
     }
 }
