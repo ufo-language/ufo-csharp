@@ -1,3 +1,4 @@
 cleanall
 rm UFO.Plugins/*
+dotnet restore
 dotnet build

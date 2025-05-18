@@ -6,6 +6,6 @@ public class AWS
 {
     public static UFOObject OnLoad(Evaluator.Evaluator etor)
     {
-        return Prims.A_DefinePrims.DefinePrims(etor);
+        return Prims.DefinePrims.DefPrims(etor);
     }
 }

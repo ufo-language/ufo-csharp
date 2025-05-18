@@ -1,7 +1,6 @@
 using UFO.Types;
 using UFO.Types.Literal;
 using Amazon.S3;
-using System.ComponentModel.DataAnnotations;
 
 namespace UFO.DLL.AWS.S3;
 
