@@ -22,7 +22,7 @@ public class Load : Primitive
 
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        Queue results = Queue.Create();
+        Types.Data.Queue results = Types.Data.Queue.Create();
         foreach (UFOObject arg in args)
         {
             string dllPrefix = arg.ToDisplayString();
