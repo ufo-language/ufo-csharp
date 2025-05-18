@@ -6,13 +6,13 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
-public class Receive : Primitive
+public class Peek : Primitive
 {
-    public Receive() : base("receive")
+    public Peek() : base("peek")
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonSQSClient wrapper)
-             TypeId.STRING     // queue URL
+             TypeId.STRING     // queue name
             ]
         ];
     }

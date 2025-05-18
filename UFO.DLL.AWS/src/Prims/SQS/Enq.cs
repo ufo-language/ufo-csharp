@@ -11,7 +11,7 @@ public class Send : Primitive
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonSQSClient wrapper)
-             TypeId.STRING,    // queue URL
+             TypeId.STRING,    // queue name
              TypeId.STRING     // message body
             ]
         ];

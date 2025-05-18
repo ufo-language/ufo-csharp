@@ -14,7 +14,9 @@ public class A_DefinePrims
         HashTable ns1 = HashTable.Create();
         DefineAllPrims.DefPrim(new Client(), ns1, nsName);
         DefineAllPrims.DefPrim(new Create(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Receive(), ns1, nsName);
+        DefineAllPrims.DefPrim(new Delete(), ns1, nsName);
+        DefineAllPrims.DefPrim(new Deq(), ns1, nsName);
+        DefineAllPrims.DefPrim(new Peek(), ns1, nsName);
         DefineAllPrims.DefPrim(new Send(), ns1, nsName);
         ns[Identifier.Create(nsName1)] = ns1;
     }
