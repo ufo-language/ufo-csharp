@@ -1,13 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Formats.Asn1;
-using System.Text;
-
 namespace UFO.Types.Literal;
 
 public class Nil : Literal
 {
     public static readonly Nil NIL = new();
-
     private static readonly int HashCode = typeof(Nil).GetHashCode();
 
     private Nil()
@@ -35,5 +30,4 @@ public class Nil : Literal
     {
         writer.Write("nil");
     }
-
 }

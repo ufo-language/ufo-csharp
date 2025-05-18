@@ -1,4 +1,3 @@
-using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
@@ -6,7 +5,6 @@ namespace UFO.Types.Data;
 public class Binding : Data
 {
     private static readonly Binding _EMPTY = new(Nil.Create(), Nil.Create(), null);
-
     public UFOObject Key { get; private set; }
     public UFOObject Value { get; set; }
     public Binding? Next { get; set; }
@@ -82,5 +80,4 @@ public class Binding : Data
         writer.Write('=');
         Value.ShowOn(writer);
     }
-
 }

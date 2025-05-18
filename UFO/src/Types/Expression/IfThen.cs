@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
@@ -48,5 +46,4 @@ public class IfThen : Expression
             _alt.ShowOn(writer);
         }
     }
-
 }

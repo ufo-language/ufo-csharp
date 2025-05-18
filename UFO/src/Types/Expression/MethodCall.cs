@@ -1,5 +1,3 @@
-
-
 namespace UFO.Types.Expression;
 
 public class MethodCall : Expression

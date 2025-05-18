@@ -4,7 +4,6 @@ namespace UFO.Utils;
 
 public class ShowOn
 {
-
     public static void ShowOnWith(TextWriter writer, IEnumerable<UFOObject> elems, string open, string sep, string close)
     {
         bool firstIter = true;
@@ -17,5 +16,4 @@ public class ShowOn
         }
         writer.Write(close);
     }
-
 }

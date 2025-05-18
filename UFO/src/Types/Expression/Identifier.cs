@@ -1,6 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
@@ -20,10 +17,8 @@ public class Identifier : Expression
 
     private static readonly Dictionary<string, Identifier> _INTERNED_IDENTIFIERS = [];
     private static readonly Lock _DICTIONARY_LOCK = new();
-
     public string Name { get; private set; }
     private readonly int _hashCode;
-
     private static readonly int _HASH_SEED = typeof(Identifier).GetHashCode();
 
     private Identifier(string name)
@@ -77,5 +72,4 @@ public class Identifier : Expression
     {
         writer.Write(Name);
     }
-
 }

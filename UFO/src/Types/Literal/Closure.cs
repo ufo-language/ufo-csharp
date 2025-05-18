@@ -1,4 +1,3 @@
-using System.Text;
 using UFO.Types.Data;
 using UFO.Types.Expression;
 
@@ -6,7 +5,6 @@ namespace UFO.Types.Literal;
 
 public class Closure : Literal
 {
-
     public class ArgumentMismatchException(Function fun, List<UFOObject> args) : Exception
     {
         public Function Fun { get; private set; } = fun;
@@ -53,5 +51,4 @@ public class Closure : Literal
     {
         Fun.ShowOn(writer);
     }
-
 }

@@ -1,17 +1,9 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
-using System.Text;
-using UFO.Types.Data;
-
 namespace UFO.Types.Literal;
 
 public abstract class Primitive(string name) : Literal(TypeId.PRIMITIVE)
 {
-
     private static readonly int _HASH_SEED = typeof(Primitive).GetHashCode();
-
     public readonly string Name = name;
-
     protected IEnumerable<TypeId>[] ParamTypes = [];
 
     private enum ParamTypeTypes
@@ -78,5 +70,4 @@ public abstract class Primitive(string name) : Literal(TypeId.PRIMITIVE)
         writer.Write(Name);
         writer.Write('}');
     }
-
 }

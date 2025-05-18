@@ -1,13 +1,10 @@
-using System.Linq.Expressions;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
 
 public class Array : Data
 {
-
     private readonly List<UFOObject> _elems;
-
     public int Count => _elems.Count;
 
     private Array(params UFOObject[] elems)
@@ -119,5 +116,4 @@ public class Array : Data
     {
         Utils.ShowOn.ShowOnWith(writer, EachElem(), "{", ", ", "}");
     }
-
 }

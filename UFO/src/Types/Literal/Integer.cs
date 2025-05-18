@@ -1,13 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
 namespace UFO.Types.Literal;
 
 public class Integer : Literal
 {
-
     private static readonly int HashSeed = typeof(Integer).GetHashCode();
-
     public readonly int Value;
 
     private Integer(int value)
@@ -38,5 +33,4 @@ public class Integer : Literal
     {
         writer.Write(Value);
     }
-
 }

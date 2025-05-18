@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
@@ -7,7 +5,6 @@ namespace UFO.Types.Data;
 public class List : Data
 {
     public static readonly List EMPTY = new(Nil.Create(), Nil.Create());
-
     public UFOObject First { get; set; }
     public UFOObject Rest { get; set; }
 
@@ -95,5 +92,4 @@ public class List : Data
     {
         Utils.ShowOn.ShowOnWith(writer, EachElem(), "[", ", ", "]");
     }
-
 }

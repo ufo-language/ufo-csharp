@@ -140,5 +140,4 @@ public class HashTable : Data
     {
         Utils.ShowOn.ShowOnWith(writer, EachElemAsBinding(), "#{", ", ", "}");
     }
-
 }

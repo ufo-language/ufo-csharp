@@ -1,16 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
 namespace UFO.Types.Literal;
 
 public class String : Literal
 {
     private static readonly Dictionary<string, String> _INTERNED_STRINGS = [];
     private static readonly Lock _DICTIONARY_LOCK = new();
-
     public string Value { get; private set; }
     private readonly int _hashCode;
-
     private static readonly int _HASH_SEED = typeof(String).GetHashCode();
 
     private String(string name)
@@ -57,5 +52,4 @@ public class String : Literal
         writer.Write(Value);
         writer.Write('"');
     }
-
 }

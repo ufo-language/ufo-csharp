@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace UFO.Types.Data;
 
 public abstract class Data(TypeId typeId) : UFOObject(typeId)
@@ -10,5 +8,4 @@ public abstract class Data(TypeId typeId) : UFOObject(typeId)
     {
         throw new NotImplementedException("GetHashCode");
     }
-
 }

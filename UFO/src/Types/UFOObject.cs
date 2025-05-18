@@ -1,5 +1,3 @@
-using System.Text;
-using UFO.Evaluator;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 

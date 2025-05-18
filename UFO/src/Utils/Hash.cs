@@ -11,5 +11,4 @@ public class Hash
             return (a * _MAGIC_HASH_PRIME) ^ b;
         }
     }
-
 }

@@ -1,11 +1,7 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
 namespace UFO.Types.Literal;
 
 public class Boolean : Literal
 {
-
     public static readonly Boolean TRUE = new();
     public static readonly Boolean FALSE = new();
 
@@ -31,5 +27,4 @@ public class Boolean : Literal
     {
         writer.Write(BoolValue ? "true" : "false");
     }
-
 }

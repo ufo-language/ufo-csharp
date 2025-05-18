@@ -1,4 +1,3 @@
-using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Expression;
@@ -69,5 +68,4 @@ public class Function : Expression
             fun = fun.NextRule;
         }
     }
-
 }

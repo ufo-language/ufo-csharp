@@ -11,5 +11,4 @@ public abstract class Literal(TypeId typeId) : UFOObject(typeId)
     {
         throw new NotImplementedException();
     }
-
 }

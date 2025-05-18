@@ -1,13 +1,8 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
 namespace UFO.Types.Literal;
 
 public class Real : Literal
 {
-
     private static readonly int HashSeed = typeof(Real).GetHashCode();
-
     public readonly double Value;
 
     private Real(double value)
@@ -38,5 +33,4 @@ public class Real : Literal
     {
         writer.Write(Value);
     }
-
 }

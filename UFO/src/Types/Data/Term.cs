@@ -1,4 +1,3 @@
-
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;

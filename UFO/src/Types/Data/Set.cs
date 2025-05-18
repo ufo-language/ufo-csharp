@@ -3,7 +3,6 @@ namespace UFO.Types.Data;
 public class Set : Data
 {
     private readonly HashSet<UFOObject> _elems;
-
     public int Count { get { return _elems.Count; } }
 
     private Set(params UFOObject[] elems)
@@ -73,5 +72,4 @@ public class Set : Data
     {
         Utils.ShowOn.ShowOnWith(writer, EachElem(), "${", ", ", "}");
     }
-
 }

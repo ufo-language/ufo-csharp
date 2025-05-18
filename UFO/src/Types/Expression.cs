@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-
 namespace UFO.Types.Expression;
 
 public abstract class Expression(TypeId typeId) : UFOObject(typeId)
@@ -10,5 +8,4 @@ public abstract class Expression(TypeId typeId) : UFOObject(typeId)
     {
         throw new NotImplementedException("Expression.GetHashCode");
     }
-
 }

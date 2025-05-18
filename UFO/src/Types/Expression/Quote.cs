@@ -1,6 +1,3 @@
-
-using UFO.Types.Literal;
-
 namespace UFO.Types.Expression;
 
 public class Quote : Expression

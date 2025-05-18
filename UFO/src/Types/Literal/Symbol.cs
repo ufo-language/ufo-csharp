@@ -1,16 +1,11 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-
 namespace UFO.Types.Literal;
 
 public class Symbol : Literal
 {
     private static readonly Dictionary<string, Symbol> _INTERNED_SYMBOLS = [];
     private static readonly Lock _DICTIONARY_LOCK = new();
-
     public string Name { get; private set; }
     private readonly int _hashCode;
-
     private static readonly int _HASH_SEED = typeof(Symbol).GetHashCode();
 
     private Symbol(string name)
@@ -48,5 +43,4 @@ public class Symbol : Literal
     {
         writer.Write(Name);
     }
-
 }

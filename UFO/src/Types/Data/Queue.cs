@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
@@ -90,5 +88,4 @@ public class Queue : Data
     {
         Utils.ShowOn.ShowOnWith(writer, EachElem(), "~[", ", ", "]");
     }
-
 }

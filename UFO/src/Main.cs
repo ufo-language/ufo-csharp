@@ -1,5 +1,4 @@
-﻿using System;
-using UFO.Main;
+﻿using UFO.Main;
 
 namespace UFO;
 
