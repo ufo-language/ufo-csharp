@@ -22,7 +22,7 @@ public class CD : Primitive
         }
         catch (Exception exn)
         {
-            return Term.Create(Symbol.Create("Fail"), Types.Literal.String.Create(exn.Message));
+            return Types.Data.Term.Create(Symbol.Create("Fail"), Types.Literal.String.Create(exn.Message));
         }
         return Nil.NIL;
     }

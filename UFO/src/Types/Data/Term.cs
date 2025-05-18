@@ -39,10 +39,6 @@ public class Term : Data
     {
         Name.ShowOn(writer);
         Args.ShowOn(writer);
-        if (Attrib != Nil.NIL)
-        {
-            Attrib.ShowOn(writer);
-        }
     }
 
 }
