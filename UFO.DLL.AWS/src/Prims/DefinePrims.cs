@@ -11,6 +11,7 @@ public class DefinePrims
     {
         string nsName = "aws";
         HashTable ns = HashTable.Create();
+        Lambda.A_DefinePrims.DefinePrims(ns, nsName);
         S3.A_DefinePrims.DefinePrims(ns, nsName);
         SQS.A_DefinePrims.DefinePrims(ns, nsName);
         Identifier awsId = Identifier.Create(nsName);
