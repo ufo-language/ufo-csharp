@@ -31,8 +31,11 @@ public class Receive : Primitive
         if (response.HttpStatusCode == System.Net.HttpStatusCode.OK && response.Messages.Count > 0)
         {
             string messageBody = response.Messages[0].Body;
+            string receiptHandle = response.Messages[0].ReceiptHandle;
             // You might want to delete the message after receiving it or handle receipt handle separately.
-            return Term.Create(statusCodeSymbol, Types.Literal.String.Create(messageBody));
+            Term term = Term.Create(statusCodeSymbol, Types.Literal.String.Create(messageBody));
+            term.Attrib = Types.Literal.String.Create(receiptHandle);
+            return term;
         }
         return statusCodeSymbol;
     }

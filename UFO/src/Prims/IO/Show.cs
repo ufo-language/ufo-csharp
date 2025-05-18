@@ -14,7 +14,7 @@ public class Show : Primitive
     {
         foreach (UFOObject arg in args)
         {
-            arg.DisplayOn(Console.Out);
+            arg.ShowOn(Console.Out);
         }
         return Nil.Create();
     }
