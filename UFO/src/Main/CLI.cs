@@ -43,11 +43,18 @@ public class CLI
                 string fileName1 = fileName;
                 if (!File.Exists(fileName1))
                 {
-                    fileName1 += ".ufo";
-                    if (!File.Exists(fileName1))
+                    if (!fileName1.EndsWith(".ufo"))
                     {
-                        Console.Error.WriteLine($"File not found '{fileName}' or '{fileName1}', skipping.");
-                        continue;
+                        fileName1 += ".ufo";
+                        if (!File.Exists(fileName1))
+                        {
+                            Console.Error.WriteLine($"File not found '{fileName}' or '{fileName1}', skipping.");
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine($"File not found '{fileName}', skipping.");
                     }
                 }
                 repl.RunFile(fileName1);
