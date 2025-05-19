@@ -1,7 +1,6 @@
 using System.Reflection;
 
 using UFO.Types;
-using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.Prims.Operator;

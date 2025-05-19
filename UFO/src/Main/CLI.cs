@@ -17,7 +17,7 @@ public class CLI
         List<string> filesToRun = [AUTOLOAD_FILENAME];
         foreach (string arg in args)
         {
-            if (arg.EndsWith(".ufo"))
+            if (!arg.StartsWith('-'))
             {
                 filesToRun.Add(arg);
             }
@@ -40,7 +40,17 @@ public class CLI
         {
             foreach (string fileName in fileNames)
             {
-                repl.RunFile(fileName);
+                string fileName1 = fileName;
+                if (!File.Exists(fileName1))
+                {
+                    fileName1 += ".ufo";
+                    if (!File.Exists(fileName1))
+                    {
+                        Console.Error.WriteLine($"File not found '{fileName}' or '{fileName1}', skipping.");
+                        continue;
+                    }
+                }
+                repl.RunFile(fileName1);
             }
         }
         catch (Exception exn)
