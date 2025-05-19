@@ -12,11 +12,11 @@ public class A_DefinePrims
         string nsName1 = "s3";
         string primPrefix = $"{nsName}_{nsName1}";
         HashTable ns1 = HashTable.Create();
-        DefineAllPrims.DefPrim(new Client(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Delete(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Get(), ns1, nsName);
-        DefineAllPrims.DefPrim(new List(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Put(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Client(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Delete(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Get(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new List(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Put(), ns1, nsName);
         ns[Identifier.Create(nsName1)] = ns1;
     }
 }

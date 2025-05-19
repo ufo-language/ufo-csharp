@@ -3,6 +3,7 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Queue;
 
+[PrimAttrib("queue", "deq")]
 public class Deq : Primitive
 {
     public Deq() : base("deq")

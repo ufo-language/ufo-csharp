@@ -3,6 +3,7 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.OS;
 
+[PrimAttrib("os", "cwd")]
 public class CWD : Primitive
 {
     public CWD() : base("cwd")

@@ -5,6 +5,7 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Operator;
 
+[PrimAttrib("load")]
 public class Load : Primitive
 {
     private static readonly string _PLUGIN_DIR = "../UFO.Plugins";

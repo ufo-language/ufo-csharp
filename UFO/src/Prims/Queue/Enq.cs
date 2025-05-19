@@ -3,6 +3,7 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Queue;
 
+[PrimAttrib("queue", "enq")]
 public class Enq : Primitive
 {
     public Enq() : base("enq")

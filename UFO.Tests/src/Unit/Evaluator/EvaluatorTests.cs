@@ -15,7 +15,7 @@ public class EvaluatorTests
 
         // Act
         UFOObject value = Nil.NIL;
-        bool success = etor.Lookup(id_x, ref value);
+        bool success = etor.Lookup(id_x, out value);
 
         // Assert
         Assert.False(success);

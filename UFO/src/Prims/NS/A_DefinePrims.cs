@@ -10,7 +10,7 @@ public class A_DefinePrims
     {
         string nsName = "ns";
         HashTable ns = HashTable.Create();
-        DefineAllPrims.DefPrim(new Global(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new Global(), ns, nsName);
         etor.Bind(Identifier.Create(nsName), ns);
     }
 }

@@ -1,9 +1,9 @@
 using UFO.Types;
-using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.Prims.Array;
 
+[PrimAttrib("array", "length")]
 public class Length : Primitive
 {
     public Length() : base("length")

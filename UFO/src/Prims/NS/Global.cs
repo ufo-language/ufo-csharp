@@ -6,6 +6,8 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.NS;
 
+[PrimAttrib("ns", "global")]
+
 public class Global : Primitive
 {
 

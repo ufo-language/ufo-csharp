@@ -4,6 +4,7 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.OS;
 
+[PrimAttrib("os", "cd")]
 public class CD : Primitive
 {
     public CD() : base("cd")

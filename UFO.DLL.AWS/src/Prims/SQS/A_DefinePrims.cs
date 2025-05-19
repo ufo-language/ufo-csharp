@@ -12,12 +12,12 @@ public class A_DefinePrims
         string nsName1 = "sqs";
         string primPrefix = $"{nsName}_{nsName1}";
         HashTable ns1 = HashTable.Create();
-        DefineAllPrims.DefPrim(new Client(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Create(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Delete(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Deq(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Peek(), ns1, nsName);
-        DefineAllPrims.DefPrim(new Send(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Client(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Create(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Delete(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Deq(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Peek(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Send(), ns1, nsName);
         ns[Identifier.Create(nsName1)] = ns1;
     }
 }

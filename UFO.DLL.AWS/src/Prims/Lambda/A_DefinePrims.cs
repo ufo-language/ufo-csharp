@@ -12,7 +12,7 @@ public class A_DefinePrims
         string nsName1 = "lambda";
         string primPrefix = $"{nsName}_{nsName1}";
         HashTable ns1 = HashTable.Create();
-        DefineAllPrims.DefPrim(new Invoke(), ns1, nsName);
+        DefineAllPrims.DefPrim_manual(new Invoke(), ns1, nsName);
         ns[Identifier.Create(nsName1)] = ns1;
     }
 }

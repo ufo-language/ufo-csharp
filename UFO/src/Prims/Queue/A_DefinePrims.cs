@@ -10,9 +10,9 @@ public class A_DefinePrims
     {
         string nsName = "queue";
         HashTable ns = HashTable.Create();
-        DefineAllPrims.DefPrim(new Enq(), ns, nsName);
-        DefineAllPrims.DefPrim(new Deq(), ns, nsName);
-        DefineAllPrims.DefPrim(new Length(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new Enq(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new Deq(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new Length(), ns, nsName);
         etor.Bind(Identifier.Create(nsName), ns);
     }
 }

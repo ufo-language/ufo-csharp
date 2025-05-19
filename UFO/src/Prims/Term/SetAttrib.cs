@@ -4,6 +4,7 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Term;
 
+[PrimAttrib("term", "setAttrib")]
 public class SetAttrib : Primitive
 {
     public SetAttrib() : base("setAttrib")

@@ -50,7 +50,7 @@ public class Identifier : Expression
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
         UFOObject value = Nil.Create();
-        if (etor.Lookup(this, ref value))
+        if (etor.Lookup(this, out value))
         {
             return value;
         }

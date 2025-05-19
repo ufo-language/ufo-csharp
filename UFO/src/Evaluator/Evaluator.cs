@@ -31,7 +31,7 @@ public class Evaluator
         return elemVals;
     }
 
-    public bool Lookup(Identifier name, ref UFOObject value)
+    public bool Lookup(Identifier name, out UFOObject value)
     {
         value = default!;
         Binding binding = Env.Locate(name);

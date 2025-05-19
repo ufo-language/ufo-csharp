@@ -5,6 +5,8 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.IO;
 
+[PrimAttrib("io", "show")]
+
 public class Show : Primitive
 {
     public Show() : base("show")

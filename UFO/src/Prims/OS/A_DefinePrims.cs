@@ -10,8 +10,8 @@ public class A_DefinePrims
     {
         string nsName = "os";
         HashTable ns = HashTable.Create();
-        DefineAllPrims.DefPrim(new CD(), ns, nsName);
-        DefineAllPrims.DefPrim(new CWD(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new CD(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new CWD(), ns, nsName);
         etor.Bind(Identifier.Create(nsName), ns);
     }
 }

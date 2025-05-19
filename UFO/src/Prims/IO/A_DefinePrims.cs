@@ -10,8 +10,8 @@ public class A_DefinePrims
     {
         string nsName = "io";
         HashTable ns = HashTable.Create();
-        DefineAllPrims.DefPrim(new Display(), ns, nsName);
-        DefineAllPrims.DefPrim(new Show(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new Display(), ns, nsName);
+        DefineAllPrims.DefPrim_manual(new Show(), ns, nsName);
         etor.Bind(Identifier.Create(nsName), ns);
     }
 }
