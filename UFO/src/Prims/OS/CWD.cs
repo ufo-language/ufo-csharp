@@ -3,10 +3,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.OS;
 
-[PrimAttrib("os", "cwd")]
+[PrimName("os", "cwd")]
 public class CWD : Primitive
 {
-    public CWD() : base("cwd")
+    public CWD(string longName) : base(longName)
     {
         ParamTypes = [
         ];

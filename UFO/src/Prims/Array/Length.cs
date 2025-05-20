@@ -3,10 +3,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Array;
 
-[PrimAttrib("array", "length")]
+[PrimName("array", "length")]
 public class Length : Primitive
 {
-    public Length() : base("length")
+    public Length(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.ARRAY],

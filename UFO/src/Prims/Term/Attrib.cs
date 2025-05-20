@@ -3,10 +3,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Term;
 
-[PrimAttrib("term", "attrib")]
+[PrimName("term", "attrib")]
 public class Attrib : Primitive
 {
-    public Attrib() : base("attrib")
+    public Attrib(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.TERM],

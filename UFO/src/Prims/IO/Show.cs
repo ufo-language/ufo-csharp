@@ -5,13 +5,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.IO;
 
-[PrimAttrib("io", "show")]
+[PrimName("io", "show")]
 
-public class Show : Primitive
+public class Show(string longName) : Primitive(longName)
 {
-    public Show() : base("show")
-    {}
-
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         foreach (UFOObject arg in args)

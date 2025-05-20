@@ -26,18 +26,26 @@ public class DefineAllPrims
         Assembly assembly = Assembly.GetExecutingAssembly();
         foreach (Type type in assembly.GetTypes())
         {
-            PrimAttrib? attrib = type.GetCustomAttribute<PrimAttrib>();
+            PrimName? attrib = type.GetCustomAttribute<PrimName>();
             if (attrib != null)
             {
                 if (typeof(Primitive).IsAssignableFrom(type))
                 {
-                    if (Activator.CreateInstance(type) is Primitive instance)
+                    string longName = string.Join<string>("_", attrib.NameSegments);
+                    try
                     {
-                        DefinePrim(instance!, attrib.NameSegments, etor);
+                        if (Activator.CreateInstance(type, longName) is Primitive instance)
+                        {
+                            DefinePrim(instance!, attrib.NameSegments, etor);
+                        }
+                        else
+                        {
+                            Console.Error.WriteLine($"DefineAllPrims.DefinePrims2 could not instantiate {attrib.NameSegments}:{type}");
+                        }
                     }
-                    else
+                    catch (MissingMethodException)
                     {
-                        Console.Error.WriteLine($"DefineAllPrims.DefinePrims2 could not instantiate {attrib.NameSegments}:{type}");
+                        Console.Error.WriteLine($"ERROR: Unable to instantiate primitive {type} with arguments (\"{longName}\")");
                     }
                 }
             }

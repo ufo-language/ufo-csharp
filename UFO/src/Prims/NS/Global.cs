@@ -6,12 +6,11 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.NS;
 
-[PrimAttrib("ns", "global")]
-
+[PrimName("ns", "global")]
 public class Global : Primitive
 {
 
-    public Global() : base("global")
+    public Global(string longName) : base(longName)
     {
         ParamTypes_SumOfProds([TypeId.SYMBOL]);
     }

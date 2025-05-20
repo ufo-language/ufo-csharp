@@ -3,10 +3,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Queue;
 
-[PrimAttrib("queue", "enq")]
+[PrimName("queue", "enq")]
 public class Enq : Primitive
 {
-    public Enq() : base("enq")
+    public Enq(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.QUEUE, TypeId.Z_ANY]

@@ -4,10 +4,10 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.OS;
 
-[PrimAttrib("os", "cd")]
+[PrimName("os", "cd")]
 public class CD : Primitive
 {
-    public CD() : base("cd")
+    public CD(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.STRING]

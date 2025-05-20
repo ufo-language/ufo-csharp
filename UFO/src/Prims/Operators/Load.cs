@@ -13,7 +13,7 @@ public class DLL_Pre_Load : Attribute
 public class DLL_Post_Load : Attribute
 {}
 
-[PrimAttrib("load")]
+[PrimName("load")]
 public class Load : Primitive
 {
     private static readonly string _PLUGIN_DIR = "../UFO.Plugins";
@@ -23,7 +23,7 @@ public class Load : Primitive
 
     private static HashSet<string> _ALREADY_LOADED = [];
 
-    public Load() : base("load")
+    public Load(string longName) : base(longName)
     {
         ParamTypes_SumOfProds([TypeId.SYMBOL]);
     }
