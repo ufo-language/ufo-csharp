@@ -4,8 +4,6 @@ namespace UFO.DLL.Web;
 
 public class Web
 {
-    public static UFOObject OnLoad(Evaluator.Evaluator etor)
-    {
-        return Prims.DefinePrims.DefPrims(etor);
-    }
+    public static void OnLoad(Evaluator.Evaluator etor)
+    {}
 }

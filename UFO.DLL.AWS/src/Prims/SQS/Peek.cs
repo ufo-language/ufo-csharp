@@ -1,14 +1,16 @@
 using Amazon.SQS.Model;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
+[PrimName("aws", "sqs", "peek")]
 public class Peek : Primitive
 {
-    public Peek() : base("peek")
+    public Peek(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonSQSClient wrapper)

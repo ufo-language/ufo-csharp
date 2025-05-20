@@ -1,15 +1,17 @@
 using Amazon.SQS.Model;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
+[PrimName("aws", "sqs", "deq")]
 public class Deq : Primitive
 {
     private static int _DEFAULT_WAIT_SECONDS = 5;
-    public Deq() : base("deq")
+    public Deq(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM /*client*/, TypeId.STRING /*queue name*/],

@@ -1,16 +1,18 @@
 using Amazon.S3.Model;
 using System.Net;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.S3;
 
+[PrimName("aws", "s3", "get")]
 public class Get : Primitive
 {
 
-    public Get() : base("get")
+    public Get(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client

@@ -40,11 +40,19 @@ public abstract class Primitive(string name) : Literal(TypeId.PRIMITIVE)
     private void CheckArgTypes_ProdOfSums(List<UFOObject> args)
     {
         // TODO
+        Console.WriteLine($"CheckArgTypes_ProdOfSums {this} {args}");
     }
 
     private void CheckArgTypes_SumOfProds(List<UFOObject> args)
     {
         // TODO
+#if false
+        Console.WriteLine($"CheckArgTypes_SumOfProds {this} {args}");
+        foreach (IEnumerable<TypeId> paramRule in ParamTypes)
+        {
+            Console.WriteLine($"  checking {paramRule}");
+        }
+#endif
     }
 
     public override int GetHashCode()

@@ -1,15 +1,17 @@
 using System.Net;
 using Amazon.SQS.Model;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
+[PrimName("aws", "sqs", "create")]
 public class Create : Primitive
 {
-    public Create() : base("create")
+    public Create(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM, // client (AmazonSQSClient wrapper)

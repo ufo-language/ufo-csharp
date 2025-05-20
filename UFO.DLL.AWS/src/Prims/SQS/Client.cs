@@ -1,8 +1,10 @@
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
+[PrimName("aws", "sqs", "client")]
 public class Client : Primitive
 {
     public static readonly Symbol URLSymbol = Symbol.Create("URL");
@@ -11,7 +13,7 @@ public class Client : Primitive
     private readonly string _DEFAULT_URL = "http://localhost:4566";
 
 
-    public Client() : base("client")
+    public Client(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_ANY,  // AWS URL; String, or "" or nil or false for default

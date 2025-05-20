@@ -136,6 +136,17 @@ public class HashTable : Data
         return defaultValue;
     }
 
+    public Set Keys()
+    {
+        Set keySet = Set.Create();
+        Dictionary<UFOObject, UFOObject>.KeyCollection keys = _dict.Keys;
+        foreach (UFOObject key in keys)
+        {
+            keySet.Add(key);
+        }
+        return keySet;
+    }
+
     public override void ShowOn(TextWriter writer)
     {
         Utils.ShowOn.ShowOnWith(writer, EachElemAsBinding(), "#{", ", ", "}");

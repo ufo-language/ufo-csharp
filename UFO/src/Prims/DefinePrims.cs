@@ -8,63 +8,67 @@ namespace UFO.Prims;
 
 public class DefineAllPrims
 {
-    // Helper method to define a primitive in a namespace.
-    // But instead of using this, let it use reflection to find the primitives.
-    public static void DefPrim_manual(Primitive prim, HashTable ns, string ns_name)
-    {
-        ns[Identifier.Create(prim.Name)] = prim;
-    }
-
-    public static void DefPrim(Primitive prim, Evaluator.Evaluator etor)
-    {
-        etor.Bind(Identifier.Create(prim.Name), prim);
-    }
-
-    // This uses reflection to look for primitives.
-    public static void DefPrims(Evaluator.Evaluator etor)
+    public static void DefPrims(Evaluator.Evaluator etor, Set results)
     {
         Assembly assembly = Assembly.GetExecutingAssembly();
-        foreach (Type type in assembly.GetTypes())
+        DefPrims(etor, assembly, results);
+    }
+
+    public static void DefPrims(Evaluator.Evaluator etor, Assembly assembly, Set results)
+    {
+        try
         {
-            PrimName? attrib = type.GetCustomAttribute<PrimName>();
-            if (attrib != null)
+            foreach (Type type in assembly.GetTypes())
             {
-                if (typeof(Primitive).IsAssignableFrom(type))
+                PrimName? attrib = type.GetCustomAttribute<PrimName>();
+                if (attrib != null)
                 {
-                    string longName = string.Join<string>("_", attrib.NameSegments);
-                    try
+                    if (typeof(Primitive).IsAssignableFrom(type))
                     {
-                        if (Activator.CreateInstance(type, longName) is Primitive instance)
+                        string longName = string.Join<string>("_", attrib.NameSegments);
+                        try
                         {
-                            DefinePrim(instance!, attrib.NameSegments, etor);
+                            if (Activator.CreateInstance(type, longName) is Primitive instance)
+                            {
+                                DefinePrim(instance!, attrib.NameSegments, etor, results);
+                            }
+                            else
+                            {
+                                Console.Error.WriteLine($"DefineAllPrims.DefinePrims2 could not instantiate {attrib.NameSegments}:{type}");
+                            }
                         }
-                        else
+                        catch (MissingMethodException)
                         {
-                            Console.Error.WriteLine($"DefineAllPrims.DefinePrims2 could not instantiate {attrib.NameSegments}:{type}");
+                            Console.Error.WriteLine($"ERROR: Unable to instantiate primitive {type} with arguments (\"{longName}\")");
                         }
-                    }
-                    catch (MissingMethodException)
-                    {
-                        Console.Error.WriteLine($"ERROR: Unable to instantiate primitive {type} with arguments (\"{longName}\")");
                     }
                 }
             }
         }
+        catch (Exception exn)
+        {
+            Console.WriteLine("DefineAllPrims caught exception");
+            Console.WriteLine(exn);
+        }
     }
 
-    private static void DefinePrim(Primitive prim, string[] nameSegments, Evaluator.Evaluator etor)
+    // This uses the primitive's PrimName attribute and defines the primitive
+    // in that namespace. For example
+    //   [PrimName("array", "length")]
+    // defines the primitive 'length' in the namespace 'array'.
+    private static void DefinePrim(Primitive prim, string[] nameSegments, Evaluator.Evaluator etor, Set results)
     {
         if (nameSegments == null || nameSegments.Length == 0)
             throw new ArgumentException("Primitive nameSegments must have at least one segment");
+        Identifier firstIdent = Identifier.Create(nameSegments[0]);
+        results.Add(firstIdent);
         if (nameSegments.Length == 1)
         {
             // Top-level binding
-            Identifier ident = Identifier.Create(nameSegments[0]);
-            etor.Bind(ident, prim);
+            etor.Bind(firstIdent, prim);
             return;
         }
         // Handle nested namespaces
-        Identifier firstIdent = Identifier.Create(nameSegments[0]);
         if (!etor.Lookup(firstIdent, out UFOObject? currentObj))
         {
             currentObj = HashTable.Create();

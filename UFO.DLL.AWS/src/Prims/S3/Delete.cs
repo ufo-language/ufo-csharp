@@ -1,14 +1,15 @@
 using Amazon.S3.Model;
-using System.Net;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.S3;
 
+[PrimName("aws", "s3", "delete")]
 public class Delete : Primitive
 {
-    public Delete() : base("delete")
+    public Delete(string longname) : base(longname)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client

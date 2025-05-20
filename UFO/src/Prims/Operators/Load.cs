@@ -1,7 +1,9 @@
 using System.Reflection;
 
 using UFO.Types;
+using UFO.Types.Expression;
 using UFO.Types.Literal;
+using UFO.Utils;
 
 namespace UFO.Prims.Operator;
 
@@ -30,7 +32,7 @@ public class Load : Primitive
 
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        Types.Data.Queue results = Types.Data.Queue.Create();
+        Types.Data.Set results = Types.Data.Set.Create();
         foreach (UFOObject arg in args)
         {
             string dllPrefix = arg.ToDisplayString();
@@ -38,14 +40,13 @@ public class Load : Primitive
             {
                 continue;
             }
-            UFOObject result = LoadDll(dllPrefix, etor);
-            results.Enq(result);
+            LoadDll(dllPrefix, etor, results);
             _ALREADY_LOADED.Add(dllPrefix);
         }
-        return results.AsList();
+        return results;
     }
 
-    private static UFOObject LoadDll(string dllPrefix, Evaluator.Evaluator etor)
+    private static void LoadDll(string dllPrefix, Evaluator.Evaluator etor, Types.Data.Set results)
     {
         string fileName = $"{_PLUGIN_DIR}{_PATH_SEP}{dllPrefix}{_DLL_SUFFIX}";
         string fullPath = Path.GetFullPath(fileName);
@@ -53,17 +54,9 @@ public class Load : Primitive
         string className = $"{_NAMESPACE_PREFIX}.{dllPrefix}.{dllPrefix}";
         Type? type = assembly!.GetType(className)
             ?? throw new Exception($"Unable to load plugin '{dllPrefix}' from file {fullPath}");
-        MethodInfo? method = type.GetMethod("OnLoad", BindingFlags.Public | BindingFlags.Static)
-            ?? throw new Exception($"Unable to call OnLoad in {dllPrefix} plugin");
-        object? returnValue = method.Invoke(null, [etor]);
-        return returnValue == null ? Nil.NIL : (UFOObject)returnValue;
-    }
-
-    private static void RunPreLoad()
-    {
-    }
-
-    private static void RunPostLoad()
-    {
+        MethodInfo? method = type.GetMethod("OnLoad", BindingFlags.Public | BindingFlags.Static);
+        method?.Invoke(null, [etor]);
+        // Load primitives
+        DefineAllPrims.DefPrims(etor, assembly, results);
     }
 }

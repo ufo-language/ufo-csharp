@@ -1,13 +1,15 @@
-using Amazon.Lambda;
 using Amazon.Lambda.Model;
+
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.Lambda;
 
+[PrimName("aws", "lambda", "invoke")]
 public class Invoke : Primitive
 {
-    public Invoke() : base("invoke")
+    public Invoke(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonLambdaClient wrapper)

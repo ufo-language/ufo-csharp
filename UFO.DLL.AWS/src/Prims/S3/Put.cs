@@ -1,14 +1,16 @@
 using Amazon.S3.Model;
 using System.Text;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.S3;
 
+[PrimName("aws", "s3", "put")]
 public class Put : Primitive
 {
-    public Put() : base("put")
+    public Put(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client

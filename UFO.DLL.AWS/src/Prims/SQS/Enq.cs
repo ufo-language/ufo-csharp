@@ -1,13 +1,15 @@
 using Amazon.SQS.Model;
 
+using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
+[PrimName("aws", "sqs", "send")]
 public class Send : Primitive
 {
-    public Send() : base("send")
+    public Send(string longName) : base(longName)
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonSQSClient wrapper)

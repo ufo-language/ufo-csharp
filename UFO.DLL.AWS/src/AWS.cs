@@ -1,11 +1,10 @@
 ﻿using UFO.Types;
+using UFO.Utils;
 
 namespace UFO.DLL.AWS;
 
 public class AWS
 {
-    public static UFOObject OnLoad(Evaluator.Evaluator etor)
-    {
-        return Prims.DefinePrims.DefPrims(etor);
-    }
+    public static void OnLoad(Evaluator.Evaluator etor)
+    {}
 }
