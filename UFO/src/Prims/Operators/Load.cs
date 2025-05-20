@@ -5,6 +5,14 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Operator;
 
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class DLL_Pre_Load : Attribute
+{}
+
+[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+public class DLL_Post_Load : Attribute
+{}
+
 [PrimAttrib("load")]
 public class Load : Primitive
 {
@@ -49,5 +57,13 @@ public class Load : Primitive
             ?? throw new Exception($"Unable to call OnLoad in {dllPrefix} plugin");
         object? returnValue = method.Invoke(null, [etor]);
         return returnValue == null ? Nil.NIL : (UFOObject)returnValue;
+    }
+
+    private static void RunPreLoad()
+    {
+    }
+
+    private static void RunPostLoad()
+    {
     }
 }
