@@ -39,6 +39,12 @@ public class Array : Data
         return array;
     }
 
+    public UFOObject this[int index]
+    {
+        get => _elems[index];
+        set => _elems[index] = value;
+    }
+
     public void Append(UFOObject elem)
     {
         _elems.Add(elem);

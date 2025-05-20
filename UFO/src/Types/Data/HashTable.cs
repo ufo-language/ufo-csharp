@@ -10,7 +10,7 @@ public class HashTable : Data
 
         public ProtoHash()
             : base(TypeId.PROTO_HASH)
-        {}
+        { }
 
         public static ProtoHash Create(Parser.List elems)
         {
@@ -86,6 +86,30 @@ public class HashTable : Data
         set => _dict[index] = value;
     }
 
+    public void Add(object value)
+    {
+        if (value is Binding binding)
+        {
+            this[binding.Key] = binding.Value;
+        }
+        else if (value is List list)
+        {
+            this[list.First] = list.Rest;
+        }
+        else if (value is Array array && ((Array)value).Count == 2)
+        {
+            this[array[0]] = array[1];
+        }
+        else if (value is KeyValuePair<UFOObject, UFOObject> pair)
+        {
+            this[pair.Key] = pair.Value;
+        }
+        else
+        {
+            throw new Exception($"Illegal key/value pair: {value}");
+        }
+    }
+
     public override bool BoolValue => _dict.Count > 0;
 
     public int Count { get { return _dict.Count; } }
@@ -150,5 +174,16 @@ public class HashTable : Data
     public override void ShowOn(TextWriter writer)
     {
         Utils.ShowOn.ShowOnWith(writer, EachElemAsBinding(), "#{", ", ", "}");
+    }
+
+    public Queue Values()
+    {
+        Queue valueQueue = Queue.Create();
+        Dictionary<UFOObject, UFOObject>.ValueCollection values = _dict.Values;
+        foreach (UFOObject value in values)
+        {
+            valueQueue.Enq(value);
+        }
+        return valueQueue;
     }
 }

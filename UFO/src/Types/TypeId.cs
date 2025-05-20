@@ -3,7 +3,7 @@ namespace UFO.Types;
 public enum TypeId
 {
     // Data
-    ARRAY, BINDING, HASH_TABLE, PAIR, PROTO_HASH, QUEUE, SET, TERM,
+    ARRAY, BINDING, HASH_TABLE, LIST, PROTO_HASH, QUEUE, SET, TERM,
     // Expression
     APPLY, ASSIGN, FUNCTION, IDENTIFIER, IF_THEN, METHOD_CALL, QUOTE, SCOPE_RESOLUTION, SEQ, SUBSCRIPT,
      // Literal
@@ -21,7 +21,7 @@ public static class TypeIdExtensions
             TypeId.ARRAY => "Array",
             TypeId.BINDING => "Binding",
             TypeId.HASH_TABLE => "HashTable",
-            TypeId.PAIR => "Pair",
+            TypeId.LIST => "Pair",
             TypeId.PROTO_HASH => "HashTable",
             TypeId.QUEUE => "Queue",
             TypeId.SET => "Set",

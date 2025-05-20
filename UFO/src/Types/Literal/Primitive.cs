@@ -1,9 +1,9 @@
 namespace UFO.Types.Literal;
 
-public abstract class Primitive(string name) : Literal(TypeId.PRIMITIVE)
+public abstract class Primitive(string longName) : Literal(TypeId.PRIMITIVE)
 {
     private static readonly int _HASH_SEED = typeof(Primitive).GetHashCode();
-    public readonly string Name = name;
+    public readonly string Name = longName;
     protected IEnumerable<TypeId>[] ParamTypes = [];
 
     private enum ParamTypeTypes
