@@ -40,7 +40,7 @@ public class REP
                 Print(Value);
             }
         }
-        catch (Exception exn)
+        catch (UFOException exn)
         {
             Console.Error.WriteLine("REP caught exception:");
             Console.Error.WriteLine(exn.Message);

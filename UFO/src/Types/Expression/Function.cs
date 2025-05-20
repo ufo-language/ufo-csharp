@@ -19,6 +19,29 @@ public class Function : Expression
         NextRule = nextRule;
     }
 
+    public static Function Create(Parser.List parts)
+    {
+        string functionOrMacro = (string)parts[0];
+        UFOObject nameOrNil = (UFOObject)parts[1];
+        Parser.List rules = (Parser.List)parts[2];
+        Parser.List rule1 = (Parser.List)rules[0];
+        Parser.List parameters = (Parser.List)rule1[0];
+        UFOObject body = (UFOObject)rule1[1];
+        return new Function(nameOrNil, parameters.ToListOfUFOObjects(), body, ParseRule(rules, 1));
+    }
+
+    private static Function? ParseRule(Parser.List rules, int index)
+    {
+        if (index >= rules.Count)
+        {
+            return null;
+        }
+        Parser.List rule = (Parser.List)rules[index];
+        Parser.List parameters = (Parser.List)rule[0];
+        UFOObject body = (UFOObject)rule[1];
+        return new Function(Nil.NIL, parameters.ToListOfUFOObjects(), body, ParseRule(rules, index + 1));
+    }
+
     public static Function Create(List<UFOObject> parameters, UFOObject body)
     {
         return new(Nil.Create(), parameters, body, null);
@@ -61,7 +84,7 @@ public class Function : Expression
         while (fun != null)
         {
             if (firstIter) firstIter = false;
-            else writer.Write(", ");
+            else writer.Write(" | ");
             Utils.ShowOn.ShowOnWith(writer, fun.Parameters, "(", ", ", ")");
             writer.Write(" = ");
             fun.Body.ShowOn(writer);
