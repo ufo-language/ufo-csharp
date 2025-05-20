@@ -7,6 +7,7 @@ using UFOArray = UFO.Types.Data.Array;
 using UFOAssign = UFO.Types.Expression.Assign;
 using UFOBinding = UFO.Types.Data.Binding;
 using UFOBool = UFO.Types.Literal.Boolean;
+using UFOFunction = UFO.Types.Expression.Function;
 using UFOHashTable = UFO.Types.Data.HashTable;
 using UFOIdentifier = UFO.Types.Expression.Identifier;
 using UFOIfThen = UFO.Types.Expression.IfThen;
@@ -45,6 +46,8 @@ public class UFOGrammar
     private static SepBy SepBy(object elem, object sep, int min=0) => new(elem, sep, min);
     private static Seq Seq(params object[] parsers) => new(parsers);
     private static Spot Spot(TokenType tokenType) => new(tokenType);
+    private static Spot Spot(TokenType tokenType, string value) => new(tokenType, value);
+    private static Succeed Succeed(object obj) => new(obj);
 
     // Type conversion functions
     private static readonly Func<object, object> MakeApply = tokenObj => UFOApply.Create((List)tokenObj);
@@ -52,6 +55,7 @@ public class UFOGrammar
     private static readonly Func<object, object> MakeAssign = tokenObj => UFOAssign.Create((List)tokenObj);
     private static readonly Func<object, object> MakeBinding = tokenObj => UFOBinding.Create((List)tokenObj);
     private static readonly Func<object, object> MakeHashTable = tokenObj => UFOHashTable.ProtoHash.Create((List)tokenObj);
+    private static readonly Func<object, object> MakeFunction = tokenObj => UFOFunction.Create((List)tokenObj);
     private static readonly Func<object, object> MakeIdentifier = tokenObj => UFOIdentifier.Create(((Token)tokenObj).Lexeme);
     private static readonly Func<object, object> MakeIfThen = tokenObj => UFOIfThen.Create((List)tokenObj);
     private static readonly Func<object, object> MakeInt = tokenObj => UFOInt.Create(int.Parse(((Token)tokenObj).Lexeme));
@@ -74,17 +78,17 @@ public class UFOGrammar
         ["!EOI"]         = Require(Ignore(Spot(TokenType.EOI)), "End-of-Input"),
         ["!Any"]         = Require("Any"),
 
-        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp", "Function",*/ "IfThen", /*"PrefixOp",*/ "Quote", "ScopeRes", "Subscript", "Data"),
+        ["Any"]          = OneOf("Apply", "Assign", /*"BinOp",*/ "Function", "IfThen", /*"PrefixOp",*/ "Quote", "ScopeRes", "Subscript", "Data"),
         ["Apply"]        = Apply(MakeApply, Seq(RecursionBarrier(), "Any", "ArgList")),
         ["ArgList"]      = ListOf("(", "Any", ",", ")"),
         ["Assign"]       = Apply(MakeAssign, Seq("Data", ":=", "!Any")),
         // "BinOp"         = Apply(BinOp.from_parser, Seq(RecursionBarrier(), "Any", "Operator", "!Any")),
         // "Operator"      = Apply(Identifier, Spot("Operator")),
-        // "Function"      = Apply(Function.from_parser, Seq(OneOf("fun", "macro"), OneOf("Identifier", Succeed(None)), SepBy("FunctionRule", "|"))),
-        // "fun"           = IfThen(Spot("Reserved", "fun"), false),
-        // "macro"         = IfThen(Spot("Reserved", "macro"), true),
-        // "FunctionRule": Seq("ParamList", "=", "Any"),
-        // "ParamList"     = ListOf("(", "Any", ",", ")"),
+        ["Function"]     = Apply(MakeFunction, Seq(OneOf("Fun", "Macro"), OneOf("Identifier", Succeed(Types.Literal.Nil.NIL)), SepBy("FunctionRule", "|"))),
+        ["Fun"]          = IfThen("fun", "fun"),
+        ["Macro"]        = IfThen("macro", "macro"),
+        ["FunctionRule"] = Seq("ParamList", "=", "Any"),
+        ["ParamList"]    = ListOf("(", "Any", ",", ")"),
         ["IfThen"]       = Apply(MakeIfThen, Seq("if", "!Any", "!then", "!Any", Maybe(Seq("else", "!Any")))),
         ["!then"]        = Require("then"),
         // "PrefixOp"      = Apply(PrefixOp.from_parser, Seq("Operator", "Any")),
