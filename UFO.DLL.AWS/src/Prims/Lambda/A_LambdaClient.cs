@@ -1,7 +1,6 @@
 using UFO.Types;
 using UFO.Types.Literal;
 using Amazon.Lambda;
-using Amazon.Lambda.Model;
 
 namespace UFO.DLL.AWS.Lambda;
 
