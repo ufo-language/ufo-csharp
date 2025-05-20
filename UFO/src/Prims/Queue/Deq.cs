@@ -16,8 +16,7 @@ public class Deq : Primitive
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         Types.Data.Queue q = (Types.Data.Queue)args[0];
-        UFOObject elem;
-        if (q.Deq(out elem))
+        if (q.Deq(out UFOObject elem))
         {
             return elem;
         }
