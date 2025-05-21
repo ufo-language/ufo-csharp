@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using UFO.Types.Literal;
 
 namespace UFO.Types.Data;
@@ -101,6 +102,31 @@ public class Array : Data
     public UFOObject Get_Unsafe(int index)
     {
         return _elems[index];
+    }
+
+    public override bool Match(UFOObject other, ref Evaluator.Evaluator etor)
+    {
+        if (other is not Array)
+        {
+            return false;
+        }
+        Array otherArray = (Array)other;
+        if (otherArray.Count != Count)
+        {
+            return false;
+        }
+        Binding savedEnv = etor.Env;
+        for (int n = 0; n < Count; n++)
+        {
+            UFOObject elem = _elems[n];
+            UFOObject otherElem = otherArray._elems[n];
+            if (!elem.Match(otherElem, ref etor))
+            {
+                etor.Env = savedEnv;
+                return false;
+            }
+        }
+        return true;
     }
 
     public bool Set(int index, UFOObject elem)

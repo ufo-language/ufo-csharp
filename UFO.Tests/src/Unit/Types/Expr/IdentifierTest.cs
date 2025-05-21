@@ -16,7 +16,7 @@ public class IdentifeirTests
         // Act
 
         // Assert
-        Assert.Throws<Identifier.UnboundIdentifierException>(() => id_x.Eval(etor));
+        Assert.Throws<UFOException>(() => id_x.Eval(etor));
     }
 
     [Fact]
