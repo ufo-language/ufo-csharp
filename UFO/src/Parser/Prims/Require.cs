@@ -12,7 +12,11 @@ public class Require(object parser, string? message = null) : IParser
         {
             return true;
         }
-        throw new Exception(_message ?? $"Parse failure: expected {_parser}");
+        string parserName = _parser.ToString()!;
+        throw new UFOException("Parser", [
+            ("Message", _message != null ? Types.Literal.String.Create(_message) : Types.Literal.String.Create("Token not found")),
+            ("Parser", Types.Literal.String.Create(parserName))
+        ]);
     }
 
     public override string ToString()
