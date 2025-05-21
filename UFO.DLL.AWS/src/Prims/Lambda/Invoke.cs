@@ -22,12 +22,13 @@ public class Invoke : Primitive
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         if (args[0] is not LambdaClient lambdaClient)
+        {
             throw new Exception("Expected LambdaClient");
-
+        }
         string functionName = args[1].ToDisplayString();
         string payload = args[2].ToDisplayString();
 
-        var response = InvokeLambda(lambdaClient, functionName, payload).GetAwaiter().GetResult();
+        string? response = InvokeLambda(lambdaClient, functionName, payload).GetAwaiter().GetResult();
         return Types.Literal.String.Create(response);
     }
 

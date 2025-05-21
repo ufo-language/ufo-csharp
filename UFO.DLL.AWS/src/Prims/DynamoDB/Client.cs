@@ -2,9 +2,9 @@ using UFO.Prims;
 using UFO.Types;
 using UFO.Types.Literal;
 
-namespace UFO.DLL.AWS.Lambda;
+namespace UFO.DLL.AWS.DynamoDB;
 
-[PrimName("aws", "lambda", "client")]
+[PrimName("aws", "ddb", "client")]
 public class Client : Primitive
 {
     public static readonly Symbol URLSymbol = Symbol.Create("URL");
@@ -29,7 +29,7 @@ public class Client : Primitive
         string url = urlObj.BoolValue ? urlObj.ToDisplayString() : _DEFAULT_URL; ;
         string accessKey = args[1].ToDisplayString();
         string secretKey = args[2].ToDisplayString();
-        return new LambdaClient(url, accessKey, secretKey);
+        return new DynamoDBClient(url, accessKey, secretKey);
     }
 
 }
