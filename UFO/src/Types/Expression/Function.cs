@@ -64,7 +64,12 @@ public class Function : Expression
 
     public override UFOObject Eval(Evaluator.Evaluator etor)
     {
-        return Closure.Create(this, etor.Env);
+        Closure closure = Closure.Create(this, etor.Env);
+        if (_name == Nil.NIL)
+        {
+            return closure;
+        }
+        return Assign.Create(_name, closure).Eval(etor);
     }
 
     public void SetNextRule(Function nextRule)

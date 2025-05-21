@@ -13,6 +13,11 @@ public class Assign : Expression
         _rhs = rhs;
     }
 
+    public static Assign Create(UFOObject lhs, UFOObject rhs)
+    {
+        return new Assign(lhs, rhs);
+    }
+
     public static Assign Create(Parser.List exprs)
     {
         return new((UFOObject)exprs[0], (UFOObject)exprs[1]);

@@ -43,7 +43,7 @@ public class REP
         catch (UFOException exn)
         {
             Console.Error.WriteLine("REP caught exception:");
-            Console.Error.WriteLine(exn.Message);
+            Console.Error.WriteLine(exn);
             if (inputStream != Console.In)
             {
                 UFOMain.ExitCode = 1;

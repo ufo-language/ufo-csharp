@@ -5,15 +5,15 @@ namespace UFO.Types.Expression;
 public class Identifier : Expression
 {
 
-    public class UnboundIdentifierException(Identifier ident) : Exception($"Unbound identifier: {ident}")
-    {
-        public Identifier Ident { get; } = ident;
+    // public class UnboundIdentifierException(Identifier ident) : Exception($"Unbound identifier: {ident}")
+    // {
+    //     public Identifier Ident { get; } = ident;
 
-        public override string ToString()
-        {
-            return $"{base.ToString()}, Identifier: {Ident}";
-        }
-    }
+    //     public override string ToString()
+    //     {
+    //         return $"{base.ToString()}, Identifier: {Ident}";
+    //     }
+    // }
 
     private static readonly Dictionary<string, Identifier> _INTERNED_IDENTIFIERS = [];
     private static readonly Lock _DICTIONARY_LOCK = new();
@@ -54,7 +54,10 @@ public class Identifier : Expression
         {
             return value;
         }
-        throw new UnboundIdentifierException(this);
+        throw new UFOException("UnboundIdentifier", [
+            ("Message", Types.Literal.String.Create("The identifier is not bound to a value in the current context.")),
+            ("Identifier", this)
+        ]);
     }
 
     public override int GetHashCode()

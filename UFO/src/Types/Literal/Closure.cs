@@ -34,7 +34,11 @@ public class Closure : Literal
             }
             fun = fun.NextRule;
         }
-        throw new ArgumentMismatchException(Fun, args);
+        throw new UFOException("ArgumentMismatch", [
+            ("Message", Types.Literal.String.Create("Arguments do not match any parameter list")),
+            ("Function", this),
+            ("Arguments", Data.Array.Create(args))
+        ]);
     }
 
     public static Closure Create(Function function, Binding lexicalEnv)
