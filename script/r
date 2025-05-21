@@ -1,2 +1,5 @@
-cd UFO
-dotnet run "$@"
+# cd UFO
+# dotnet run "$@"
+
+export UFO_MODULES=${HOME}/workspace/ufo/csharp/UFO.Plugins
+UFO/bin/Release/net9.0/osx-arm64/UFO

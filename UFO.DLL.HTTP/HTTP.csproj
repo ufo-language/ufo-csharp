@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../UFO/UFO.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+  </ItemGroup>
+
+  <Target Name="CopyToPlugins" AfterTargets="Build">
+  <ItemGroup>
+    <PluginDlls Include="$(OutputPath)\*.dll" />
+  </ItemGroup>
+  <Copy SourceFiles="@(PluginDlls)" DestinationFolder="$(SolutionDir)\UFO.Plugins\" SkipUnchangedFiles="true" />
+  </Target>
+
+</Project>

@@ -21,7 +21,11 @@ public class CreateTable : Primitive
     {
         if (args[0] is not DynamoDBClient clientObj)
         {
-            throw new Exception("Expected LambdaClient");
+            throw new UFOException("DynamoDB", [
+                ("Message", Types.Literal.String.Create("Expected a DynamoDBClient instance")),
+                ("Actual", args[0]),
+                ("Type", args[0].TypeSymbol())
+            ]);
         }
         Types.Literal.String tableName = (Types.Literal.String)args[1];
         AmazonDynamoDBClient client = clientObj.Client;
@@ -58,7 +62,7 @@ public class CreateTable : Primitive
                 [
                     new AttributeDefinition
                     {
-                        AttributeName = "id",
+                        AttributeName = "Id",
                         AttributeType = "S" // String
                     }
                 ],
@@ -66,7 +70,7 @@ public class CreateTable : Primitive
                 [
                     new KeySchemaElement
                     {
-                        AttributeName = "id",
+                        AttributeName = "Id",
                         KeyType = "HASH" // Partition key
                     }
                 ],

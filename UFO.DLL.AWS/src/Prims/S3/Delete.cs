@@ -21,12 +21,14 @@ public class Delete : Primitive
 
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        UFOObject clientObj = args[0];
-        if (clientObj is not S3Client)
+        if (args[0] is not S3Client s3ClientObj)
         {
-            throw new Exception($"Expected S3Client, found {clientObj} :: {clientObj.TypeSymbol()}");
+            throw new UFOException("S3Client", [
+                ("Message", Types.Literal.String.Create("Expected an S3Client instance")),
+                ("Actual", args[0]),
+                ("Type", args[0].TypeSymbol())
+            ]);
         }
-        S3Client s3ClientObj = (S3Client)clientObj;
         string bucketName = args[1].ToDisplayString();
         string key = args[2].ToDisplayString();
         DeleteObjectResponse response = DoDelete(s3ClientObj, bucketName, key).GetAwaiter().GetResult();

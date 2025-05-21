@@ -12,7 +12,6 @@ public class Client : Primitive
     public static readonly Symbol SecretKeySymbol = Symbol.Create("SecretKey");
     private readonly string _DEFAULT_URL = "http://localhost:4566";
 
-
     public Client(string longName) : base(longName)
     {
         ParamTypes = [

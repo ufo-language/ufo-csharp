@@ -23,7 +23,11 @@ public class Invoke : Primitive
     {
         if (args[0] is not LambdaClient lambdaClient)
         {
-            throw new Exception("Expected LambdaClient");
+            throw new UFOException("LambdaClient", [
+                ("Message", Types.Literal.String.Create("Expected a LambdaClient instance")),
+                ("Actual", args[0]),
+                ("Type", args[0].TypeSymbol())
+            ]);
         }
         string functionName = args[1].ToDisplayString();
         string payload = args[2].ToDisplayString();

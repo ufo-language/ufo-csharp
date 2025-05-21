@@ -21,12 +21,14 @@ public class Peek : Primitive
 
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
-        UFOObject clientObj = args[0];
-        if (clientObj is not SQSClient)
+        if (args[0] is not SQSClient sqsClient)
         {
-            throw new Exception($"Expected SQSClient, found {clientObj} :: {clientObj.TypeSymbol()}");
+            throw new UFOException("SQSClient", [
+                ("Message", Types.Literal.String.Create("Expected an SQSClient instance")),
+                ("Actual", args[0]),
+                ("Type", args[0].TypeSymbol())
+            ]);
         }
-        SQSClient sqsClient = (SQSClient)clientObj;
         string queueUrl = args[1].ToDisplayString();
         ReceiveMessageResponse response = ReceiveMessageAsync(sqsClient, queueUrl).GetAwaiter().GetResult();
         Symbol statusCodeSymbol = Symbol.Create(response.HttpStatusCode.ToString());
