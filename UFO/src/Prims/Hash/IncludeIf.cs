@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Hash;
 
-[PrimName("hash", "includeIf")]
 public class IncludeIf : Primitive
 {
-    public IncludeIf(string longName) : base(longName)
+    public IncludeIf()
     {
         ParamTypes = [
             [TypeId.HASH_TABLE, TypeId.Z_ANY]

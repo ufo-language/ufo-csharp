@@ -1,12 +1,11 @@
 using UFO.Types;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.OS;
+namespace UFO.Prims.Os;
 
-[PrimName("os", "cwd")]
-public class CWD : Primitive
+public class Cwd : Primitive
 {
-    public CWD(string longName) : base(longName)
+    public Cwd()
     {
         ParamTypes = [
         ];

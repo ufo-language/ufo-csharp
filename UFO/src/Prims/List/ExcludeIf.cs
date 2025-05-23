@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.List;
 
-[PrimName("list", "removeIf")]
-public class RemoveIf : Primitive
+public class ExcludeIf : Primitive
 {
-    public RemoveIf(string longName) : base(longName)
+    public ExcludeIf()
     {
         ParamTypes = [
             [TypeId.LIST, TypeId.Z_ANY]

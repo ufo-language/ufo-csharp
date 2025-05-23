@@ -7,10 +7,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.S3;
 
-[PrimName("aws", "s3", "put")]
 public class Put : Primitive
 {
-    public Put(string longName) : base(longName)
+    public Put()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client

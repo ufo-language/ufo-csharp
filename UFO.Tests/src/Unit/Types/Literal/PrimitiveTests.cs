@@ -12,7 +12,7 @@ public class PrimitiveTests
     {
         public int NCalls = 0;
         public List<UFOObject> SavedArgs = [];
-        public Prim1() : base("Prim1")
+        public Prim1()
         {}
         public override UFOObject Call(UFO.Evaluator.Evaluator etor, List<UFOObject> args)
         {

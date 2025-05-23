@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Hash;
 
-[PrimName("hash", "map")]
 public class Map : Primitive
 {
-    public Map(string longName) : base(longName)
+    public Map()
     {
         ParamTypes = [
             [TypeId.HASH_TABLE, TypeId.Z_ANY]

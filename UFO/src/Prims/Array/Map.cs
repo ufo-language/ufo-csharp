@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Array;
 
-[PrimName("array", "map")]
 public class Map : Primitive
 {
-    public Map(string longName) : base(longName)
+    public Map()
     {
         ParamTypes = [
             [TypeId.ARRAY, TypeId.Z_ANY]

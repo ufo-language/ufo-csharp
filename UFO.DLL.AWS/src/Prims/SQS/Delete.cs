@@ -6,10 +6,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
-[PrimName("aws", "sqs", "delete")]
 public class Delete : Primitive
 {
-    public Delete(string longName) : base(longName)
+    public Delete()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonSQSClient wrapper)

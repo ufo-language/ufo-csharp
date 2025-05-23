@@ -6,10 +6,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.S3;
 
-[PrimName("aws", "s3", "delete")]
 public class Delete : Primitive
 {
-    public Delete(string longname) : base(longname)
+    public Delete()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client

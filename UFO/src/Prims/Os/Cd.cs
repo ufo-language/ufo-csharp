@@ -2,12 +2,11 @@ using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.OS;
+namespace UFO.Prims.Os;
 
-[PrimName("os", "cd")]
-public class CD : Primitive
+public class Cd : Primitive
 {
-    public CD(string longName) : base(longName)
+    public Cd()
     {
         ParamTypes = [
             [TypeId.STRING]

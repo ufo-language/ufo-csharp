@@ -5,10 +5,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.HTTP.Server;
 
-[PrimName("http", "server", "new")]
 public class New : Primitive
 {
-    public New(string longName) : base(longName)
+    public New()
     {
     }
 

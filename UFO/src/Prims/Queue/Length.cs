@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Queue;
 
-[PrimName("queue", "length")]
 public class Length : Primitive
 {
-    public Length(string longName) : base(longName)
+    public Length()
     {
         ParamTypes = [
             [TypeId.QUEUE]

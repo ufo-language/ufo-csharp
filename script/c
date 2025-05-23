@@ -1,2 +1,7 @@
 # dotnet build
-dotnet publish -c Release -r osx-arm64 -p:PublishReadyToRun=true --self-contained=true
+
+#dotnet publish -c Release -r osx-arm64 -p:PublishReadyToRun=true --self-contained=true
+
+# Standalone executable from a native optimizing compiler
+# This does not find any annotated primitives
+dotnet publish -c Release -r osx-arm64 -p:PublishAot=true -p:Trim=false

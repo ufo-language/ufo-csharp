@@ -8,11 +8,10 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.S3;
 
-[PrimName("aws", "s3", "get")]
 public class Get : Primitive
 {
 
-    public Get(string longName) : base(longName)
+    public Get()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client

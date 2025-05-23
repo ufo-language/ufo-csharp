@@ -7,11 +7,10 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
-[PrimName("aws", "sqs", "deq")]
 public class Deq : Primitive
 {
     private static int _DEFAULT_WAIT_SECONDS = 5;
-    public Deq(string longName) : base(longName)
+    public Deq()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM /*client*/, TypeId.STRING /*queue name*/],

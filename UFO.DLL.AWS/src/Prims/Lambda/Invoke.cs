@@ -6,10 +6,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.Lambda;
 
-[PrimName("aws", "lambda", "invoke")]
 public class Invoke : Primitive
 {
-    public Invoke(string longName) : base(longName)
+    public Invoke()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM,  // client (AmazonLambdaClient wrapper)

@@ -8,10 +8,9 @@ using UFO.Types.Data;
 
 namespace UFO.DLL.AWS.DynamoDB;
 
-[PrimName("aws", "ddb", "put")]
 public class PutItem : Primitive
 {
-    public PutItem(string longName) : base(longName)
+    public PutItem()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM /*Client*/, TypeId.STRING /*table*/, TypeId.HASH_TABLE /*value*/]

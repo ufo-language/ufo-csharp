@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Hash;
 
-[PrimName("hash", "forEach")]
 public class ForEach : Primitive
 {
-    public ForEach(string longName) : base(longName)
+    public ForEach()
     {
         ParamTypes = [
             [TypeId.HASH_TABLE, TypeId.Z_ANY]

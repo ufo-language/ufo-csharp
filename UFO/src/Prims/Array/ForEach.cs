@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Array;
 
-[PrimName("array", "forEach")]
 public class ForEach : Primitive
 {
-    public ForEach(string longName) : base(longName)
+    public ForEach()
     {
         ParamTypes = [
             [TypeId.ARRAY, TypeId.Z_ANY]

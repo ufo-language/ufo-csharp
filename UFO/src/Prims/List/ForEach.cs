@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.List;
 
-[PrimName("list", "forEach")]
 public class ForEach : Primitive
 {
-    public ForEach(string longName) : base(longName)
+    public ForEach()
     {
         ParamTypes = [
             [TypeId.LIST, TypeId.Z_ANY]

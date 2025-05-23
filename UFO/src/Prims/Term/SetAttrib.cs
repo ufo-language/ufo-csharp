@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Term;
 
-[PrimName("term", "setAttrib")]
 public class SetAttrib : Primitive
 {
-    public SetAttrib(string longName) : base(longName)
+    public SetAttrib()
     {
         ParamTypes = [
             [TypeId.TERM, TypeId.Z_ANY],

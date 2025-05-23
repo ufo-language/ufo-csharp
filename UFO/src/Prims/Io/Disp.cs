@@ -1,19 +1,20 @@
-using UFO.Evaluator;
 using UFO.Types;
-using UFO.Types.Data;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.IO;
+namespace UFO.Prims.Io;
 
-[PrimName("io", "show")]
-
-public class Show(string longName) : Primitive(longName)
+public class Disp : Primitive
 {
+    public Disp()
+    {
+        ParamTypes_SumOfProds([]);
+    }
+
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
     {
         foreach (UFOObject arg in args)
         {
-            arg.ShowOn(Console.Out);
+            arg.DisplayOn(Console.Out);
         }
         return Nil.Create();
     }

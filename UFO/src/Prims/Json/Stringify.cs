@@ -1,17 +1,12 @@
-using System.Text;
-using System.Text.Json;
-
 using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
-using UFO.Utils;
 
-namespace UFO.Prims.JSON;
+namespace UFO.Prims.Json;
 
-[PrimName("json", "stringify")]
 public class Stringify : Primitive
 {
-    public Stringify(string longName) : base(longName)
+    public Stringify()
     {
         ParamTypes = [
             [TypeId.Z_ANY]

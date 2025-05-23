@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.List;
 
-[PrimName("list", "includeIf")]
 public class IncludeIf : Primitive
 {
-    public IncludeIf(string longName) : base(longName)
+    public IncludeIf()
     {
         ParamTypes = [
             [TypeId.LIST, TypeId.Z_ANY]

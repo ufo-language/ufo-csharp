@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Array;
 
-[PrimName("array", "includeIf")]
 public class IncludeIf : Primitive
 {
-    public IncludeIf(string longName) : base(longName)
+    public IncludeIf()
     {
         ParamTypes = [
             [TypeId.ARRAY, TypeId.Z_ANY]

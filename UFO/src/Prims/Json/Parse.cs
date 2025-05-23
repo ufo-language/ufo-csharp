@@ -5,12 +5,11 @@ using UFO.Types.Data;
 using UFO.Types.Expression;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.JSON;
+namespace UFO.Prims.Json;
 
-[PrimName("json", "parse")]
 public class Parse : Primitive
 {
-    public Parse(string longName) : base(longName)
+    public Parse()
     {
         ParamTypes = [
             [TypeId.STRING]

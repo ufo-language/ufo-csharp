@@ -3,28 +3,23 @@ using System.Reflection;
 using UFO.Types;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.Operator;
+namespace UFO.Prims;
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class DLL_Pre_Load : Attribute
-{}
-
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class DLL_Post_Load : Attribute
-{}
-
-[PrimName("load")]
 public class Load : Primitive
 {
+    public static string MODULE_DIR = ".";
     private static readonly string _NAMESPACE_PREFIX = "UFO.DLL";
     private static readonly string _PATH_SEP = "/";
     private static readonly string _DLL_SUFFIX = ".dll";
 
     private static HashSet<string> _ALREADY_LOADED = [];
 
-    public Load(string longName) : base(longName)
+    public Load()
     {
         ParamTypes_SumOfProds([TypeId.SYMBOL]);
+        string? moduleDir = Environment.GetEnvironmentVariable("UFO_MODULES");
+        moduleDir ??= ".";
+        MODULE_DIR = moduleDir;
     }
 
     public override UFOObject Call(Evaluator.Evaluator etor, List<UFOObject> args)
@@ -59,7 +54,11 @@ public class Load : Primitive
             MethodInfo? method = type.GetMethod("OnLoad", BindingFlags.Public | BindingFlags.Static);
             method?.Invoke(null, [etor]);
             // Load primitives
+#if false
             DefineAllPrims.DefPrims(etor, assembly, results);
+#else
+            Console.WriteLine("LoadDll has been disabled");
+#endif
         }
         catch (FileNotFoundException)
         {

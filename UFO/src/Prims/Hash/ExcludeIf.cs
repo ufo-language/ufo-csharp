@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Hash;
 
-[PrimName("hash", "removeIf")]
-public class RemoveIf : Primitive
+public class ExcludeIf : Primitive
 {
-    public RemoveIf(string longName) : base(longName)
+    public ExcludeIf()
     {
         ParamTypes = [
             [TypeId.HASH_TABLE, TypeId.Z_ANY]

@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.Array;
 
-[PrimName("array", "removeIf")]
-public class RemoveIf : Primitive
+public class ExcludeIf : Primitive
 {
-    public RemoveIf(string longName) : base(longName)
+    public ExcludeIf()
     {
         ParamTypes = [
             [TypeId.ARRAY, TypeId.Z_ANY]

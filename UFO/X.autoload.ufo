@@ -1,0 +1,2 @@
+io:disp(".autoload.ufo loaded ", load(AWS), "\n")
+c := aws:ddb:client(nil, "a", "b")

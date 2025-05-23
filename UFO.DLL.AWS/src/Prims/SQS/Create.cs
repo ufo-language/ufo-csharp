@@ -8,10 +8,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.SQS;
 
-[PrimName("aws", "sqs", "create")]
 public class Create : Primitive
 {
-    public Create(string longName) : base(longName)
+    public Create()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM, // client (AmazonSQSClient wrapper)

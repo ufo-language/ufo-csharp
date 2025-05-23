@@ -4,10 +4,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.HTTP.Server;
 
-[PrimName("http", "server", "start")]
 public class Start : Primitive
 {
-    public Start(string longName) : base(longName)
+    public Start()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM /*HTTPServer*/]

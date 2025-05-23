@@ -2,12 +2,11 @@ using UFO.Types;
 using UFO.Types.Data;
 using UFO.Types.Literal;
 
-namespace UFO.Prims.Array;
+namespace UFO.Prims.Hash;
 
-[PrimName("hash", "values")]
 public class Values : Primitive
 {
-    public Values(string longName) : base(longName)
+    public Values()
     {
         ParamTypes = [
             [TypeId.HASH_TABLE],

@@ -7,10 +7,9 @@ using UFO.Types.Literal;
 
 namespace UFO.DLL.AWS.DynamoDB;
 
-[PrimName("aws", "ddb", "listTables")]
 public class ListTables : Primitive
 {
-    public ListTables(string longName) : base(longName)
+    public ListTables()
     {
         ParamTypes = [
             [TypeId.Z_CUSTOM]

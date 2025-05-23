@@ -3,10 +3,9 @@ using UFO.Types.Literal;
 
 namespace UFO.Prims.File;
 
-[PrimName("file", "readAll")]
 public class ReadAll : Primitive
 {
-    public ReadAll(string longName) : base(longName)
+    public ReadAll()
     {
         ParamTypes = [
             [TypeId.STRING]
